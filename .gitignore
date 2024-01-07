@@ -1,0 +1,6 @@
+Lethal Company/
+lib/
+bin/
+obj/
+.vs
+Properties/launchSettings.json
