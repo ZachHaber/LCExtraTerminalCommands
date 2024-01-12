@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TerminalApi.Classes;
 using UnityEngine;
 using static TerminalApi.TerminalApi;
@@ -13,21 +9,15 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class InverseTeleportCommand
     {
+        public static string description = "Inverse teleports everyone on the inverse teleporter.";
         public static void inverseTeleportCommand()
         {
-            CommandInfo cmdInfo = new CommandInfo
-            {
-                Category = "other",
-                Description = "Inverse teleports everyone on the inverse teleporter.",
-                DisplayTextSupplier = OnInverseTeleportCommand
-            };
-            AddCommand("iteleport", cmdInfo);
-            AddCommand("itp", new CommandInfo { Category = "none", Description = "Inverse teleports everyone on the inverse teleporter.", DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverseteleport", new CommandInfo { Category = "none", Description = "Inverse teleports everyone on the inverse teleporter.", DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverse-teleport", new CommandInfo { Category = "none", Description = "Inverse teleports everyone on the inverse teleporter.", DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverse teleport", new CommandInfo { Category = "none", Description = "Inverse teleports everyone on the inverse teleporter.", DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("iteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("itp", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("inverseteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("inverse-teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("inverse teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
         }
-
 
         private static string OnInverseTeleportCommand()
         {

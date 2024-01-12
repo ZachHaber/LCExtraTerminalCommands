@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TerminalApi.Classes;
-using TerminalApi;
 using static TerminalApi.TerminalApi;
 using UnityEngine;
 using System.Reflection;
@@ -13,18 +8,19 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class TeleportCommand
     {
+        public static string description = "Teleports the current selected player on the camera.";
         public static void teleportCommand()
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "other",
-                Description = "Teleports the current selected player on the camera.",
+                Category = "none",
+                Description = description,
                 DisplayTextSupplier = OnTeleportCommand
             };
             CommandInfo cmdInfo2 = new CommandInfo
             {
                 Category = "none",
-                Description = "Teleports the current selected player on the camera.",
+                Description = description,
                 DisplayTextSupplier = OnTeleportCommand
             };
             AddCommand("teleport", cmdInfo);
