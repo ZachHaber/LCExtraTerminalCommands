@@ -17,7 +17,7 @@ readme = "../../README.md"
 outdir = "../dist"
 
 [[build.copy]]
-source = "./bin/Releas/Beauver.ExtraTerminalCommands.dll"
+source = "../bin/Release/Beauver.ExtraTerminalCommands.dll"
 target = "/BepInEx/plugins/ExtraTerminalCommands/"
 
 [[build.copy]]
