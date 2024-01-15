@@ -22,10 +22,10 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configDoorsCommand;
         public static ConfigEntry<bool> introSongCommand;
 
-        public const string modGUID = "Beauver.ExtraTerminalCommands";
-        public const string modName = "Extra Terminal Commands";
-        public const string modVersion = "1.1.0";
-        
+        public const string modGUID = MyPluginInfo.PLUGIN_GUID;
+        public const string modName = MyPluginInfo.PLUGIN_NAME;
+        public const string modVersion = MyPluginInfo.PLUGIN_VERSION;
+
         private readonly Harmony harmony = new Harmony(modGUID);
 
         private static ExtraTerminalCommandsBase Instance;
