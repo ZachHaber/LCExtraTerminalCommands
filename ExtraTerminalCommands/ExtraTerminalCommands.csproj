@@ -4,13 +4,13 @@
     <ProjectGuid>{737E14D8-0F77-4DFF-97B0-44149D33BBCC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <TargetFrameworkVersion>netstandard2.1</TargetFrameworkVersion>
-    
+
     <RootNamespace>ExtraTerminalCommands</RootNamespace>
-    <AssemblyName>ExtraTerminalCommands</AssemblyName>
+    <AssemblyName>Beauver.ExtraTerminalCommands</AssemblyName>
     <Product>ExtraTerminalCommands</Product>
     <Version>1.0.0</Version>
     <Description></Description>
-    
+
     <ThunderstoreId>Beauver-ExtraTerminalCommands</ThunderstoreId>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -65,7 +65,7 @@
   <ItemGroup Condition="$(CI) == 'true'">
     <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" PrivateAssets="all"/>
   </ItemGroup>
-  
+
   <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')" />
   </Target>
