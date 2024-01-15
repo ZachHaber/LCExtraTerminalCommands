@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using ExtraTerminalCommands.TerminalCommands;
 using HarmonyLib;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
@@ -20,16 +21,23 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configInverseTeleportCommand;
         public static ConfigEntry<bool> configLightsCommand;
         public static ConfigEntry<bool> configDoorsCommand;
-        public static ConfigEntry<bool> introSongCommand;
+        public static ConfigEntry<bool> configIntroSongCommand;
+        public static ConfigEntry<bool> configRandomMoonCommand;
+
+        public static ConfigEntry<bool> configAllowRandomWeatherFilter;
+        public static ConfigEntry<bool> configHidePlanet;
+        public static ConfigEntry<int> configRandomCommandPrice;
 
         public const string modGUID = "Beauver.ExtraTerminalCommands";
         public const string modName = "Extra Terminal Commands";
-        public const string modVersion = "1.1.0";
+        public const string modVersion = "1.2.0";
         
         private readonly Harmony harmony = new Harmony(modGUID);
 
+        public static AssetBundle MainAssetBundle;
+
         private static ExtraTerminalCommandsBase Instance;
-        internal ManualLogSource mls;
+        public static ManualLogSource mls;
 
 
         void Awake()
@@ -43,8 +51,11 @@ namespace ExtraTerminalCommands
             LoadConfig();
             harmony.PatchAll();
 
-            //NetcodePatcher();
-            //mls.LogInfo("Invoked NetcodePatcher");
+            MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ExampleModAssets"));
+
+            NetcodePatcher();
+            mls.LogInfo("Invoked NetcodePatcher");
+
             RegisterCommands();
             mls.LogInfo($"{modGUID} v{modVersion} has loaded!");
         }
@@ -52,6 +63,7 @@ namespace ExtraTerminalCommands
         void RegisterCommands()
         {
             IntroSongCommand introSongCommandClass = new IntroSongCommand();
+            TestRPC testRpc = new TestRPC();
 
             if (!configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
             if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
@@ -60,7 +72,10 @@ namespace ExtraTerminalCommands
             if (!configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
             if (!configLightsCommand.Value) { LightsCommand.lightsCommand(); }
             if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
-            if (!introSongCommand.Value) { introSongCommandClass.introSongCommand(); }
+            if (!configIntroSongCommand.Value) { introSongCommandClass.introSongCommand(); }
+            if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
+
+            testRpc.testRpc();
         }
 
         private void LoadConfig()
@@ -98,10 +113,27 @@ namespace ExtraTerminalCommands
                                          "DisableDoors",
                                          false,
                                          "Disables the 'doors' command in terminal");
-            introSongCommand = Config.Bind("commands",
+            configIntroSongCommand = Config.Bind("commands",
                                          "DisableIntroSong",
                                          false,
                                          "Plays the intro song when this command is run");
+            configRandomMoonCommand = Config.Bind("commands",
+                                         "DisableRandomMoon",
+                                         false,
+                                         "Disables the 'random' command to go to a random moon.");
+
+            configRandomCommandPrice = Config.Bind("random",
+                                         "RandomCommandPrice",
+                                         100,
+                                         "The price of the 'random' command. You will not receive a confirmation warning.");
+            configAllowRandomWeatherFilter = Config.Bind("random",
+                                         "AllowWeatherFilter",
+                                         true,
+                                         "When enabled allows you to filter out weather when going to a random moon by typing 'random weather'");
+            configHidePlanet = Config.Bind("random",
+                                         "AllowPlanetHide",
+                                         true,
+                                         "When enabled will not show what planet you're going to when writing 'random'");
         }
 
         private static void NetcodePatcher()
