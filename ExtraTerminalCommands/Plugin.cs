@@ -28,10 +28,10 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configHidePlanet;
         public static ConfigEntry<int> configRandomCommandPrice;
 
-        public const string modGUID = "Beauver.ExtraTerminalCommands";
-        public const string modName = "Extra Terminal Commands";
-        public const string modVersion = "1.2.0";
-        
+        public const string modGUID = MyPluginInfo.PLUGIN_GUID;
+        public const string modName = MyPluginInfo.PLUGIN_NAME;
+        public const string modVersion = MyPluginInfo.PLUGIN_VERSION;
+
         private readonly Harmony harmony = new Harmony(modGUID);
 
         public static AssetBundle MainAssetBundle;

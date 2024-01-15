@@ -1,0 +1,35 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "Beauver"
+name = "ExtraTerminalCommands"
+description = "Adds a few of terminal commands, each can be disabled in the config."
+websiteUrl = "https://github.com/Beauver/ExtraTerminalCommands"
+containsNsfwContent = false
+[package.dependencies]
+BepInEx-BepInExPack = "5.4.2100"
+NotAtomicBomb-TerminalApi = "1.5.0"
+
+[build]
+icon = "icons/extra-terminal-commands.png"
+readme = "../../README.md"
+outdir = "../dist"
+
+[[build.copy]]
+source = "../bin/Release/Beauver.ExtraTerminalCommands.dll"
+target = "/BepInEx/plugins/ExtraTerminalCommands/"
+
+[[build.copy]]
+source = "bundles"
+target = "/BepInEx/plugins/ExtraTerminalCommands/"
+
+[[build.copy]]
+source = "../../LICENSE"
+target = "/"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "lethal-company", ]
+[publish.categories]
+lethal-company = [ "bepinex", "misc", "mods", "serverside", ]
