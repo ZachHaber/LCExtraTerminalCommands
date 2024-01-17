@@ -26,12 +26,13 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             String message = "Extra Terminal Commands:";
 
-            if (!ExtraTerminalCommandsBase.configInverseTeleportCommand.Value) { message += "\n\n>ITP\n" + InverseTeleportCommand.description; }
             if (!ExtraTerminalCommandsBase.configTeleportCommand.Value) { message += "\n\n>TP\n" + TeleportCommand.description; }
+            if (!ExtraTerminalCommandsBase.configInverseTeleportCommand.Value) { message += "\n\n>ITP\n" + InverseTeleportCommand.description; }
+            if (!ExtraTerminalCommandsBase.configRandomMoonCommand.Value) { message += "\n\n>RANDOM [MONEY/WEATHER/BOTH]\n" + RandomMoonCommand.description; }
             if (!ExtraTerminalCommandsBase.configLaunchCommand.Value) { message += "\n\n>LAUNCH\n" + LaunchCommand.description; }
             if (!ExtraTerminalCommandsBase.configDoorsCommand.Value) { message += "\n\n>DOORS\n" + DoorsCommand.description; }
             if (!ExtraTerminalCommandsBase.configLightsCommand.Value) { message += "\n\n>LIGHTS\n" + LightsCommand.description; }
-            if (!ExtraTerminalCommandsBase.introSongCommand.Value) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }
+            if (!ExtraTerminalCommandsBase.configIntroSongCommand.Value) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }
             if (!ExtraTerminalCommandsBase.configTimeCommand.Value) { message += "\n\n>TIME\n" + TimeCommand.description; }
 
             return message + "\n\n";

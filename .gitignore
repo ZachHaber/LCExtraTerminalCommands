@@ -1,6 +1,43 @@
-Lethal Company/
-lib/
-bin/
-obj/
-.vs
-Properties/launchSettings.json
+# Exclude everything
+/*
+
+# Specific includes
+
+## Editorconfig
+!.editorconfig
+
+## Build System/Scripts
+!/.config
+!/global.json
+!NuGet.Config
+!Directory.Build.props
+!Directory.Build.targets
+!build.sh
+!build.ps1
+!build.cmd
+
+## Markdowns
+!*.md
+!LICENSE
+
+## important Git files
+!.gitmodules
+!.gitignore
+!.gitattributes
+!.git-blame-ignore-revs
+
+## GitHub specific
+!.github/
+
+## Solution
+!ExtraTerminalCommands.sln
+
+### ExtraTerminalCommands Project
+!/ExtraTerminalCommands
+/ExtraTerminalCommands/[Bb]in
+/ExtraTerminalCommands/[Oo]bj
+/ExtraTerminalCommands/[Dd]ist
+
+# Explicit exceptions/ignores
+**.user
+!**.template.*.user
