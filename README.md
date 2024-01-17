@@ -9,30 +9,39 @@ If you encounter any bugs you can report them on the project github: https://git
 # Commands
 ## Extra Commands
 Shows the list of all commands that are enabled.
+
 Aliases: Extra, Commands, Extra Commands, Extra-Commands, EC
 ## Random planet
 This will send you to a random planet, you can specify these filters (Weather), more might be added in the future.
-- Aliases: Random/R, Random Weather/R W
+
+Aliases: Random/R, Random Weather/R W
 ## Launch Ship
 Pulls the launch lever to land or launch the ship.
+
 Aliases: Launch, Go, Start
 ## Teleporter
 Activates the teleporter, respects teleporting cooldown.
+
 Aliases: Teleport, TP
 ## Inverse Teleporter
 Activates the inverse teleporter, respects teleporting cooldown.
+
 Aliases: ITeleport, ITP, InverseTeleport, Inverse Teleport, Inverse-Teleport
 ## Doors
 Opens or closes the ship doors depending on its current state.
+
 Aliases: Doors, Door, D
 ## Lights
 Turns the lights on or off depending on its current state.
+
 Aliases: Lights, Light, L
 ## Intro Song
 Plays the intro song (great great asset to the company 💃), it plays for everyone.
+
 Aliases: Intro, Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
 ## Time
 Shows the current time it is on the moon.
+
 Aliases: Time
 
 
@@ -59,3 +68,6 @@ Aliases: Time
 
 ## V1.0.0
 Initial release
+
+# Credits
+- Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
