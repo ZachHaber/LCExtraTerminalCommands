@@ -59,3 +59,6 @@ Aliases: Time
 
 ## V1.0.0
 Initial release
+
+# Credits
+- Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
