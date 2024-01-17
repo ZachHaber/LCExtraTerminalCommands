@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{737E14D8-0F77-4DFF-97B0-44149D33BBCC}</ProjectGuid>
@@ -25,15 +25,15 @@
 
   <!-- development dependencies -->
   <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all"/>
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" PrivateAssets="all"/>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- reference dependencies (common) -->
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all"/>
-    <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all"/>
-    <PackageReference Include="NotAtomicBomb.TerminalApi" Version="1.5.1" PrivateAssets="all"/>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all" />
+    <PackageReference Include="NotAtomicBomb.TerminalApi" Version="1.5.1" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- reference dependencies (local) -->
@@ -51,24 +51,19 @@
 
   <!-- reference dependencies (CI) -->
   <ItemGroup Condition="$(CI) == 'true'">
-    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" PrivateAssets="all"/>
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')" />
   </Target>
 
-  <Target
-    Name="PackThunderstore"
-    DependsOnTargets="NetcodePatch"
-    AfterTargets="PostBuildEvent"
-    Condition="$(Configuration) == 'Release'"
-  >
-    <MakeDir Directories="$(ProjectDir)assets/bundles" Condition="!Exists('$(ProjectDir)assets/bundles')"/>
-    <Exec Command="dotnet tcli build --config-path $(ProjectDir)assets/thunderstore.toml --package-version $(Version)"/>
+  <Target Name="PackThunderstore" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
+    <MakeDir Directories="$(ProjectDir)assets/bundles" Condition="!Exists('$(ProjectDir)assets/bundles')" />
+    <Exec Command="dotnet tcli build --config-path $(ProjectDir)assets/thunderstore.toml --package-version $(Version)" />
   </Target>
 
   <Target Name="ThunderstorePublish" Condition="$(IsThunderstorePackable) == 'true'">
-    <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets/thunderstore.toml --file $(ProjectDir)build/*-$(Version).zip"/>
+    <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets/thunderstore.toml --file $(ProjectDir)build/*-$(Version).zip" />
   </Target>
 </Project>

@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using ExtraTerminalCommands.TerminalCommands;
@@ -51,7 +51,7 @@ namespace ExtraTerminalCommands
             LoadConfig();
             harmony.PatchAll();
 
-            MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ExampleModAssets"));
+            MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "extraterminalcommandsnetwork"));
 
             NetcodePatcher();
             mls.LogInfo("Invoked NetcodePatcher");
@@ -63,7 +63,6 @@ namespace ExtraTerminalCommands
         void RegisterCommands()
         {
             IntroSongCommand introSongCommandClass = new IntroSongCommand();
-            TestRPC testRpc = new TestRPC();
 
             if (!configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
             if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
@@ -74,8 +73,6 @@ namespace ExtraTerminalCommands
             if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
             if (!configIntroSongCommand.Value) { introSongCommandClass.introSongCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
-
-            testRpc.testRpc();
         }
 
         private void LoadConfig()

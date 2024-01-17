@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,6 +17,7 @@ namespace ExtraTerminalCommands.Networking
             networkPrefab.AddComponent<ETCNetworkHandler>();
 
             NetworkManager.Singleton.AddNetworkPrefab(networkPrefab);
+            ExtraTerminalCommandsBase.mls.LogInfo("Loaded NetworkHandler");
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(StartOfRound), nameof(StartOfRound.Awake))]
@@ -26,6 +27,7 @@ namespace ExtraTerminalCommands.Networking
             {
                 var networkHandlerHost = Object.Instantiate(networkPrefab, Vector3.zero, Quaternion.identity);
                 networkHandlerHost.GetComponent<NetworkObject>().Spawn();
+                ExtraTerminalCommandsBase.mls.LogInfo("Spawned NetworkHandler");
             }
         }
 

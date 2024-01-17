@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ using Unity.Netcode;
 using static TerminalApi.TerminalApi;
 using UnityEngine.Video;
 using TMPro;
+using ExtraTerminalCommands.Networking;
 
 
 namespace ExtraTerminalCommands.TerminalCommands
@@ -130,29 +131,19 @@ namespace ExtraTerminalCommands.TerminalCommands
             }
                 
             int randomMoonNum = rnd.Next(0, moons.Count - 1);
-            VideoPlayer video = GameObject.Find("PlanetVideoReel").GetComponent<VideoPlayer>();
-            TextMeshProUGUI tmPro = GameObject.Find("PlanetDescription").GetComponent<TextMeshProUGUI>();
 
             if (startOfRound.IsHost || startOfRound.IsServer)
             {
                 startOfRound.ChangeLevelClientRpc(moons[randomMoonNum].levelID, terminal.groupCredits - travelPrice);
+                ETCNetworkHandler.Instance.unknownPlanetClientRpc();
             }
             else
             {
                 startOfRound.ChangeLevelServerRpc(moons[randomMoonNum].levelID, terminal.groupCredits - travelPrice);
+                ETCNetworkHandler.Instance.unknownPlanetServerRpc();
             }
-            startOfRound.ChangePlanet();
-            unknownPlanet(video, tmPro);
-            return "Traveled to ???";
-        }
-
-        private static void unknownPlanet(VideoPlayer video, TextMeshProUGUI tmPro)
-        {
-            if (ExtraTerminalCommandsBase.configHidePlanet.Value)
-            {
-                tmPro.text = "Orbiting: Unknown\nPopulation: Unknown\nConditions: Unknown\nFauna: Unknown\nWeather: Unknown";
-                video.enabled = false;
-            }
+            
+            return "Traveled to ???\n";
         }
     }
 }
