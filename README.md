@@ -43,6 +43,10 @@ Aliases: Intro, Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset
 Shows the current time it is on the moon.
 
 Aliases: Time
+## Clear
+Clears the terminal view
+
+Aliases: Clear, CL
 
 
 # Planned:

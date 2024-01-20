@@ -1,4 +1,5 @@
-﻿using System;
+using ExtraTerminalCommands.Networking;
+using System;
 using System.Reflection;
 using TerminalApi.Classes;
 using UnityEngine;
@@ -21,6 +22,10 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string OnInverseTeleportCommand()
         {
+            if (ETCNetworkHandler.Instance.itpCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
 
             if (!StartOfRound.Instance.shipDoorsEnabled || !StartOfRound.Instance.currentLevel.planetHasTime)
             {

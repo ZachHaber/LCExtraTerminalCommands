@@ -1,4 +1,5 @@
-﻿using TerminalApi.Classes;
+using ExtraTerminalCommands.Networking;
+using TerminalApi.Classes;
 using UnityEngine;
 using static TerminalApi.TerminalApi;
 
@@ -25,6 +26,11 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string OnLaunchCommand()
         {
+            if (ETCNetworkHandler.Instance.launchCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             if (GameObject.Find("StartGameLever") == null)
             {
                 return "Can not find start lever.\n";
@@ -41,7 +47,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return "Unable to complete action. The ship has already been launched.\n";
             }
 
-            if(!ExtraTerminalCommandsBase.configAllowLaunchOnMoon.Value && !lever.leverHasBeenPulled)
+            if(!ETCNetworkHandler.Instance.allowLaunchOnMoon && !lever.leverHasBeenPulled)
             {
                 return "Could not launch to space, you can only launch to a moon. This is due to config settings.\n";
             }

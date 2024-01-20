@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using TerminalApi.Classes;
 using static TerminalApi.TerminalApi;
 using UnityEngine;
 using System.Reflection;
+using ExtraTerminalCommands.Networking;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -31,6 +32,11 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string OnTeleportCommand()
         {
+            if (ETCNetworkHandler.Instance.tpCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             if (GameObject.Find("Teleporter(Clone)") == null)
             {
                 return "You do not own the teleporter.\n";

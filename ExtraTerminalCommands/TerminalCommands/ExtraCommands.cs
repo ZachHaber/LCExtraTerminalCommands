@@ -1,4 +1,5 @@
-﻿using System;
+using ExtraTerminalCommands.Networking;
+using System;
 using TerminalApi.Classes;
 using static TerminalApi.TerminalApi;
 
@@ -24,16 +25,23 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onExtraCommands()
         {
+            ETCNetworkHandler NH = ETCNetworkHandler.Instance;
+            if (NH.extraCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             String message = "Extra Terminal Commands:";
 
-            if (!ExtraTerminalCommandsBase.configTeleportCommand.Value) { message += "\n\n>TP\n" + TeleportCommand.description; }
-            if (!ExtraTerminalCommandsBase.configInverseTeleportCommand.Value) { message += "\n\n>ITP\n" + InverseTeleportCommand.description; }
-            if (!ExtraTerminalCommandsBase.configRandomMoonCommand.Value) { message += "\n\n>RANDOM [MONEY/WEATHER/BOTH]\n" + RandomMoonCommand.description; }
-            if (!ExtraTerminalCommandsBase.configLaunchCommand.Value) { message += "\n\n>LAUNCH\n" + LaunchCommand.description; }
-            if (!ExtraTerminalCommandsBase.configDoorsCommand.Value) { message += "\n\n>DOORS\n" + DoorsCommand.description; }
-            if (!ExtraTerminalCommandsBase.configLightsCommand.Value) { message += "\n\n>LIGHTS\n" + LightsCommand.description; }
-            if (!ExtraTerminalCommandsBase.configIntroSongCommand.Value) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }
-            if (!ExtraTerminalCommandsBase.configTimeCommand.Value) { message += "\n\n>TIME\n" + TimeCommand.description; }
+            if (!NH.tpCmdDisabled) { message += "\n\n>TP\n" + TeleportCommand.description; }
+            if (!NH.itpCmdDisabled) { message += "\n\n>ITP\n" + InverseTeleportCommand.description; }
+            if (!NH.randomCmdDisabled) { message += "\n\n>RANDOM [MONEY/WEATHER/BOTH]\n" + RandomMoonCommand.description; }
+            if (!NH.launchCmdDisabled) { message += "\n\n>LAUNCH\n" + LaunchCommand.description; }
+            if (!NH.doorCmdDisabled) { message += "\n\n>DOORS\n" + DoorsCommand.description; }
+            if (!NH.lightCmdDisabled) { message += "\n\n>LIGHTS\n" + LightsCommand.description; }
+            if (!NH.introCmdDisabled) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }
+            if (!NH.timeCmdDisabled) { message += "\n\n>TIME\n" + TimeCommand.description; }
+            if (!NH.clearCmdDisabled) { message += "\n\n>CLEAR\n" + ClearScreenCommand.description; }
 
             return message + "\n\n";
         }

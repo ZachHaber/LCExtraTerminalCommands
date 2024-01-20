@@ -1,4 +1,5 @@
-﻿using BepInEx;
+using BepInEx;
+using ExtraTerminalCommands.Networking;
 using HarmonyLib;
 using TerminalApi.Classes;
 using static TerminalApi.TerminalApi;
@@ -23,6 +24,11 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string OnTimeCommand()
         {
+            if (ETCNetworkHandler.Instance.timeCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             return !StartOfRound.Instance.currentLevel.planetHasTime || !StartOfRound.Instance.shipDoorsEnabled ? "You are currently not on a moon, please try again once you are on a moon.\n" : $"The time is {HUDManager.Instance.clockNumber.text.Replace('\n', ' ')}.\n";
         }
     }

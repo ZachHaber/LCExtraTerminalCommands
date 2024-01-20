@@ -35,6 +35,11 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         public string PlayIntro()
         {
+            if (ETCNetworkHandler.Instance.introCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             if (ETCNetworkHandler.Instance.introPlaying) { return "Song is already playing, please try again once it has stopped playing\n"; }
 
             if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
@@ -9,27 +10,6 @@ namespace ExtraTerminalCommands.Networking
 {
     public class ETCNetworkHandler : NetworkBehaviour
     {
-        public override void OnNetworkSpawn()
-        {
-            LevelEvent = null;
-
-            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
-                Instance?.gameObject.GetComponent<NetworkObject>().Despawn();
-            Instance = this;
-
-            base.OnNetworkSpawn();
-        }
-
-        [ClientRpc]
-        public void EventClientRpc(string eventName)
-        {
-            // If the event has subscribers (does not equal null), invoke the event
-            if (LevelEvent != null)
-            {
-                LevelEvent(eventName);
-            }
-        }
-
         public static event Action<String> LevelEvent;
 
         public static ETCNetworkHandler Instance { get; private set; }
@@ -39,7 +19,56 @@ namespace ExtraTerminalCommands.Networking
         public bool introPlaying = false;
         public bool randomMoonCommandRan = false;
 
+        public bool extraCmdDisabled = ExtraTerminalCommandsBase.configExtraCommandsList.Value;
+        public bool timeCmdDisabled = ExtraTerminalCommandsBase.configTimeCommand.Value;
+        public bool launchCmdDisabled = ExtraTerminalCommandsBase.configLaunchCommand.Value;
+        public bool tpCmdDisabled = ExtraTerminalCommandsBase.configTeleportCommand.Value;
+        public bool itpCmdDisabled = ExtraTerminalCommandsBase.configInverseTeleportCommand.Value;
+        public bool lightCmdDisabled = ExtraTerminalCommandsBase.configLightsCommand.Value;
+        public bool doorCmdDisabled = ExtraTerminalCommandsBase.configDoorsCommand.Value;
+        public bool introCmdDisabled = ExtraTerminalCommandsBase.configIntroSongCommand.Value;
+        public bool randomCmdDisabled = ExtraTerminalCommandsBase.configRandomMoonCommand.Value;
+        public bool clearCmdDisabled = ExtraTerminalCommandsBase.configClearCommand.Value;
+
+        public bool allowWeatherFilter = ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value;
+        public bool allowHidePlanet = ExtraTerminalCommandsBase.configHidePlanet.Value;
+        public int randomMoonPrice = ExtraTerminalCommandsBase.configRandomCommandPrice.Value;
+        public bool allowLaunchOnMoon = ExtraTerminalCommandsBase.configAllowLaunchOnMoon.Value;
+
+
         //Networking Functions:
+
+        //Sync important things on join:
+        [ServerRpc(RequireOwnership = true)]
+        public void syncVariablesServerRpc()
+        {
+            syncVariablesClientRpc(extraCmdDisabled, timeCmdDisabled, launchCmdDisabled, tpCmdDisabled, itpCmdDisabled,
+                lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, allowWeatherFilter, allowHidePlanet,
+                randomMoonPrice, allowLaunchOnMoon);
+        }
+
+        [ClientRpc]
+        public void syncVariablesClientRpc(bool extraCmd, bool timeCmd, bool launchCmd, bool tpCmd, bool itpCmd, bool lightCmd,
+            bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon)
+        {
+            randomMoonPrice = moonPrice;
+            extraCmdDisabled = extraCmd;
+            timeCmdDisabled = timeCmd;
+            launchCmdDisabled = launchCmd;
+            tpCmdDisabled = tpCmd;
+            itpCmdDisabled = itpCmd;
+            lightCmdDisabled = lightCmd;
+            doorCmdDisabled = doorCmd;
+            introCmdDisabled = introCmd;
+            randomCmdDisabled = randomCmd;
+            clearCmdDisabled = clearCmd;
+
+            allowWeatherFilter = weatherFilter;
+            allowHidePlanet = hidePlanet;
+            randomMoonPrice = moonPrice;
+            allowLaunchOnMoon = launchOnMoon;
+            ExtraTerminalCommandsBase.mls.LogInfo($"Synced variables with host.");
+        }
 
         //IntroSongCommand
         [ServerRpc(RequireOwnership = false)]
@@ -65,11 +94,33 @@ namespace ExtraTerminalCommands.Networking
             startIntroTimer();
             return;
         }
-        private async Task startIntroTimer()
+
+        [ClientRpc]
+        public void canceledSongClientRpc()
         {
-            await Task.Delay(38200);
             introPlaying = false;
+            introTimerCancellation?.Cancel();
         }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void canceledSongServerRpc()
+        {
+            canceledSongClientRpc();
+        }
+        private CancellationTokenSource introTimerCancellation;
+        public async Task startIntroTimer()
+        {
+            try
+            {
+                await Task.Delay(38200, introTimerCancellation.Token);
+                introPlaying = false;
+            }
+            catch (TaskCanceledException)
+            {
+                introPlaying = false;
+            }
+        }
+
 
         //RandomMoonCommand
         [ServerRpc(RequireOwnership =false)]

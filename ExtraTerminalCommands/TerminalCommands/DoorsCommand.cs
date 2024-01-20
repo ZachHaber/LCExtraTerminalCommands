@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+using ExtraTerminalCommands.Networking;
+using System.ComponentModel;
 using TerminalApi.Classes;
 using UnityEngine;
 using static TerminalApi.TerminalApi;
@@ -29,6 +30,11 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onDoorCommand()
         {
+            if(ETCNetworkHandler.Instance.doorCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             if (!StartOfRound.Instance.shipDoorsEnabled)
             {
                 return "You are currently not on a moon, you can not toggle the doors.\n";

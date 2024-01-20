@@ -23,10 +23,13 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configDoorsCommand;
         public static ConfigEntry<bool> configIntroSongCommand;
         public static ConfigEntry<bool> configRandomMoonCommand;
+        public static ConfigEntry<bool> configClearCommand;
 
         public static ConfigEntry<bool> configAllowRandomWeatherFilter;
         public static ConfigEntry<bool> configHidePlanet;
         public static ConfigEntry<int> configRandomCommandPrice;
+
+        public static ConfigEntry<bool> configDenyNetworking;
 
         public const string modGUID = MyPluginInfo.PLUGIN_GUID;
         public const string modName = MyPluginInfo.PLUGIN_NAME;
@@ -52,10 +55,9 @@ namespace ExtraTerminalCommands
             harmony.PatchAll();
 
             MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "extraterminalcommandsnetwork"));
-
             NetcodePatcher();
             mls.LogInfo("Invoked NetcodePatcher");
-
+            
             RegisterCommands();
             mls.LogInfo($"{modGUID} v{modVersion} has loaded!");
         }
@@ -73,6 +75,7 @@ namespace ExtraTerminalCommands
             if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
             if (!configIntroSongCommand.Value) { introSongCommandClass.introSongCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
+            if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
         }
 
         private void LoadConfig()
@@ -118,6 +121,10 @@ namespace ExtraTerminalCommands
                                          "DisableRandomMoon",
                                          false,
                                          "Disables the 'random' command to go to a random moon.");
+            configClearCommand = Config.Bind("commands",
+                                         "DisableClear",
+                                         false,
+                                         "Disables the 'clear' comman which clears all lines in the console.");
 
             configRandomCommandPrice = Config.Bind("random",
                                          "RandomCommandPrice",
@@ -131,6 +138,11 @@ namespace ExtraTerminalCommands
                                          "AllowPlanetHide",
                                          true,
                                          "When enabled will not show what planet you're going to when writing 'random'");
+
+            configHidePlanet = Config.Bind("networking",
+                                         "DenyNetworking",
+                                         false,
+                                         "When enabled, will remove the entire networking functionality from this mod, all commands dependent on networking will be unloaded.");
         }
 
         private static void NetcodePatcher()
