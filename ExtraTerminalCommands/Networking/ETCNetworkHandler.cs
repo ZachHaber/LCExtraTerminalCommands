@@ -4,16 +4,41 @@ using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Video;
 
 namespace ExtraTerminalCommands.Networking
 {
     public class ETCNetworkHandler : NetworkBehaviour
     {
+
+        public override void OnNetworkSpawn()
+        {
+            LevelEvent = null;
+
+            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+            {
+                if(Instance != null)
+                {
+                    Instance.gameObject.GetComponent<NetworkObject>().Despawn();
+                    ExtraTerminalCommandsBase.mls.LogWarning("Despawned network object. Don't fear, if you just started a level, this may happen.");
+                }
+            }
+            Instance = this;
+
+            base.OnNetworkSpawn();
+        }
+
+        [ClientRpc]
+        public void EventClientRpc(string eventName)
+        {
+            // If the event has subscribers (does not equal null), invoke the event
+            if (LevelEvent != null)
+            {
+                LevelEvent(eventName);
+            }
+        }
+
         public static event Action<String> LevelEvent;
-
         public static ETCNetworkHandler Instance { get; private set; }
-
 
         //Networking Variables:
         public bool introPlaying = false;
@@ -39,12 +64,13 @@ namespace ExtraTerminalCommands.Networking
         //Networking Functions:
 
         //Sync important things on join:
-        [ServerRpc(RequireOwnership = true)]
+        [ServerRpc(RequireOwnership = false)]
         public void syncVariablesServerRpc()
         {
             syncVariablesClientRpc(extraCmdDisabled, timeCmdDisabled, launchCmdDisabled, tpCmdDisabled, itpCmdDisabled,
-                lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, allowWeatherFilter, allowHidePlanet,
-                randomMoonPrice, allowLaunchOnMoon);
+                lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled,
+
+                allowWeatherFilter, allowHidePlanet,randomMoonPrice, allowLaunchOnMoon);
         }
 
         [ClientRpc]

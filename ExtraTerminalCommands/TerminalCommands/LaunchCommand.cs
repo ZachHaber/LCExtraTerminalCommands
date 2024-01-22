@@ -47,7 +47,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return "Unable to complete action. The ship has already been launched.\n";
             }
 
-            if(!ETCNetworkHandler.Instance.allowLaunchOnMoon && !lever.leverHasBeenPulled)
+            if(!ETCNetworkHandler.Instance.allowLaunchOnMoon && lever.leverHasBeenPulled)
             {
                 return "Could not launch to space, you can only launch to a moon. This is due to config settings.\n";
             }

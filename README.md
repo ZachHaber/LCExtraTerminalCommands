@@ -1,8 +1,6 @@
 This mod adds all kinds of commands to the terminal each of these commands can be disabled in the config file. 
 
-Currently they are listed under the "other" command in Terminal.
-
-This mod currently depends on TerminalAPI (minimum version: 1.5.0), this should however be installed automatically.
+V1.3.0 may be my last version (other than a bugfix version) of ExtraTerminalCommands that releases anytime soon. As I do not know what to add to this mod in the future. Suggestions are always welcome, and if there are good suggestions I'll consider updating the mod again.
 
 If you encounter any bugs you can report them on the project github: https://github.com/Beauver/ExtraTerminalCommands
 
@@ -44,9 +42,9 @@ Shows the current time it is on the moon.
 
 Aliases: Time
 ## Clear
-Clears the terminal view
+Clears the terminal commandline.
 
-Aliases: Clear, CL
+Aliases: Clear, CL, CLS
 
 
 # Planned:
@@ -54,6 +52,18 @@ Aliases: Clear, CL
 - Randomize moon command (with money filter)
 
 # Versions
+## V1.3.0
+### Additions:
+- Clear Command (@Narboic)
+- Better Networking (example: copy host settings)
+
+### Bug Fixes:
+- All clients now copy host setting! (@Sebiann)
+- Can now write random when in orbit around company building (@Narobic)
+- Disabling the intro song stops the counter (@Sebiann)
+- No longer crashes/bugs out when loading into a game for the second time (@Narboic)
+
+
 ## V1.2.0
 ### Additions:
 - Random Command

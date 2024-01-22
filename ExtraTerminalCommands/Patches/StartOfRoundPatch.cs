@@ -1,6 +1,6 @@
 using ExtraTerminalCommands.Networking;
 using HarmonyLib;
-using System.Threading;
+using System;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine.Video;
@@ -23,6 +23,7 @@ namespace ExtraTerminalCommands.Patches
                 ___screenLevelVideoReel.Stop();
             }
         }
+
         [HarmonyPostfix]
         [HarmonyPatch("DisableShipSpeaker")]
         public static void DisableShipSpeaker()
@@ -44,7 +45,7 @@ namespace ExtraTerminalCommands.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch("OnClientConnect")]
-        public static void onClientConnectPatch(VideoPlayer ___screenLevelVideoReel, TextMeshProUGUI ___screenLevelDescription)
+        public static void onClientConnectPatch()
         {
             ETCNetworkHandler NH = ETCNetworkHandler.Instance;
             if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)

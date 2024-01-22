@@ -11,7 +11,9 @@ namespace ExtraTerminalCommands.Networking
         public static void Init()
         {
             if (networkPrefab != null)
+            {
                 return;
+            }
 
             networkPrefab = (GameObject) ExtraTerminalCommandsBase.MainAssetBundle.LoadAsset("Assets/AssetsBundlesWanted/NetworkHandler.prefab");
             networkPrefab.AddComponent<ETCNetworkHandler>();

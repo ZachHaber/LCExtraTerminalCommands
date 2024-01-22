@@ -19,6 +19,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             };
             AddCommand("clear", cmdInfo);
             AddCommand("cl", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onClear });
+            AddCommand("cls", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onClear });
         }
 
         private static string onClear()

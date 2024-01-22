@@ -1,6 +1,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
+using ExtraTerminalCommands.Networking;
 using ExtraTerminalCommands.TerminalCommands;
 using HarmonyLib;
 using System.IO;
@@ -42,7 +43,6 @@ namespace ExtraTerminalCommands
         private static ExtraTerminalCommandsBase Instance;
         public static ManualLogSource mls;
 
-
         void Awake()
         {
             if (Instance == null)
@@ -50,6 +50,7 @@ namespace ExtraTerminalCommands
                 Instance = this;
             }
             mls = BepInEx.Logging.Logger.CreateLogSource(modGUID);
+
 
             LoadConfig();
             harmony.PatchAll();
@@ -64,8 +65,6 @@ namespace ExtraTerminalCommands
 
         void RegisterCommands()
         {
-            IntroSongCommand introSongCommandClass = new IntroSongCommand();
-
             if (!configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
             if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
             if (!configLaunchCommand.Value) { LaunchCommand.launchCommand(); }
@@ -73,7 +72,7 @@ namespace ExtraTerminalCommands
             if (!configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
             if (!configLightsCommand.Value) { LightsCommand.lightsCommand(); }
             if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
-            if (!configIntroSongCommand.Value) { introSongCommandClass.introSongCommand(); }
+            if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
         }
@@ -124,7 +123,7 @@ namespace ExtraTerminalCommands
             configClearCommand = Config.Bind("commands",
                                          "DisableClear",
                                          false,
-                                         "Disables the 'clear' comman which clears all lines in the console.");
+                                         "Disables the 'clear' command which clears all lines in the console.");
 
             configRandomCommandPrice = Config.Bind("random",
                                          "RandomCommandPrice",
