@@ -30,8 +30,6 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configHidePlanet;
         public static ConfigEntry<int> configRandomCommandPrice;
 
-        public static ConfigEntry<bool> configDenyNetworking;
-
         public const string modGUID = MyPluginInfo.PLUGIN_GUID;
         public const string modName = MyPluginInfo.PLUGIN_NAME;
         public const string modVersion = MyPluginInfo.PLUGIN_VERSION;
@@ -137,11 +135,6 @@ namespace ExtraTerminalCommands
                                          "AllowPlanetHide",
                                          true,
                                          "When enabled will not show what planet you're going to when writing 'random'");
-
-            configHidePlanet = Config.Bind("networking",
-                                         "DenyNetworking",
-                                         false,
-                                         "When enabled, will remove the entire networking functionality from this mod, all commands dependent on networking will be unloaded.");
         }
 
         private static void NetcodePatcher()
