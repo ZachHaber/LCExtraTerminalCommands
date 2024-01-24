@@ -85,3 +85,4 @@ Initial release
 
 # Credits
 - Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
+- Narobic (Thanks for the logo, much love!)
