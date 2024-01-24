@@ -48,7 +48,6 @@ Aliases: Clear, CL, CLS
 
 
 # Planned:
-- Better icon (yeah I know it's very bad)
 - Randomize moon command (with money filter)
 
 # Versions
