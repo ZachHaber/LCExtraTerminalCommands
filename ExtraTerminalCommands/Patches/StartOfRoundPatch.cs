@@ -60,5 +60,11 @@ namespace ExtraTerminalCommands.Patches
                 ETCNetworkHandler.Instance.syncVariablesServerRpc();
             }
         }
+        [HarmonyPostfix]
+        [HarmonyPatch("openingDoorsSequence")]
+        public static void openingDoorsSequencePatch()
+        {
+            ExtraTerminalCommandsBase.daysJoined++;
+        }
     }
 }

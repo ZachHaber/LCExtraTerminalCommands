@@ -47,10 +47,25 @@ Clears the terminal commandline.
 Aliases: Clear, CL, CLS
 
 
-# Planned:
+# Planned (Maybe):
 - Randomize moon command (with money filter)
 
+
+# Credits
+- Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
+- Narobic (Thanks for the logo, much love!)
+
 # Versions
+## V1.3.3
+### Changes:
+- New logo (@Narboic)
+
+### Bug Fixes:
+- Launch breaks if you're not the owner on the first round
+- Random command now works when orbiting the company building
+
+
+
 ## V1.3.0
 ### Additions:
 - Clear Command (@Narboic)
@@ -63,6 +78,7 @@ Aliases: Clear, CL, CLS
 - No longer crashes/bugs out when loading into a game for the second time (@Narboic)
 
 
+
 ## V1.2.0
 ### Additions:
 - Random Command
@@ -71,6 +87,8 @@ Aliases: Clear, CL, CLS
 ### Bug Fixes:
 - Intro song now plays for every player with the mod
 - Intro song can only be played once
+
+
 
 ## V1.1.0
 ### Additions:
@@ -81,7 +99,3 @@ Aliases: Clear, CL, CLS
 
 ## V1.0.0
 Initial release
-
-# Credits
-- Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
-- Narobic (Thanks for the logo, much love!)

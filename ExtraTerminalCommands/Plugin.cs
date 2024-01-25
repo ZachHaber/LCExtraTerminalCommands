@@ -41,6 +41,8 @@ namespace ExtraTerminalCommands
         private static ExtraTerminalCommandsBase Instance;
         public static ManualLogSource mls;
 
+        public static int daysJoined;
+
         void Awake()
         {
             if (Instance == null)

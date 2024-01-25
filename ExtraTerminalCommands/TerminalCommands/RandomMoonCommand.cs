@@ -45,11 +45,16 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onRandomMoonNoFilter()
         {
+            if(ETCNetworkHandler.Instance.launchCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
-            if (startOfRound.shipDoorsEnabled || !startOfRound.currentLevel.planetHasTime)
+            if (startOfRound.shipDoorsEnabled)
             {
-                return "You are currently on a moon. Can not travel to a random moon";
+                return "You are currently on a moon. Can not travel to a random moon\n";
             }
 
             List<SelectableLevel> moons = new List<SelectableLevel>();
@@ -62,9 +67,14 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onRandomMoonWeather()
         {
+            if (ETCNetworkHandler.Instance.allowLaunchOnMoon)
+            {
+                return "This filter is disabled by the host.\n";
+            }
+
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
-            if (startOfRound.shipDoorsEnabled || !startOfRound.currentLevel.planetHasTime)
+            if (startOfRound.shipDoorsEnabled)
             {
                 return "You are currently on a moon. Can not travel to a random moon.\n";
             }

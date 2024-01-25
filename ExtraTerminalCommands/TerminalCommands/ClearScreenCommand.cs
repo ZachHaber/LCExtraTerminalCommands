@@ -1,3 +1,4 @@
+using ExtraTerminalCommands.Networking;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,10 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onClear()
         {
+            if(ETCNetworkHandler.Instance.clearCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
             return "";
         }
 

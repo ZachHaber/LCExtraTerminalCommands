@@ -1,5 +1,7 @@
 using ExtraTerminalCommands.Networking;
+using GameNetcodeStuff;
 using TerminalApi.Classes;
+using Unity.Netcode;
 using UnityEngine;
 using static TerminalApi.TerminalApi;
 
@@ -29,6 +31,11 @@ namespace ExtraTerminalCommands.TerminalCommands
             if (ETCNetworkHandler.Instance.launchCmdDisabled)
             {
                 return "This command is disabled by the host.\n";
+            }
+            
+            if(!(NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer) && ExtraTerminalCommandsBase.daysJoined <= 0)
+            {
+                return "You have just joined this game. You can not launch the ship yet, please wait a day.\n";
             }
 
             if (GameObject.Find("StartGameLever") == null)

@@ -1,12 +1,8 @@
-# V1.3.0
-## Commands:
-- Clear Command
+# V1.3.3
 
-## Additions:
-- Better Networking (example: copy host settings)
+## Changes:
+- New logo (@Narboic)
 
-### Bug Fixes:
-- All clients now copy host setting! (@Sebiann)
-- Can now write random when in orbit around company building (@Narobic)
-- Disabling the intro song stops the counter (@Sebiann)
-- No longer crashes/bugs out when loading into a game for the second time (@Narboic)
+## Bug Fixes:
+- Launch breaks if you're not the owner on the first round
+- Random command now works when orbiting the company building
