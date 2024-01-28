@@ -1,8 +1,4 @@
-# V1.3.3
-
-## Changes:
-- New logo (@Narboic)
+# V1.3.4
 
 ## Bug Fixes:
-- Launch breaks if you're not the owner on the first round
-- Random command now works when orbiting the company building
+- Launch breaks first round if not owner

@@ -93,8 +93,6 @@ namespace ExtraTerminalCommands.Networking
             allowHidePlanet = hidePlanet;
             randomMoonPrice = moonPrice;
             allowLaunchOnMoon = launchOnMoon;
-
-            ExtraTerminalCommandsBase.daysJoined = 0;
             ExtraTerminalCommandsBase.mls.LogInfo($"Synced variables with host.");
         }
 

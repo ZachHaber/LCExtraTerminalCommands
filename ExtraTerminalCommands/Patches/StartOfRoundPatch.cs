@@ -60,6 +60,14 @@ namespace ExtraTerminalCommands.Patches
                 ETCNetworkHandler.Instance.syncVariablesServerRpc();
             }
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch("OnLocalDisconnect")]
+        public static void onLocalDisconnectPatch()
+        {
+            ExtraTerminalCommandsBase.daysJoined = 0;
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch("openingDoorsSequence")]
         public static void openingDoorsSequencePatch()

@@ -75,6 +75,7 @@ namespace ExtraTerminalCommands
             if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
+            daysJoined = 0;
         }
 
         private void LoadConfig()

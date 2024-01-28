@@ -56,6 +56,12 @@ Aliases: Clear, CL, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+## V1.3.4
+### Bug Fixes:
+- Launch breaks first round if not owner
+
+
+
 ## V1.3.3
 ### Changes:
 - New logo (@Narboic)

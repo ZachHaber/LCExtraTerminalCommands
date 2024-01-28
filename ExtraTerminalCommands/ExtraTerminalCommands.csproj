@@ -8,7 +8,7 @@
     <RootNamespace>ExtraTerminalCommands</RootNamespace>
     <AssemblyName>Beauver.ExtraTerminalCommands</AssemblyName>
     <Product>Extra Terminal Commands</Product>
-    <Version>1.3.3</Version>
+    <Version>1.3.4</Version>
     <Description></Description>
 
     <ThunderstoreId>Beauver-ExtraTerminalCommands</ThunderstoreId>
