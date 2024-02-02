@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using ExtraTerminalCommands.Networking;
+using ExtraTerminalCommands.Patches;
 using ExtraTerminalCommands.TerminalCommands;
 using HarmonyLib;
 using System.IO;

@@ -1,4 +1,4 @@
-# V1.3.4
+# V1.3.5
 
 ## Bug Fixes:
-- Launch breaks first round if not owner
+- Weather Filter condition broken

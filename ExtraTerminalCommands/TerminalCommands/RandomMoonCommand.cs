@@ -45,7 +45,7 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onRandomMoonNoFilter()
         {
-            if(ETCNetworkHandler.Instance.launchCmdDisabled)
+            if(ETCNetworkHandler.Instance.randomCmdDisabled)
             {
                 return "This command is disabled by the host.\n";
             }
@@ -67,7 +67,7 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onRandomMoonWeather()
         {
-            if (ETCNetworkHandler.Instance.allowLaunchOnMoon)
+            if (!ETCNetworkHandler.Instance.allowWeatherFilter)
             {
                 return "This filter is disabled by the host.\n";
             }

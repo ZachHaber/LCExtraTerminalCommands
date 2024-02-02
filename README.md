@@ -56,6 +56,12 @@ Aliases: Clear, CL, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+## V1.3.5
+### Bug Fixes:
+- Weather Filter condition broken
+
+
+
 ## V1.3.4
 ### Bug Fixes:
 - Launch breaks first round if not owner
