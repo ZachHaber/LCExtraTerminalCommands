@@ -41,6 +41,13 @@ Aliases: Intro, Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset
 Shows the current time it is on the moon.
 
 Aliases: Time
+
+## Switch
+Switches the monitor view to the next person
+
+Aliases: S, SW, S [player], SW [player]
+
+Known bugs: will say that the command doesn't exist, whilst it does, will look to fix later
 ## Clear
 Clears the terminal commandline.
 
@@ -56,6 +63,11 @@ Aliases: Clear, CL, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+## V1.4.0
+### Additions:
+- 's' command, does the same as the vanilla 'switch' command. Includes player
+
+
 ## V1.3.5
 ### Bug Fixes:
 - Weather Filter condition broken

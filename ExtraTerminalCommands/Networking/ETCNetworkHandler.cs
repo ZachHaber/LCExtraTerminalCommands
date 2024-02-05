@@ -54,6 +54,7 @@ namespace ExtraTerminalCommands.Networking
         public bool introCmdDisabled = ExtraTerminalCommandsBase.configIntroSongCommand.Value;
         public bool randomCmdDisabled = ExtraTerminalCommandsBase.configRandomMoonCommand.Value;
         public bool clearCmdDisabled = ExtraTerminalCommandsBase.configClearCommand.Value;
+        public bool switchCmdDisabled = ExtraTerminalCommandsBase.configSwitchCommand.Value;
 
         public bool allowWeatherFilter = ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value;
         public bool allowHidePlanet = ExtraTerminalCommandsBase.configHidePlanet.Value;
@@ -68,14 +69,14 @@ namespace ExtraTerminalCommands.Networking
         public void syncVariablesServerRpc()
         {
             syncVariablesClientRpc(extraCmdDisabled, timeCmdDisabled, launchCmdDisabled, tpCmdDisabled, itpCmdDisabled,
-                lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled,
+                lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, switchCmdDisabled,
 
                 allowWeatherFilter, allowHidePlanet,randomMoonPrice, allowLaunchOnMoon);
         }
 
         [ClientRpc]
         public void syncVariablesClientRpc(bool extraCmd, bool timeCmd, bool launchCmd, bool tpCmd, bool itpCmd, bool lightCmd,
-            bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon)
+            bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool switchCmd, bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon)
         {
             randomMoonPrice = moonPrice;
             extraCmdDisabled = extraCmd;
@@ -88,6 +89,7 @@ namespace ExtraTerminalCommands.Networking
             introCmdDisabled = introCmd;
             randomCmdDisabled = randomCmd;
             clearCmdDisabled = clearCmd;
+            switchCmdDisabled = switchCmd;
 
             allowWeatherFilter = weatherFilter;
             allowHidePlanet = hidePlanet;

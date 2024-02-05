@@ -26,6 +26,7 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configIntroSongCommand;
         public static ConfigEntry<bool> configRandomMoonCommand;
         public static ConfigEntry<bool> configClearCommand;
+        public static ConfigEntry<bool> configSwitchCommand;
 
         public static ConfigEntry<bool> configAllowRandomWeatherFilter;
         public static ConfigEntry<bool> configHidePlanet;
@@ -76,6 +77,7 @@ namespace ExtraTerminalCommands
             if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
+            if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
             daysJoined = 0;
         }
 
@@ -126,6 +128,10 @@ namespace ExtraTerminalCommands
                                          "DisableClear",
                                          false,
                                          "Disables the 'clear' command which clears all lines in the console.");
+            configSwitchCommand = Config.Bind("commands",
+                                         "DisableSwitch",
+                                         false,
+                                         "Disables the 's' command, which does the same as the vanilla 'switch' command.");
 
             configRandomCommandPrice = Config.Bind("random",
                                          "RandomCommandPrice",

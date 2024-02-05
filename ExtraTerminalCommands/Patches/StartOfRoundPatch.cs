@@ -52,7 +52,7 @@ namespace ExtraTerminalCommands.Patches
             {
                 ETCNetworkHandler.Instance.syncVariablesClientRpc(NH.extraCmdDisabled, NH.timeCmdDisabled, NH.launchCmdDisabled,
                     NH.tpCmdDisabled, NH.itpCmdDisabled, NH.lightCmdDisabled, NH.doorCmdDisabled, NH.introCmdDisabled,
-                    NH.randomCmdDisabled, NH.clearCmdDisabled, NH.allowWeatherFilter, NH.allowHidePlanet, NH.randomMoonPrice,
+                    NH.randomCmdDisabled, NH.clearCmdDisabled, NH.switchCmdDisabled, NH.allowWeatherFilter, NH.allowHidePlanet, NH.randomMoonPrice,
                     NH.allowLaunchOnMoon);
             }
             else

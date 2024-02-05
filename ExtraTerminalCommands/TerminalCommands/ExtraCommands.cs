@@ -42,6 +42,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             if (!NH.introCmdDisabled) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }
             if (!NH.timeCmdDisabled) { message += "\n\n>TIME\n" + TimeCommand.description; }
             if (!NH.clearCmdDisabled) { message += "\n\n>CLEAR\n" + ClearScreenCommand.description; }
+            if (!NH.switchCmdDisabled) { message += "\n\n>S\n" + SwitchCommand.description; }
 
             return message + "\n\n";
         }
