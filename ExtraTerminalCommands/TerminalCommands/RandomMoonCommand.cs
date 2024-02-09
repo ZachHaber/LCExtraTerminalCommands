@@ -140,7 +140,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return $"Could not go to a random moon, you have too little money, you need atleast: {travelPrice} credits.\n";
             }
 
-            int randomMoonNum = rnd.Next(0, moons.Count - 1);
+            int randomMoonNum = rnd.Next(0, moons.Count);
 
             if (startOfRound.IsHost || startOfRound.IsServer)
             {
