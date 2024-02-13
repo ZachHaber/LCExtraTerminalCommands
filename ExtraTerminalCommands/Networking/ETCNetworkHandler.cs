@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
@@ -55,12 +56,14 @@ namespace ExtraTerminalCommands.Networking
         public bool randomCmdDisabled = ExtraTerminalCommandsBase.configRandomMoonCommand.Value;
         public bool clearCmdDisabled = ExtraTerminalCommandsBase.configClearCommand.Value;
         public bool switchCmdDisabled = ExtraTerminalCommandsBase.configSwitchCommand.Value;
+        public bool hornCmdDisabled = ExtraTerminalCommandsBase.configHornCommand.Value;
 
         public bool allowWeatherFilter = ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value;
         public bool allowHidePlanet = ExtraTerminalCommandsBase.configHidePlanet.Value;
         public int randomMoonPrice = ExtraTerminalCommandsBase.configRandomCommandPrice.Value;
         public bool allowLaunchOnMoon = ExtraTerminalCommandsBase.configAllowLaunchOnMoon.Value;
-
+        public int hornSeconds = ExtraTerminalCommandsBase.configHornDefaultseconds.Value;
+        public int hornMaxSeconds = ExtraTerminalCommandsBase.configHornMaxSeconds.Value;
 
         //Networking Functions:
 
@@ -70,13 +73,15 @@ namespace ExtraTerminalCommands.Networking
         {
             syncVariablesClientRpc(extraCmdDisabled, timeCmdDisabled, launchCmdDisabled, tpCmdDisabled, itpCmdDisabled,
                 lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, switchCmdDisabled,
+                hornCmdDisabled,
 
-                allowWeatherFilter, allowHidePlanet,randomMoonPrice, allowLaunchOnMoon);
+                allowWeatherFilter, allowHidePlanet,randomMoonPrice, allowLaunchOnMoon, hornSeconds, hornMaxSeconds);
         }
 
         [ClientRpc]
         public void syncVariablesClientRpc(bool extraCmd, bool timeCmd, bool launchCmd, bool tpCmd, bool itpCmd, bool lightCmd,
-            bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool switchCmd, bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon)
+            bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool switchCmd, bool hornCmd,
+            bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon, int hornSec, int hornMaxSec)
         {
             randomMoonPrice = moonPrice;
             extraCmdDisabled = extraCmd;
@@ -90,11 +95,14 @@ namespace ExtraTerminalCommands.Networking
             randomCmdDisabled = randomCmd;
             clearCmdDisabled = clearCmd;
             switchCmdDisabled = switchCmd;
+            hornCmdDisabled = hornCmd;
 
             allowWeatherFilter = weatherFilter;
             allowHidePlanet = hidePlanet;
             randomMoonPrice = moonPrice;
             allowLaunchOnMoon = launchOnMoon;
+            hornSeconds = hornSec;
+            hornMaxSeconds = hornMaxSec;
             ExtraTerminalCommandsBase.mls.LogInfo($"Synced variables with host.");
         }
 

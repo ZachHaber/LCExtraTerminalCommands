@@ -27,10 +27,13 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configRandomMoonCommand;
         public static ConfigEntry<bool> configClearCommand;
         public static ConfigEntry<bool> configSwitchCommand;
+        public static ConfigEntry<bool> configHornCommand;
 
         public static ConfigEntry<bool> configAllowRandomWeatherFilter;
         public static ConfigEntry<bool> configHidePlanet;
         public static ConfigEntry<int> configRandomCommandPrice;
+        public static ConfigEntry<int> configHornDefaultseconds;
+        public static ConfigEntry<int> configHornMaxSeconds;
 
         public const string modGUID = MyPluginInfo.PLUGIN_GUID;
         public const string modName = MyPluginInfo.PLUGIN_NAME;
@@ -78,6 +81,7 @@ namespace ExtraTerminalCommands
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
             if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
+            if (!configHornCommand.Value) { HornCommand.hornCommand(); }
             daysJoined = 0;
         }
 
@@ -132,6 +136,10 @@ namespace ExtraTerminalCommands
                                          "DisableSwitch",
                                          false,
                                          "Disables the 's' command, which does the same as the vanilla 'switch' command.");
+            configHornCommand = Config.Bind("commands",
+                                         "DisableHorn",
+                                         false,
+                                         "Disables the 'horn' command, which sounds the horn for X amount of seconds");
 
             configRandomCommandPrice = Config.Bind("random",
                                          "RandomCommandPrice",
@@ -145,6 +153,15 @@ namespace ExtraTerminalCommands
                                          "AllowPlanetHide",
                                          true,
                                          "When enabled will not show what planet you're going to when writing 'random'");
+
+            configHornDefaultseconds = Config.Bind("horn",
+                                         "SecondsEnabled",
+                                         10,
+                                         "This is the amount of seconds the horn will continue to sound when running 'horn'");
+            configHornMaxSeconds = Config.Bind("horn",
+                                         "MaxSeconds",
+                                         30,
+                                         "This is the maximum amount of seconds the horn can sound when running 'horn [time]' Be warned, the higher this number more lag may occur.");
         }
 
         private static void NetcodePatcher()

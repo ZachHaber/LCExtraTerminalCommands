@@ -6,6 +6,9 @@ using TerminalApi.Classes;
 using UnityEngine;
 using static TerminalApi.TerminalApi;
 using static TerminalApi.Events.Events;
+using GameNetcodeStuff;
+using Unity.Netcode;
+using ExtraTerminalCommands.Handlers;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -16,30 +19,37 @@ namespace ExtraTerminalCommands.TerminalCommands
         public static void switchCommand()
         {
             TerminalParsedSentence += onParsedPlayerSentance;
+            AddCommand("s", new CommandInfo { Category = "hide", Description = description, DisplayTextSupplier = returnText });
+            AddCommand("sw", new CommandInfo { Category = "hide", Description = description, DisplayTextSupplier = returnText });
+        }
+        public static string returnText()
+        {
+            if (ETCNetworkHandler.Instance.switchCmdDisabled)
+            {
+                return "This command is disabled by the host.\n";
+            }
+            return "Switched radar scan view\n";
         }
 
         private static void onParsedPlayerSentance(object sender, TerminalParseSentenceEventArgs e)
         {
+
             if(ETCNetworkHandler.Instance.switchCmdDisabled)
             {
                 return;
             }
+            ParsedPlayerSentanceHandler.onParsedPlayerSentance(sender, e);
+        }
 
-            string userInput = GetTerminalInput();
-            string[] userInputParts = userInput.Split(' ');
-
-            if (userInputParts.Length == 1 && (userInputParts[0] == "s" || userInputParts[0] == "sw"))
-            {
-                StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
-                return;
-            }
-            else if(userInputParts.Length == 2 && (userInputParts[0] == "s" || userInputParts[0] == "sw"))
-            {
-                Terminal terminal = GameObject.FindObjectOfType<Terminal>();
-                int playerNum = terminal.CheckForPlayerNameCommand("switch", userInputParts[1]);
-                StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
-
-            }
+        public static void switchNormal()
+        {
+            StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
+        }
+        public static void switchInput(string[] userInputParts)
+        {
+            Terminal terminal = GameObject.FindObjectOfType<Terminal>();
+            int playerNum = terminal.CheckForPlayerNameCommand("switch", userInputParts[1]);
+            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
         }
     }
 }

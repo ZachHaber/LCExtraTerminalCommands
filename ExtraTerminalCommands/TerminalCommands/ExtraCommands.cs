@@ -35,8 +35,9 @@ namespace ExtraTerminalCommands.TerminalCommands
 
             if (!NH.tpCmdDisabled) { message += "\n\n>TP\n" + TeleportCommand.description; }
             if (!NH.itpCmdDisabled) { message += "\n\n>ITP\n" + InverseTeleportCommand.description; }
-            if (!NH.randomCmdDisabled) { message += "\n\n>RANDOM [MONEY]\n" + RandomMoonCommand.description; }
+            if (!NH.randomCmdDisabled) { message += "\n\n>RANDOM [WEATHER]\n" + RandomMoonCommand.description; }
             if (!NH.launchCmdDisabled) { message += "\n\n>LAUNCH\n" + LaunchCommand.description; }
+            if (!NH.hornCmdDisabled) { message += "\n\n>HORN [SECONDS]\n" + HornCommand.description; }
             if (!NH.doorCmdDisabled) { message += "\n\n>DOORS\n" + DoorsCommand.description; }
             if (!NH.lightCmdDisabled) { message += "\n\n>LIGHTS\n" + LightsCommand.description; }
             if (!NH.introCmdDisabled) { message += "\n\n>INTRO\n" + IntroSongCommand.description; }

@@ -1,6 +1,4 @@
-This mod adds all kinds of commands to the terminal each of these commands can be disabled in the config file. 
-
-V1.3.0 may be my last version (other than a bugfix version) of ExtraTerminalCommands that releases anytime soon. As I do not know what to add to this mod in the future. Suggestions are always welcome, and if there are good suggestions I'll consider updating the mod again.
+This mod adds all kinds of commands to the terminal, each of these commands can be disabled in the config file. 
 
 If you encounter any bugs you can report them on the project github: https://github.com/Beauver/ExtraTerminalCommands
 
@@ -33,6 +31,10 @@ Aliases: Doors, Door, D
 Turns the lights on or off depending on its current state.
 
 Aliases: Lights, Light, L
+## Horn [Time (in seconds)]
+Sounds the horn for the specified amount of time, if ran without a time it will default to config default.
+
+Aliases: Horn, Horn [Time]
 ## Intro Song
 Plays the intro song (great great asset to the company 💃), it plays for everyone.
 
@@ -41,13 +43,10 @@ Aliases: Intro, Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset
 Shows the current time it is on the moon.
 
 Aliases: Time
-
 ## Switch
 Switches the monitor view to the next person
 
 Aliases: S, SW, S [player], SW [player]
-
-Known bugs: will say that the command doesn't exist, whilst it does, will look to fix later
 ## Clear
 Clears the terminal commandline.
 
@@ -63,6 +62,24 @@ Aliases: Clear, CL, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+## 1.5.0
+
+### Additions:
+- Horn command (works with custom input)
+
+
+### Bug fixes:
+- Fixed Extra command mismatch (in the extra menu it used to show "random [money], whilst money is not a filter)
+
+
+ 
+## V1.4.1
+
+### Bug Fixes:
+- No longer says "sw/s [player]" is an invalid command
+- Random command now takes the last moon, previously didn't
+
+
 ## V1.4.0
 ### Additions:
 - 's' command, does the same as the vanilla 'switch' command. Includes player
