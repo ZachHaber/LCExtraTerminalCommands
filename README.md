@@ -1,3 +1,5 @@
+# ExtraTerminalCommands will no longer be updated as of now. I appreciated everyone's feedback but as I currently have other important things to do and have outgrown the lethal company "phase" I have decided no longer to update the mod.
+
 This mod adds all kinds of commands to the terminal, each of these commands can be disabled in the config file. 
 
 If you encounter any bugs you can report them on the project github: https://github.com/Beauver/ExtraTerminalCommands
