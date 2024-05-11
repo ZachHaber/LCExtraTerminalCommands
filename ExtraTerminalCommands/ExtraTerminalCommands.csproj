@@ -14,18 +14,21 @@
     <ThunderstoreId>Beauver-ExtraTerminalCommands</ThunderstoreId>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-  </PropertyGroup>
 
-  <!-- prevent referenced assemblies from being copied to the output folder -->
-  <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
-    <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
-    </ItemGroup>
-  </Target>
+    <!-- Number of instances of the game to start to test the plugin -->
+    <NumberOfClients>2</NumberOfClients>
+    <!-- Delay between each start of the game in seconds -->
+    <DelayBetweenClientsInSeconds>5</DelayBetweenClientsInSeconds>
+    <!-- To apply the correct delay between each instance, we need to add 1 to the delay because the first "echo" sent by the ping command is instant -->
+    <PingDelay>$([MSBuild]::Add($(DelayBetweenClientsInSeconds), 1))</PingDelay>
+    <!-- True to start the game when the plugin is built, false to only copy the plugin to the game's plugin directory -->
+    <StartGame>true</StartGame>
+    <Configurations>Debug;Release;StartGame</Configurations>
+  </PropertyGroup>
 
   <!-- development dependencies -->
   <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />
+    <!--<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />-->
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" PrivateAssets="all" />
   </ItemGroup>
 
@@ -33,7 +36,7 @@
   <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all" />
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" PrivateAssets="all" />
-    <PackageReference Include="NotAtomicBomb.TerminalApi" Version="1.5.1" PrivateAssets="all" />
+    <PackageReference Include="NotAtomicBomb.TerminalApi" Version="1.5.4" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- reference dependencies (local) -->
@@ -57,6 +60,13 @@
   <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')" />
   </Target>
+  
+  <!-- prevent referenced assemblies from being copied to the output folder -->
+  <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+    </ItemGroup>
+  </Target>
 
   <Target Name="PackThunderstore" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
     <MakeDir Directories="$(ProjectDir)assets/bundles" Condition="!Exists('$(ProjectDir)assets/bundles')" />
@@ -65,5 +75,22 @@
 
   <Target Name="ThunderstorePublish" Condition="$(IsThunderstorePackable) == 'true'">
     <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets/thunderstore.toml --file $(ProjectDir)build/*-$(Version).zip" />
+  </Target>
+
+  <!-- Move the plugin to the game's plugin directory and start the game to test it -->
+  <Target Condition="'$(CI)' != 'true' And $(StartGame)" Name="StartGame" AfterTargets="PostBuildEvent">
+    <!-- Create a temporary copy of the plugin in the target directory -->
+    <!-- This is a workaround because if we copy it directly to the game's plugin directory, an error is thrown because the game is using the plugin -->
+    <Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFiles="$(TargetDir)$(TargetFileName).tmp" />
+    <!-- Move the plugin temporary copy to the game's plugin directory -->
+    <!-- The move command will overwrite the plugin if it already exists and no error will be thrown -->
+    <!-- We can't move the original plugin because it is used by reference for Test project -->
+    <Move SourceFiles="$(TargetDir)$(TargetFileName).tmp" DestinationFiles="$(PluginGameDir)$(TargetFileName)" />
+    <!-- Kill every instance of the game, ignore errors if none are running -->
+    <!--<Exec Command="taskkill /F /IM &quot;$(GameExe)&quot; /T || exit 0" />-->
+    <!-- Start new instances of the game as many times as specified in NumberOfClients -->
+    <!-- The ping command is used to apply a delay between each instance, otherwise only one BepInEx debug terminal would be opened -->
+    <!-- Use ping command is a workaround because Windows doesn't have a sleep command -->
+    <Exec Command="for /L %%i in (1,1,$(NumberOfClients)) do (start &quot;&quot; &quot;$(GameExePath)&quot; &amp; if %%i lss $(NumberOfClients) (ping 127.0.0.1 -n $(PingDelay) &gt; nul))" />
   </Target>
 </Project>

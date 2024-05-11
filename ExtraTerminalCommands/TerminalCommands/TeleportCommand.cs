@@ -4,6 +4,7 @@ using static TerminalApi.TerminalApi;
 using UnityEngine;
 using System.Reflection;
 using ExtraTerminalCommands.Networking;
+using GameNetcodeStuff;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -30,7 +31,7 @@ namespace ExtraTerminalCommands.TerminalCommands
         }
 
 
-        private static string OnTeleportCommand()
+        public static string OnTeleportCommand()
         {
             if (ETCNetworkHandler.Instance.tpCmdDisabled)
             {
@@ -64,7 +65,41 @@ namespace ExtraTerminalCommands.TerminalCommands
             }
             else
             {
-                teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
+                string userInput = GetTerminalInput();
+                ExtraTerminalCommandsBase.mls.LogInfo($"TP command called with '{userInput}'");
+                string[] userInputParts = userInput.Split(' ');
+                Terminal terminal = GameObject.FindObjectOfType<Terminal>();
+                if (userInputParts.Length > 1)
+                {
+                    int playerNum = terminal.CheckForPlayerNameCommand("switch", userInputParts[1]);
+                    PlayerControllerB currentPlayer = StartOfRound.Instance.mapScreen.targetedPlayer;
+                    int curIndex = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.name == currentPlayer.name);
+                    if (playerNum == -1)
+                    {
+                        ExtraTerminalCommandsBase.mls.LogInfo($"{userInputParts[1]} was not a valid player! ");
+
+                    }
+                    else
+                    {
+                        StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
+
+                        teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
+                        if (playerNum != curIndex)
+                        {
+                            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
+                        }
+                        else if (curIndex == -1)
+                        {
+                            ExtraTerminalCommandsBase.mls.LogInfo($"the current player {currentPlayer.name} was not in the radar targets!");
+                        }
+
+                    }
+                }
+                else
+                {
+                    teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
+                }
+
                 return "Teleporting player to ship.\n";
             }
         }

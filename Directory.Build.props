@@ -38,5 +38,6 @@
   </PropertyGroup>
 
   <!-- Import local user-specific props -->
-  <Import Project="$(SolutionDir)ExtraTerminalCommands.props.user" Condition="$(CI) != 'true'"/>
+  <!--<Import Project="$(SolutionDir)ExtraTerminalCommands.props.user" Condition="$(CI) != 'true'"/>-->
+  <Import Project=".\Common.props"/>
 </Project>

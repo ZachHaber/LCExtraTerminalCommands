@@ -67,11 +67,13 @@ namespace ExtraTerminalCommands.Patches
                 ETCNetworkHandler.Instance.syncVariablesServerRpc();
             }
             addSwitchCmd();
+            addTeleportCmd();
         }
         [HarmonyPostfix, HarmonyPatch("Start")]
         public static void onStartup()
         {
             addSwitchCmd();
+            addTeleportCmd();
             addHornCmd();
         }
 
@@ -100,6 +102,21 @@ namespace ExtraTerminalCommands.Patches
                     TerminalApi.TerminalApi.AddCommand("sw " + playerNetwork.username, new CommandInfo {Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
                     TerminalApi.TerminalApi.AddCommand("s " + playerNetwork.username, new CommandInfo { Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
                     ExtraTerminalCommandsBase.mls.LogInfo("Added command: s/sw " + playerNetwork.username);
+                }
+            }
+        }
+
+        public static void addTeleportCmd()
+        {
+            if (!ETCNetworkHandler.Instance.switchCmdDisabled)
+            {
+                GameNetworkManager[] gameNetworkManagers = GameObject.FindObjectsOfType<GameNetworkManager>();
+
+                foreach (GameNetworkManager playerNetwork in gameNetworkManagers)
+                {
+                    TerminalApi.TerminalApi.AddCommand("tp " + playerNetwork.username, new CommandInfo { Category = "none", Description = TeleportCommand.description, DisplayTextSupplier = TeleportCommand.OnTeleportCommand});
+                    //TerminalApi.TerminalApi.AddCommand("tp " + playerNetwork., new CommandInfo { Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
+                    ExtraTerminalCommandsBase.mls.LogInfo("Added command: tp " + playerNetwork.username);
                 }
             }
         }
