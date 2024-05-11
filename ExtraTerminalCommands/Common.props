@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <!-- Name of the team on Thunderstore -->
     <!-- https://thunderstore.io/settings/teams -->
@@ -11,7 +11,6 @@
     <!-- PROGRA~2 is the short path for Program Files (x86) -->
     <GameDir>C:\PROGRA~2\Steam\steamapps\common\Lethal Company\</GameDir>
     <!-- Path of the game's plugin directory where the built plugin will be copied to -->
-    <PluginGameDir>$(GameDir)BepInEx\plugins\</PluginGameDir>
     <!-- Path of the game's managed directory where the game's dlls are located -->
     <AssemblyGameDir>$(GameDir)Lethal Company_Data\Managed\</AssemblyGameDir>
     <!-- Name of the game executable -->
@@ -22,6 +21,12 @@
     <!-- The value must be the same than the one in CI/CD -->
     <!-- https://www.nuget.org/packages/LethalCompany.GameLibs.Steam -->
     <GameVersion>50.0.1-ngd.0</GameVersion>
+    <ModProfileDir></ModProfileDir>
+    <BepInExDir>$([System.Environment]::GetFolderPath(SpecialFolder.ApplicationData))\r2modmanPlus-local\LethalCompany\profiles\Modding\BepInEx\</BepInExDir>
+    <PluginGameDir>$(BepInExDir)plugins\</PluginGameDir>
+    <!--<GameArgs>$(BepInExDir)core\BepInEx.Preloader.dll</GameArgs>-->
+    <GameArgs>--doorstop-enable true --doorstop-target "$(BepInExDir)core\BepInEx.Preloader.dll"</GameArgs>
+    <AssetFileName>extraterminalcommandsnetwork</AssetFileName>
   </PropertyGroup>
 
   <ItemGroup>

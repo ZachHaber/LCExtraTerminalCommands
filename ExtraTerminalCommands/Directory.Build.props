@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- Solution metadata -->
+  <PropertyGroup>
+    <Authors>Beauver</Authors>
+    <IsPackable>false</IsPackable>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Beauver/ExtraTerminalCommands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Beauver/ExtraTerminalCommands</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/"/>
+    <None Include="$(ProjectDir)../CHANGELOG.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+  <!-- Compiler / MSBuild settings -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- Enable debug symbols -->
+  <PropertyGroup>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <IncludeSymbols>true</IncludeSymbols>
+  </PropertyGroup>
+
+  <!-- Release optimisations -->
+  <PropertyGroup Condition="$(Configuration) == 'Release'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <!-- Import local user-specific props -->
+  <!--<Import Project="$(SolutionDir)ExtraTerminalCommands.props.user" Condition="$(CI) != 'true'"/>-->
+  <Import Project=".\Common.props"/>
+</Project>
