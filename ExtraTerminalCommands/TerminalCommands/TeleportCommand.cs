@@ -166,7 +166,12 @@ namespace ExtraTerminalCommands.TerminalCommands
                 }
 
                 teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
-                return "Teleporting player to ship.\n";
+                if (mapScreen.targetedPlayer == null)
+                {
+                    // This is likely not a player - should switch to a different user.
+                    mapScreen.SwitchRadarTargetForward(true);
+                }
+                return "Teleporting player to ship.\n\n";
             }
         }
     }
