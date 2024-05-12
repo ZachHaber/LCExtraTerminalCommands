@@ -101,7 +101,22 @@ namespace ExtraTerminalCommands.TerminalCommands
                 playerNum = terminal.CheckForPlayerNameCommand("switch", userInput);
 
             }
-            if (playerNum <0 || playerNum >= StartOfRound.Instance.mapScreen.radarTargets.Count)
+            ManualCameraRenderer mapScreen = StartOfRound.Instance.mapScreen;
+            if (playerNum < 0 || playerNum >= mapScreen.radarTargets.Count || mapScreen.radarTargets[playerNum] == null)
+            {
+                ExtraTerminalCommandsBase.mls.LogInfo($"'{userInput}' was not a valid player! ");
+                return false;
+            }
+
+            var controller = mapScreen.radarTargets[playerNum].transform.gameObject.GetComponent<PlayerControllerB>();
+            if (controller != null && !controller.isPlayerControlled && !controller.isPlayerDead && controller.redirectToEnemy == null)
+            {
+                ExtraTerminalCommandsBase.mls.LogInfo($"Switch by player number: {playerNum} is an invalid target");
+                // Invalid target!
+                return false;
+            }
+
+            if (playerNum < 0 || playerNum >= StartOfRound.Instance.mapScreen.radarTargets.Count)
             {
                 return false;
             }
