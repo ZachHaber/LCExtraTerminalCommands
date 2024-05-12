@@ -1,5 +1,7 @@
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TerminalApi.Classes;
 using static TerminalApi.TerminalApi;
@@ -8,14 +10,14 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class RadarBoosterCommands
     {
-        public static string pingDescription = "Pings the current radar booster";
-        public static string flashDescription = "Flashes the current radar booster";
+        public static string pingDescription = "Pings the current radar booster.";
+        public static string flashDescription = "Flashes the current radar booster.";
 
         public static void PingCommand()
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "None",
+                Category = "Extra",
                 Description = pingDescription,
                 DisplayTextSupplier = OnPingCommand
             };
@@ -26,7 +28,7 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "None",
+                Category = "Extra",
                 Description = flashDescription,
                 DisplayTextSupplier = OnFlashCommand
             };
@@ -37,29 +39,38 @@ namespace ExtraTerminalCommands.TerminalCommands
         private static string OnPingCommand()
         {
             var targetIndex = GetCurrentRadarBooster();
+            if (targetIndex <= 0) { return "Invalid target.\n\n"; }
+
             ExtraTerminalCommandsBase.mls.LogInfo($"Ping on {targetIndex}");
 
             if (targetIndex == -1) { return "Invalid target"; }
 
             StartOfRound.Instance.mapScreen.PingRadarBooster(targetIndex);
-
+            return "Pinged radar booster.\n";
             return "Pinging\n";
         }
         private static string OnFlashCommand()
         {
             var targetIndex = GetCurrentRadarBooster();
-            ExtraTerminalCommandsBase.mls.LogInfo($"Flash/Flash on {targetIndex}");
-            if (targetIndex == -1) { return "Invalid target"; }
+            if (targetIndex <= 0) { return "Invalid target.\n\n"; }
+            ExtraTerminalCommandsBase.mls.LogInfo($"Flash on {targetIndex}");
 
             StartOfRound.Instance.mapScreen.FlashRadarBooster(targetIndex);
-            return "Flashing\n";
+            return "Flashed radar booster.\n\n";
         }
 
         private static int GetCurrentRadarBooster()
         {
             int targetIndex = StartOfRound.Instance.mapScreen.targetTransformIndex;
-            if (targetIndex == 0)
+            var targetedPlayer = StartOfRound.Instance.mapScreen.targetedPlayer;
+            if (targetedPlayer!=null)
             {
+                // this is likely a player - don't try and ping them
+                ExtraTerminalCommandsBase.mls.LogInfo($"Ping/Flash called on Player {targetedPlayer.playerUsername} at targetTransformIndex {targetIndex}");
+                return -1;
+            }
+            if(targetIndex < 0) {
+                ExtraTerminalCommandsBase.mls.LogInfo($"Ping/Flash called with invalid targetTransformIndex: {targetIndex}");
                 return -1;
             }
             return targetIndex;

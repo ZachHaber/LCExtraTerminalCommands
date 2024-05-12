@@ -15,23 +15,21 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class TeleportCommand
     {
-        public static string description = "Teleports the current selected player on the camera.";
+        public static string description = "Teleports the player name (or index) specified. Current selected if not specified.";
 
         public static void teleportCommand()
         {
-            CommandInfo cmdInfo = new CommandInfo
-            {
-                Category = "Extra",
-                Description = description,
-                DisplayTextSupplier = () => OnTeleportCommand(),
-            };
-            AddCommand("teleport", cmdInfo);
             string shortCommand = "tp";
             Commands.Add(shortCommand, (string input) =>
             {
                 input = input.Substring(shortCommand.Length).Trim();
                 return OnTeleportCommand(input);
-            }, new CommandInfo() { Category = "Extra", Description = "Teleports the player name (or index) specified. Current selected if not specified." });
+            }, new CommandInfo()
+            {
+                Title = $"{shortCommand.ToUpper()} [Player Name]?",
+                Category = "Extra",
+                Description = description
+            });
         }
 
         public static async void TeleportOnMapSync(ShipTeleporter teleporter, string toTeleportUsername, int newIndex, int originalIndex)
@@ -71,12 +69,12 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             if (ETCNetworkHandler.Instance.tpCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
 
             if (GameObject.Find("Teleporter(Clone)") == null)
             {
-                return "You do not own the teleporter.\n";
+                return "You do not own the teleporter.\n\n";
             }
 
             ShipTeleporter teleporter = GameObject.Find("Teleporter(Clone)").GetComponent<ShipTeleporter>();
@@ -86,18 +84,18 @@ namespace ExtraTerminalCommands.TerminalCommands
 
             if (cooldownField == null)
             {
-                return "Your teleporter does not have a cooldown.\n";
+                return "Your teleporter does not have a cooldown.\n\n";
             }
 
             if (teleporter == null)
             {
-                return "You do not own the teleporter. If you do, try restarting the game.\n";
+                return "You do not own the teleporter. If you do, try restarting the game.\n\n";
             }
 
             if (!teleporter.buttonTrigger.interactable)
             {
                 //bug, shows 10s default cooldown
-                return "Teleporter is on cooldown, " + Math.Round(cooldownTimef, 1) + " seconds remain.\n";
+                return "Teleporter is on cooldown, " + Math.Round(cooldownTimef, 1) + " seconds remain.\n\n";
             }
             else
             {
@@ -163,7 +161,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                     }
                     else
                     {
-                        ExtraTerminalCommandsBase.mls.LogInfo("Alread on the correct player! No switching needed!");
+                        ExtraTerminalCommandsBase.mls.LogInfo("Already on the correct player! No switching needed!");
                     }
                 }
 

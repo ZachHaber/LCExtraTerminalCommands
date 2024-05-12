@@ -15,49 +15,47 @@ namespace ExtraTerminalCommands.TerminalCommands
     internal class SwitchCommand
     {
         public static string description = "Switches the camera view to the next or specified user";
+        public static string basicDescription = "Switches the camera view to the next user. Does not allow specifying the user";
 
         public static void switchCommand()
         {
 
-            string shortCommand2 = "sw";
-            Commands.Add(shortCommand2, (string input) =>
-            {
-                input = input.Substring(shortCommand2.Length).Trim();
-                return onSwitchCommand(input);
-            }, new CommandInfo() { Category = "Extra", Description = description });
-
-            string shortCommand = "s";
+            string shortCommand = "sw";
             Commands.Add(shortCommand, (string input) =>
             {
                 input = input.Substring(shortCommand.Length).Trim();
                 return onSwitchCommand(input);
-            }, new CommandInfo() { Category = "Extra", Description = description });
-
-            string shortCommand3 = "y";
-            Commands.Add(shortCommand3, (string input) =>
+            }, new CommandInfo()
             {
-                input = input.Substring(shortCommand3.Length).Trim();
-                return onSwitchCommand(input);
-            }, new CommandInfo() { Category = "Extra", Description = description });
+                Title = $"{shortCommand.ToUpper()} [Player Name]?",
+                Category = "Extra",
+                Description = description
+            });
+
+            AddCommand("s", new CommandInfo
+            {
+                Category = "Extra",
+                Description = basicDescription,
+                DisplayTextSupplier = () => onSwitchCommand("")
+            });
+            // For some reason the Commands.Add isn't working with text of a single letter long.
+            //string shortCommand = "s";
+            //Commands.Add(shortCommand, (string input) =>
+            //{
+            //    input = input.Substring(shortCommand.Length).Trim();
+            //    return onSwitchCommand(input);
+            //}, new CommandInfo() { Category = "Extra", Description = description });
+
+
         }
         public static string returnText()
         {
             if (ETCNetworkHandler.Instance.switchCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
-            return "Switched radar scan view\n";
+            return "Switched radar scan view\n\n";
         }
-
-        //private static void onParsedPlayerSentance(object sender, TerminalParseSentenceEventArgs e)
-        //{
-
-        //    if (ETCNetworkHandler.Instance.switchCmdDisabled)
-        //    {
-        //        return;
-        //    }
-        //    ParsedPlayerSentanceHandler.onParsedPlayerSentance(sender, e);
-        //}
 
         private static string onSwitchCommand(string input)
         {
@@ -78,7 +76,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 }
                 else
                 {
-                    return $"Player '{input}' not found!\n";
+                    return $"Player '{input}' not found!\n\n";
                 };
             }
 
