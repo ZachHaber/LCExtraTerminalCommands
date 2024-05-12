@@ -85,6 +85,8 @@ namespace ExtraTerminalCommands
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
             if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
             if (!configHornCommand.Value) { HornCommand.hornCommand(); }
+            RadarBoosterCommands.FlashCommand();
+            RadarBoosterCommands.PingCommand();
             daysJoined = 0;
         }
 
