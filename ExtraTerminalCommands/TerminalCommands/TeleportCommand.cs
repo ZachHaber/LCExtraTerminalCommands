@@ -36,29 +36,35 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             //StartOfRound.Instance.mapScreen.index
             int numDelays = 0;
-            while ((StartOfRound.Instance.mapScreen.syncingTargetPlayer || StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername != toTeleportUsername) && ++numDelays <= 10)
+            // This sadly, does not work well... The best I've come up with so far is to just wait > 100ms.
+            while (StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername != toTeleportUsername && ++numDelays <= 10)
             {
-                if(!StartOfRound.Instance.mapScreen.syncingTargetPlayer && (StartOfRound.Instance.mapScreen.targetTransformIndex!=0 && StartOfRound.Instance.mapScreen.targetTransformIndex==newIndex))
+                if (!StartOfRound.Instance.mapScreen.syncingTargetPlayer && (StartOfRound.Instance.mapScreen.targetTransformIndex != 0 && StartOfRound.Instance.mapScreen.targetTransformIndex == newIndex))
                 {
                     // anther condition - Radar boosters don't have a `targetedPlayer` set, but will have `targetTransformIndex` set to their index instead...
                     break;
                 }
                 ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for camera update to finish... Currently Targeting {StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername} != {toTeleportUsername}");
-                await Task.Delay(100);
+                await Task.Delay(20);
             }
-            //await Task.Delay(20);
+
             if (numDelays > 10)
             {
+                // It's also likely waited long enough.
                 ExtraTerminalCommandsBase.mls.LogError("Syncing target players never finished!");
             }
             else
             {
+                await Task.Delay(100);
                 ExtraTerminalCommandsBase.mls.LogInfo($"Camera update finished!");
             }
+
             teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
 
 
 
+            // Note: if the number of entries changes between the teleport and this,
+            // it could potentially be problematic? (i.e.) radar-booster was activated or deactivated.
             if (originalIndex != -1)
             {
                 StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(originalIndex);
@@ -107,14 +113,14 @@ namespace ExtraTerminalCommands.TerminalCommands
                 {
                     int playerNum;
                     if (int.TryParse(userInput.Split(" ")[0], out playerNum))
-                            {
+                    {
                         // Convert 1 indexed number to 0 indexed number!
                         playerNum -= 1;
-                            }
-                        else
-                        {
+                    }
+                    else
+                    {
                         playerNum = terminal.CheckForPlayerNameCommand("switch", userInput);
-                        }
+                    }
 
 
                     if (playerNum < 0 || playerNum >= mapScreen.radarTargets.Count || mapScreen.radarTargets[playerNum] == null)
