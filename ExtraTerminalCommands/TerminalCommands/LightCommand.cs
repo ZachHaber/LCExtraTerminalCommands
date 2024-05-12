@@ -29,8 +29,11 @@ namespace ExtraTerminalCommands.TerminalCommands
             {
                 return "This command is disabled by the host.\n\n";
             }
+            var isOn = StartOfRound.Instance.shipRoomLights.areLightsOn;
+            string result = isOn ? "off" : "on";
             GameObject.Find("LightSwitch").GetComponent<InteractTrigger>().onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
-            return "Toggled the lights.\n\n";
+            
+            return $"Turned the lights {result}.\n\n";
         }
     }
 }
