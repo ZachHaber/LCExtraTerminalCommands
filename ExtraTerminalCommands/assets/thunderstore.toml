@@ -2,14 +2,14 @@
 schemaVersion = "0.0.1"
 
 [package]
-namespace = "Beauver"
+namespace = "ZachHaber"
 name = "ExtraTerminalCommands"
 description = "Adds a few of terminal commands, each can be disabled in the config."
-websiteUrl = "https://github.com/Beauver/ExtraTerminalCommands"
+websiteUrl = "https://github.com/ZachHaber/LCExtraTerminalCommands"
 containsNsfwContent = false
 [package.dependencies]
 BepInEx-BepInExPack = "5.4.2100"
-NotAtomicBomb-TerminalApi = "1.5.0"
+NotAtomicBomb-TerminalApi = "1.5.4"
 
 [build]
 icon = "icons/extra-terminal-commands.png"
@@ -17,7 +17,7 @@ readme = "../../README.md"
 outdir = "../dist"
 
 [[build.copy]]
-source = "../bin/Release/Beauver.ExtraTerminalCommands.dll"
+source = "../bin/Release/ZachHaber.ExtraTerminalCommands.dll"
 target = "/BepInEx/plugins/ExtraTerminalCommands/"
 
 [[build.copy]]

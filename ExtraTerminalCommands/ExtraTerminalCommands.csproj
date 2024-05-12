@@ -6,12 +6,12 @@
     <TargetFramework>netstandard2.1</TargetFramework>
 
     <RootNamespace>ExtraTerminalCommands</RootNamespace>
-    <AssemblyName>Beauver.ExtraTerminalCommands</AssemblyName>
+    <AssemblyName>ZachHaber.ExtraTerminalCommands</AssemblyName>
     <Product>Extra Terminal Commands</Product>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
     <Description></Description>
 
-    <ThunderstoreId>Beauver-ExtraTerminalCommands</ThunderstoreId>
+    <ThunderstoreId>ZachHaber-ExtraTerminalCommands</ThunderstoreId>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 

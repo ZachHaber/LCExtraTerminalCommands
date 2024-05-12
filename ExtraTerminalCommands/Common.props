@@ -2,7 +2,7 @@
   <PropertyGroup>
     <!-- Name of the team on Thunderstore -->
     <!-- https://thunderstore.io/settings/teams -->
-    <RootNamespace>YourThunderstoreTeam</RootNamespace>
+    <RootNamespace>ZachHaber</RootNamespace>
     <!-- The plugin will be built in the bin directory -->
     <OutputPath>bin</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
