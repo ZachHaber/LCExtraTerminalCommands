@@ -17,7 +17,7 @@ namespace ExtraTerminalCommands.Networking
 
             if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
             {
-                if(Instance != null)
+                if (Instance != null)
                 {
                     Instance.gameObject.GetComponent<NetworkObject>().Despawn();
                     ExtraTerminalCommandsBase.mls.LogWarning("Despawned network object. Don't fear, if you just started a level, this may happen.");
@@ -75,7 +75,7 @@ namespace ExtraTerminalCommands.Networking
                 lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, switchCmdDisabled,
                 hornCmdDisabled,
 
-                allowWeatherFilter, allowHidePlanet,randomMoonPrice, allowLaunchOnMoon, hornSeconds, hornMaxSeconds);
+                allowWeatherFilter, allowHidePlanet, randomMoonPrice, allowLaunchOnMoon, hornSeconds, hornMaxSeconds);
         }
 
         [ClientRpc]
@@ -159,7 +159,7 @@ namespace ExtraTerminalCommands.Networking
 
 
         //RandomMoonCommand
-        [ServerRpc(RequireOwnership =false)]
+        [ServerRpc(RequireOwnership = false)]
         public void unknownPlanetServerRpc()
         {
             unknownPlanetClientRpc();

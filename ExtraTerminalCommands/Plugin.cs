@@ -1,12 +1,15 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
+using ExtraTerminalCommands.Handlers;
 using ExtraTerminalCommands.Networking;
 using ExtraTerminalCommands.Patches;
 using ExtraTerminalCommands.TerminalCommands;
 using HarmonyLib;
+using System;
 using System.IO;
 using System.Reflection;
+using TerminalApi.Classes;
 using UnityEngine;
 
 namespace ExtraTerminalCommands
