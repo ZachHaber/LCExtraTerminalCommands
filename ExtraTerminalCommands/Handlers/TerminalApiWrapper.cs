@@ -58,6 +58,39 @@ namespace ExtraTerminalCommands.Handlers
             }
             return displayText.Trim();
         }
+
+        /// <summary>
+        /// 
+        /// Add aliases to a basic command via a CommandInfo class and a string array of aliases
+        /// Creates a new command title to add in the alias strings
+        /// </summary>
+        public static void AddCommandWithAliases(string command, CommandInfo commandInfo, List<string> aliases = null)
+        {
+            if (aliases != null && aliases.Count > 0)
+            {
+                var aliasPlural = aliases.Count > 1 ? "es" : "";
+                var aliasText = $" (alias{aliasPlural}: {string.Join(", ", aliases.Select(alias => $"'{alias}'"))})";
+                AddCommand(command, new CommandInfo
+                {
+                    Title = (commandInfo.Title ?? command.ToUpper()) + aliasText,
+                    Category = commandInfo.Category,
+                    Description = commandInfo.Description,
+                    DisplayTextSupplier = commandInfo.DisplayTextSupplier
+                });
+                foreach (string alias in aliases)
+                {
+                    var aliasedCommandInfo = new CommandInfo { Description = commandInfo.Description, DisplayTextSupplier = commandInfo.DisplayTextSupplier };
+                    ExtraTerminalCommandsBase.mls.LogInfo($"Command {command} - Adding alias {alias}.");
+                    AddCommand(alias, aliasedCommandInfo);
+                }
+            }
+            else
+            {
+                AddCommand(command, commandInfo);
+
+            }
+        }
+
     }
 
 }
