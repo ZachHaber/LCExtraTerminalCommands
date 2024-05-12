@@ -8,7 +8,8 @@
     <RootNamespace>ExtraTerminalCommands</RootNamespace>
     <AssemblyName>ZachHaber.ExtraTerminalCommands</AssemblyName>
     <Product>Extra Terminal Commands</Product>
-    <Version>1.6.0</Version>
+    <OutputVersion>1.6.0</OutputVersion>
+    <Version>$(OutputVersion)</Version>
     <Description></Description>
 
     <ThunderstoreId>ZachHaber-ExtraTerminalCommands</ThunderstoreId>
@@ -54,13 +55,13 @@
 
   <!-- reference dependencies (CI) -->
   <ItemGroup Condition="$(CI) == 'true'">
-    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" PrivateAssets="all" />
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="50.0.1-ngd.0" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet netcode-patch &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')" />
   </Target>
-  
+
   <!-- prevent referenced assemblies from being copied to the output folder -->
   <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
     <ItemGroup>
@@ -70,15 +71,15 @@
 
   <Target Name="PackThunderstore" DependsOnTargets="NetcodePatch" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
     <MakeDir Directories="$(ProjectDir)assets/bundles" Condition="!Exists('$(ProjectDir)assets/bundles')" />
-    <Exec Command="dotnet tcli build --config-path $(ProjectDir)assets/thunderstore.toml --package-version $(Version)" />
+    <Exec Command="dotnet tcli build --config-path $(ProjectDir)assets/thunderstore.toml --package-version $(OutputVersion)" />
   </Target>
 
-  <Target Name="ThunderstorePublish" Condition="$(IsThunderstorePackable) == 'true'">
-    <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets/thunderstore.toml --file $(ProjectDir)build/*-$(Version).zip" />
+  <Target Name="ThunderstorePublish" AfterTargets="PackThunderstore">
+    <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets\thunderstore.toml --file $(ProjectDir)dist\$(ThunderstoreId)-$(OutputVersion).zip" />
   </Target>
 
   <!-- Move the plugin to the game's plugin directory and start the game to test it -->
-  <Target Condition="'$(CI)' != 'true' And $(StartGame)" Name="StartGame" AfterTargets="PostBuildEvent">
+  <Target Condition="'$(CI)' != 'true' And $(StartGame) AND $(Configuration)!= 'Release'" Name="StartGame" AfterTargets="PostBuildEvent">
     <!-- Create a temporary copy of the plugin in the target directory -->
     <!-- This is a workaround because if we copy it directly to the game's plugin directory, an error is thrown because the game is using the plugin -->
     <Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFiles="$(TargetDir)$(TargetFileName).tmp" />

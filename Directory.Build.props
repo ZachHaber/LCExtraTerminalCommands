@@ -2,11 +2,11 @@
 <Project>
   <!-- Solution metadata -->
   <PropertyGroup>
-    <Authors>Beauver</Authors>
+    <Authors>ZachHaber</Authors>
     <IsPackable>false</IsPackable>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Beauver/ExtraTerminalCommands</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Beauver/ExtraTerminalCommands</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ZachHaber/LCExtraTerminalCommands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ZachHaber/LCExtraTerminalCommands</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
