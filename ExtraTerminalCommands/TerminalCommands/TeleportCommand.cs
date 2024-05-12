@@ -37,14 +37,16 @@ namespace ExtraTerminalCommands.TerminalCommands
             //StartOfRound.Instance.mapScreen.index
             int numDelays = 0;
             // This sadly, does not work well... The best I've come up with so far is to just wait > 100ms.
-            while (StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername != toTeleportUsername && ++numDelays <= 10)
+            //while (StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername != toTeleportUsername && ++numDelays <= 10)
+            while (StartOfRound.Instance.mapScreen.targetTransformIndex != newIndex && ++numDelays <= 10)
             {
-                if (!StartOfRound.Instance.mapScreen.syncingTargetPlayer && (StartOfRound.Instance.mapScreen.targetTransformIndex != 0 && StartOfRound.Instance.mapScreen.targetTransformIndex == newIndex))
-                {
-                    // anther condition - Radar boosters don't have a `targetedPlayer` set, but will have `targetTransformIndex` set to their index instead...
-                    break;
-                }
-                ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for camera update to finish... Currently Targeting {StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername} != {toTeleportUsername}");
+                //if (!StartOfRound.Instance.mapScreen.syncingTargetPlayer && (StartOfRound.Instance.mapScreen.targetTransformIndex != 0 && StartOfRound.Instance.mapScreen.targetTransformIndex == newIndex))
+                //{
+                //    // anther condition - Radar boosters don't have a `targetedPlayer` set, but will have `targetTransformIndex` set to their index instead...
+                //    break;
+                //}
+                //ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for camera update to finish... Currently Targeting {StartOfRound.Instance.mapScreen.targetedPlayer?.playerUsername} != {toTeleportUsername}");
+                ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for camera update to finish... Currently Targeting {StartOfRound.Instance.mapScreen.radarTargets.ElementAt(StartOfRound.Instance.mapScreen.targetTransformIndex)?.name} != {toTeleportUsername}");
                 await Task.Delay(20);
             }
 
@@ -67,9 +69,42 @@ namespace ExtraTerminalCommands.TerminalCommands
             // it could potentially be problematic? (i.e.) radar-booster was activated or deactivated.
             if (originalIndex != -1)
             {
+                await Task.Delay(100);
                 StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(originalIndex);
             }
         }
+
+        //public static IEnumerator TeleportOnMapCoroutine(ShipTeleporter teleporter, string toTeleportUsername, int newIndex, int originalIndex)
+        //{
+        //    //if (StartOfRound.Instance.mapScreen.updateMapCameraCoroutine != null)
+        //    //{
+        //    //    ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for updateMapCameraCoroutine to finish!");
+        //    //    yield return StartOfRound.Instance.mapScreen.updateMapCameraCoroutine;
+        //    //    if (StartOfRound.Instance.mapScreen.updateMapCameraCoroutine != null)
+        //    //    {
+        //    //        ExtraTerminalCommandsBase.mls.LogInfo($"Waiting for updateMapCameraCoroutine to finish again!!");
+        //    //        yield return StartOfRound.Instance.mapScreen.updateMapCameraCoroutine;
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    ExtraTerminalCommandsBase.mls.LogInfo($"updateMapCameraCoroutine is null. Waiting for 100ms");
+        //    //}
+
+        //    yield return new WaitForSeconds(0.12f);
+        //    ExtraTerminalCommandsBase.mls.LogInfo($"Camera update finished!");
+
+        //    teleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
+
+        //    yield return teleporter.beamUpPlayerCoroutine;
+
+        //    // Note: if the number of entries changes between the teleport and this,
+        //    // it could potentially be problematic? (i.e.) radar-booster was activated or deactivated.
+        //    if (originalIndex != -1)
+        //    {
+        //        StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(originalIndex);
+        //    }
+        //}
 
         public static string OnTeleportCommand(string userInput = "")
         {
@@ -141,24 +176,27 @@ namespace ExtraTerminalCommands.TerminalCommands
                     //ExtraTerminalCommandsBase.mls.LogInfo($"Switching to {tpTarget.name} at index {playerNum}; Current transformIndex = {mapScreen.targetTransformIndex}");
 
 
-                    PlayerControllerB currentPlayer = mapScreen.targetedPlayer;
-                    int curIndex = mapScreen.targetTransformIndex > 0 ? mapScreen.targetTransformIndex : currentPlayer == null ? -1 : mapScreen.radarTargets.FindIndex(target => target.name == currentPlayer.playerUsername);
-                    if (curIndex == -1)
-                    {
-                        ExtraTerminalCommandsBase.mls.LogInfo($"the current player {currentPlayer?.playerUsername} was not in the radar targets!");
-                    }
-                    if (curIndex != mapScreen.targetTransformIndex)
-                    {
-                        ExtraTerminalCommandsBase.mls.LogError($"The found player index ({curIndex}) doesn't match the targetTransformIndex ({mapScreen.targetTransformIndex})");
-                    }
+                    int curIndex = mapScreen.targetTransformIndex;
+                    //PlayerControllerB currentPlayer = mapScreen.targetedPlayer;
+                    //int curIndex = mapScreen.targetTransformIndex > 0 ? mapScreen.targetTransformIndex : currentPlayer == null ? -1 : mapScreen.radarTargets.FindIndex(target => target.name == currentPlayer.playerUsername);
+                    //if (curIndex == -1)
+                    //{
+                    //    ExtraTerminalCommandsBase.mls.LogInfo($"the current player {currentPlayer?.playerUsername} was not in the radar targets!");
+                    //}
+                    //if (curIndex != mapScreen.targetTransformIndex)
+                    //{
+                    //    ExtraTerminalCommandsBase.mls.LogError($"The found player index ({curIndex}) doesn't match the targetTransformIndex ({mapScreen.targetTransformIndex})");
+                    //}
 
 
 
                     if (curIndex != playerNum)
                     {
-                        ExtraTerminalCommandsBase.mls.LogInfo($"'{userInput}' gave playerNum {playerNum}. Radar is showing player '{currentPlayer?.playerUsername}' - index {curIndex}. Transform index is {mapScreen.targetTransformIndex}. Switching to {tpTarget.name} at index {playerNum}");
+                        ExtraTerminalCommandsBase.mls.LogInfo($"'{userInput}' gave playerNum {playerNum}. Radar is showing player '{mapScreen.radarTargets.ElementAt(curIndex)?.name}' - index {curIndex}. Transform index is {mapScreen.targetTransformIndex}. Switching to {tpTarget.name} at index {playerNum}");
+                        //ExtraTerminalCommandsBase.mls.LogInfo($"'{userInput}' gave playerNum {playerNum}. Radar is showing player '{currentPlayer?.playerUsername}' - index {curIndex}. Transform index is {mapScreen.targetTransformIndex}. Switching to {tpTarget.name} at index {playerNum}");
                         // This requires switching players!
                         mapScreen.SwitchRadarTargetAndSync(playerNum);
+                        //mapScreen.StartCoroutine(TeleportOnMapCoroutine(teleporter, tpTarget.name, playerNum, curIndex));
                         TeleportOnMapSync(teleporter, tpTarget.name, playerNum, curIndex);
                         return $"Teleporting player {tpTarget.name} {curIndex} to ship.\n\n";
                     }
