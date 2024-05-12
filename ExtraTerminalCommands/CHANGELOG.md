@@ -1,3 +1,24 @@
+# V1.6.0
+
+## Additions:
+- TP [player name] Command
+- Flash Command
+- Ping Command
+
+## Removals:
+- A ton of aliases
+  - Commands, Extra Commands, Extra-Commands, EC
+  - R, R W
+  - Go
+  - Teleport
+  - ITeleport
+  - InverseTeleport
+  - Inverse Teleport
+  - Inverse-Teleport
+  - Light
+  - Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
+  - CL
+
 # V1.5.0
 
 ## Additions:

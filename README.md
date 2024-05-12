@@ -1,30 +1,43 @@
-# ExtraTerminalCommands will no longer be updated as of now. I appreciated everyone's feedback but as I currently have other important things to do and have outgrown the lethal company "phase" I have decided no longer to update the mod.
 
-This mod adds all kinds of commands to the terminal, each of these commands can be disabled in the config file. 
+A continuation of https://github.com/Beauver/ExtraTerminalCommands.
 
-If you encounter any bugs you can report them on the project github: https://github.com/Beauver/ExtraTerminalCommands
+This mod adds all kinds of commands to the terminal, each of these commands can be disabled in the config file.
+- The new commands Ping/Flash and TP [Player] will be added to config/syncing in the next version.
+
+If you encounter any bugs you can report them on the project github: 
 
 # Commands
 ## Extra Commands
 Shows the list of all commands that are enabled.
 
-Aliases: Extra, Commands, Extra Commands, Extra-Commands, EC
+Aliases: Extra
 ## Random planet
 This will send you to a random planet, you can specify these filters (Weather), more might be added in the future.
 
-Aliases: Random/R, Random Weather/R W
+Aliases: Random, Random Weather
 ## Launch Ship
 Pulls the launch lever to land or launch the ship.
 
-Aliases: Launch, Go, Start
+Aliases: Launch, Start
 ## Teleporter
-Activates the teleporter, respects teleporting cooldown.
+Activates the teleporter, respects teleporting cooldown. Include a player name to teleport a particular player.
 
-Aliases: Teleport, TP
+Note: due to how the game works, TP [Player] switches the radar target to that player, then teleports them, then switches back.
+This involves specific timeout delays that may or may not be enough depending on connection times.
+
+Aliases: TP, TP [player]
 ## Inverse Teleporter
 Activates the inverse teleporter, respects teleporting cooldown.
 
-Aliases: ITeleport, ITP, InverseTeleport, Inverse Teleport, Inverse-Teleport
+Aliases: ITP
+## Flash Radar Booster
+Flashes whatever radar booster is currently active on the radar, so you don't have to specify a name. 
+
+Aliases: Flash
+## Ping Radar Booster
+Pings whatever radar booster is currently active on the radar, so you don't have to specify a name. 
+
+Aliases: Ping
 ## Doors
 Opens or closes the ship doors depending on its current state.
 
@@ -32,15 +45,16 @@ Aliases: Doors, Door, D
 ## Lights
 Turns the lights on or off depending on its current state.
 
-Aliases: Lights, Light, L
+Aliases: Lights
 ## Horn [Time (in seconds)]
 Sounds the horn for the specified amount of time, if ran without a time it will default to config default.
+This can be a fractional time (e.g. 1.5).
 
-Aliases: Horn, Horn [Time]
+Aliases: Horn, Horn [seconds]
 ## Intro Song
 Plays the intro song (great great asset to the company 💃), it plays for everyone.
 
-Aliases: Intro, Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
+Aliases: Intro
 ## Time
 Shows the current time it is on the moon.
 
@@ -48,23 +62,45 @@ Aliases: Time
 ## Switch
 Switches the monitor view to the next person
 
-Aliases: S, SW, S [player], SW [player]
+Due to weird behavior, `S` doesn't allow for switching to specific players with how I have it set up.
+
+Aliases: S, SW, SW [player]
 ## Clear
 Clears the terminal commandline.
 
-Aliases: Clear, CL, CLS
-
+Aliases: Clear, CLS
 
 # Planned (Maybe):
 - Randomize moon command (with money filter)
 
-
 # Credits
+- Beauver - Who created the original version
 - Lordfirespeed (ty for the .csproj and stuff 😭😭😭)
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
-## 1.5.0
+# V1.6.0
+
+## Additions:
+- TP [player name] Command
+- Flash Command
+- Ping Command
+
+## Removals:
+- A ton of aliases
+  - Commands, Extra Commands, Extra-Commands, EC
+  - R, R W
+  - Go
+  - Teleport
+  - ITeleport
+  - InverseTeleport
+  - Inverse Teleport
+  - Inverse-Teleport
+  - Light
+  - Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
+  - CL
+
+## V1.5.0
 
 ### Additions:
 - Horn command (works with custom input)
