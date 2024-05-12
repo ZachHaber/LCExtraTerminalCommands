@@ -60,7 +60,7 @@ namespace ExtraTerminalCommands
             {
                 Instance = this;
             }
-            mls = BepInEx.Logging.Logger.CreateLogSource(modGUID);
+            mls = BepInEx.Logging.Logger.CreateLogSource(modName);
 
 
             LoadConfig();
