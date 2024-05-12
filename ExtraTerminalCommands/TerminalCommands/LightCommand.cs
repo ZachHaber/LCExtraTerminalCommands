@@ -1,3 +1,4 @@
+using ExtraTerminalCommands.Handlers;
 using ExtraTerminalCommands.Networking;
 using TerminalApi.Classes;
 using UnityEngine;
@@ -8,19 +9,17 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class LightsCommand
     {
-        public static string description = "Toggles the lightswitch.";
+        public static string description = "Switches the ship lights on and off.";
         public static void lightsCommand()
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "None",
+                Category = "Extra",
                 Description = description,
                 DisplayTextSupplier = onLightCommand
             };
 
-            AddCommand("lights", cmdInfo);
-            AddCommand("light", new CommandInfo{ Category = "None", Description = description, DisplayTextSupplier = onLightCommand });
-            //AddCommand("l", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = onLightCommand });
+            Commands.AddCommandWithAliases("lights", cmdInfo, ["light"]);
 
         }
 
@@ -28,11 +27,10 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             if (ETCNetworkHandler.Instance.lightCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
-
             GameObject.Find("LightSwitch").GetComponent<InteractTrigger>().onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
-            return "Toggeled the lights.\n";
+            return "Toggled the lights.\n\n";
         }
     }
 }

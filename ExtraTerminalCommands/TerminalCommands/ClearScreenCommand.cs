@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TerminalApi.Classes;
 using static TerminalApi.TerminalApi;
+using ExtraTerminalCommands.Handlers;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -14,20 +15,19 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "none",
+                Category = "Extra",
                 Description = description,
                 DisplayTextSupplier = onClear
             };
-            AddCommand("clear", cmdInfo);
-            //AddCommand("cl", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onClear });
-            AddCommand("cls", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onClear });
+            
+            Commands.AddCommandWithAliases("clear", cmdInfo, ["cls"]);
         }
 
         private static string onClear()
         {
             if(ETCNetworkHandler.Instance.clearCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
             return "";
         }

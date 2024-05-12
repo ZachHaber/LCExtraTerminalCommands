@@ -16,45 +16,38 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class RandomMoonCommand
     {
-        public static string description = "Sends you to a random moon. Use [Weather/Money/Both] to blacklist moons that contain this.";
+        public static string description = "Sends you to a random moon. Use [Weather] to blacklist moons that contain this.";
         public static void randomMoonCommand()
         {
+            var command = "random";
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "none",
+                Title = $"{command.ToUpper()} [WEATHER]?",
+                Category = "Extra",
                 Description = description,
                 DisplayTextSupplier = onRandomMoonNoFilter
             };
 
             if (ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value)
             {
-                //AddCommand("r w", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
-                //AddCommand("r weather", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
-                AddCommand("random weather", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
+                AddCommand("random weather", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = onRandomMoonWeather });
             }
 
-            AddCommand("random", cmdInfo);
-            //AddCommand("r", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonNoFilter });
-            //AddCommand("random both", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonBoth });
-            //AddCommand("random money", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonMoney });
-            //AddCommand("r both", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonBoth });
-            //AddCommand("r money", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonMoney });
-            //AddCommand("r b", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonBoth });
-            //AddCommand("r m", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonMoney });
+            AddCommand(command, cmdInfo);
         }
 
         private static string onRandomMoonNoFilter()
         {
             if(ETCNetworkHandler.Instance.randomCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
 
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             if (startOfRound.shipDoorsEnabled)
             {
-                return "You are currently on a moon. Can not travel to a random moon\n";
+                return "You are currently on a moon. Can not travel to a random moon\n\n";
             }
 
             List<SelectableLevel> moons = new List<SelectableLevel>();
@@ -69,14 +62,14 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             if (!ETCNetworkHandler.Instance.allowWeatherFilter)
             {
-                return "This filter is disabled by the host.\n";
+                return "This filter is disabled by the host.\n\n";
             }
 
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             if (startOfRound.shipDoorsEnabled)
             {
-                return "You are currently on a moon. Can not travel to a random moon.\n";
+                return "You are currently on a moon. Can not travel to a random moon.\n\n";
             }
 
             List<SelectableLevel> moons = new List<SelectableLevel>();
@@ -94,7 +87,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             if (startOfRound.shipDoorsEnabled || !startOfRound.currentLevel.planetHasTime)
             {
-                return "You are currently on a moon. Can not travel to a random moon.\n";
+                return "You are currently on a moon. Can not travel to a random moon.\n\n";
             }
 
             List<SelectableLevel> moons = new List<SelectableLevel>();
@@ -113,7 +106,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             if (startOfRound.shipDoorsEnabled || !startOfRound.currentLevel.planetHasTime)
             {
-                return "You are currently on a moon. Can not travel to a random moon.\n";
+                return "You are currently on a moon. Can not travel to a random moon.\n\n";
             }
 
             List<SelectableLevel> moons = new List<SelectableLevel>();
@@ -137,7 +130,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             if (travelPrice < 0) { travelPrice = 0; }
             if (terminal.groupCredits - travelPrice < 0)
             {
-                return $"Could not go to a random moon, you have too little money, you need atleast: {travelPrice} credits.\n";
+                return $"Could not go to a random moon, you have too little money, you need atleast: {travelPrice} credits.\n\n";
             }
 
             int randomMoonNum = rnd.Next(0, moons.Count);
@@ -153,7 +146,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 ETCNetworkHandler.Instance.unknownPlanetServerRpc();
             }
 
-            return "Traveled to ???\n";
+            return "Traveled to ???\n\n";
         }
     }
 }

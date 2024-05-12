@@ -10,31 +10,27 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class InverseTeleportCommand
     {
-        public static string description = "Inverse teleports everyone on the inverse teleporter.";
+        public static string description = "Activates the Inverse Teleporter.";
         public static void inverseTeleportCommand()
         {
-            //AddCommand("iteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("itp", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            //AddCommand("inverseteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            //AddCommand("inverse-teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            //AddCommand("inverse teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            AddCommand("itp", new CommandInfo { Category = "Extra", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
         }
 
         private static string OnInverseTeleportCommand()
         {
             if (ETCNetworkHandler.Instance.itpCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
 
             if (!StartOfRound.Instance.shipDoorsEnabled || !StartOfRound.Instance.currentLevel.planetHasTime)
             {
-                return "You are currently not on a moon.\n";
+                return "You are currently not on a moon.\n\n";
             }
 
             if (GameObject.Find("InverseTeleporter(Clone)") == null)
             {
-                return "You do not own the inverse teleporter.\n";
+                return "You do not own the inverse teleporter.\n\n";
             }
 
             ShipTeleporter iTeleporter = GameObject.Find("InverseTeleporter(Clone)").GetComponent<ShipTeleporter>();
@@ -44,23 +40,23 @@ namespace ExtraTerminalCommands.TerminalCommands
 
             if (cooldownField == null)
             {
-                return "Your inverse steleporter does not have a cooldown.\n";
+                return "Your inverse teleporter does not have a cooldown.\n\n";
             }
 
             if (iTeleporter == null)
             {
-                return "You do not own the inverse teleporter. If you do, try restarting the game.\n";
+                return "You do not own the inverse teleporter. If you do, try restarting the game.\n\n";
             }
 
             if (!iTeleporter.buttonTrigger.interactable)
             {
                 //bug, shows 10s default cooldown
-                return "Inverse teleporter is on cooldown, " + Math.Round(cooldownTimef, 1) + " seconds remain.\n";
+                return "Inverse teleporter is on cooldown, " + Math.Round(cooldownTimef, 1) + " seconds remain.\n\n";
             }
             else
             {
                 iTeleporter.buttonTrigger.onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
-                return "Teleporting player to facility.\n";
+                return "Teleporting player(s) into the facility.\n\n";
             }
         }
     }

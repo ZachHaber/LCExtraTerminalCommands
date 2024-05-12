@@ -12,13 +12,13 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class HornCommand
     {
-        private const string commandKey = "horn";
-        private const string hornSoundingText = $"The horn will continue to sound.";
+        private const string hornSoundingText = $"The horn will continue to sound.\n\n";
         public static bool isBlaring = false;
-        public static string description = $"Holds the horn down for you for the next X-Amount of seconds (editable in config)";
+        public static string description = $"Holds the horn down for you for the next X-Amount of seconds or a pre-specified time if left unset.";
 
         public static void hornCommand()
         {
+            var commandKey = "horn";
             Commands.Add(commandKey, (string input) =>
             {
                 var response = returnText();
@@ -42,7 +42,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                     catch (Exception e)
                     {
                         ExtraTerminalCommandsBase.mls.LogError($"{e.Message}\n\nInputString: '{input}'");
-                        return $"{e.Message}\n\nInputString: '{input}'\n";
+                        return $"{e.Message}\n\nInputString: '{input}'\n\n";
                     }
 
                 }
@@ -51,6 +51,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 //return input;
             }, new CommandInfo()
             {
+                Title = "Horn [X seconds]?",
                 Description = description,
                 Category = "Extra"
             });
@@ -59,15 +60,15 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             if (isBlaring)
             {
-                return "The horn is already making sound!\n";
+                return "The horn is already making sound!\n\n";
             }
             if (ETCNetworkHandler.Instance.hornCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
             if (GameObject.FindAnyObjectByType<ShipAlarmCord>() == null)
             {
-                return "You have not yet purchased the horn.\n";
+                return "You have not yet purchased the horn.\n\n";
             }
             return hornSoundingText;
         }
@@ -101,7 +102,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return;
             }
             if (ETCNetworkHandler.Instance.hornCmdDisabled) { return; }
-            ExtraTerminalCommandsBase.mls.LogError($"Blaring horn for {seconds} seconds");
+            ExtraTerminalCommandsBase.mls.LogInfo($"Blaring horn for {seconds} seconds");
             ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
             if (horn == null) { return; }
             isBlaring = true;
@@ -117,7 +118,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             isBlaring = false;
         }
 
-        private static async void OnTimerElapsedAsync(object sender, ElapsedEventArgs e, ShipAlarmCord horn)
+        private static void OnTimerElapsedAsync(object sender, ElapsedEventArgs e, ShipAlarmCord horn)
         {
             ((Timer)sender).Stop();
             horn.StopHorn();

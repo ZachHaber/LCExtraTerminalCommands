@@ -14,7 +14,7 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo commandInfo = new CommandInfo
             {
-                Category = "None",
+                Category = "Extra",
                 Description = description,
                 DisplayTextSupplier = OnTimeCommand
             };
@@ -26,10 +26,10 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             if (ETCNetworkHandler.Instance.timeCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
 
-            return !StartOfRound.Instance.currentLevel.planetHasTime || !StartOfRound.Instance.shipDoorsEnabled ? "You are currently not on a moon, please try again once you are on a moon.\n" : $"The time is {HUDManager.Instance.clockNumber.text.Replace('\n', ' ')}.\n";
+            return !StartOfRound.Instance.currentLevel.planetHasTime || !StartOfRound.Instance.shipDoorsEnabled ? "You are currently not on a moon, please try again once you are on a moon.\n" : $"The time is {HUDManager.Instance.clockNumber.text.Replace('\n', ' ')}.\n\n";
         }
     }
 }

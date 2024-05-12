@@ -13,34 +13,27 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class IntroSongCommand : NetworkBehaviour
     {
-        public static string description = "Plays the intro song.";
+        public static string description = "Plays a song that reminds you what you are working towards!";
         public void introSongCommand()
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "none",
+                Category = "Extra",
                 Description = description,
                 DisplayTextSupplier = PlayIntro
             };
 
             AddCommand("intro", cmdInfo);
-            //AddCommand("song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("introsong", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("intro-song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("intro song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("great asset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("greatasset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            //AddCommand("ga", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
         }
 
         public string PlayIntro()
         {
             if (ETCNetworkHandler.Instance.introCmdDisabled)
             {
-                return "This command is disabled by the host.\n";
+                return "This command is disabled by the host.\n\n";
             }
 
-            if (ETCNetworkHandler.Instance.introPlaying) { return "Song is already playing, please try again once it has stopped playing\n"; }
+            if (ETCNetworkHandler.Instance.introPlaying) { return "Song is already playing, please try again once it has stopped playing\n\n"; }
 
             if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
             {
@@ -50,7 +43,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             {
                 ETCNetworkHandler.Instance.PlayIntroSongServerRpc();
             }
-            return "Now playing a banger song!\n";
+            return "Now playing a banger song!\n\n";
         }
     }
 }
