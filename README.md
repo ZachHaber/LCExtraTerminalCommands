@@ -80,6 +80,11 @@ Aliases: Clear, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+# V1.6.1
+
+## Bug Fixes:
+Prevent the aliased keywords from showing on the `other` commands menu.
+
 # V1.6.0
 
 ## Additions:
