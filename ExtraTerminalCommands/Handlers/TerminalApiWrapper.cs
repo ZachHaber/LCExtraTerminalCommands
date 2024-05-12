@@ -79,7 +79,7 @@ namespace ExtraTerminalCommands.Handlers
                 });
                 foreach (string alias in aliases)
                 {
-                    var aliasedCommandInfo = new CommandInfo { Description = commandInfo.Description, DisplayTextSupplier = commandInfo.DisplayTextSupplier };
+                    var aliasedCommandInfo = new CommandInfo { Category="None", Description = commandInfo.Description, DisplayTextSupplier = commandInfo.DisplayTextSupplier };
                     ExtraTerminalCommandsBase.mls.LogInfo($"Command {command} - Adding alias {alias}.");
                     AddCommand(alias, aliasedCommandInfo);
                 }
