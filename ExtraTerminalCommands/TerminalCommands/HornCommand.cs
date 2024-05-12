@@ -12,17 +12,52 @@ namespace ExtraTerminalCommands.TerminalCommands
 {
     internal class HornCommand
     {
+        private const string commandKey = "horn";
+        private const string hornSoundingText = $"The horn will continue to sound.";
         public static bool isBlaring = false;
         public static string description = $"Holds the horn down for you for the next X-Amount of seconds (editable in config)";
 
         public static void hornCommand()
         {
-            AddCommand("horn", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = returnText });
-            TerminalParsedSentence += onParsedPlayerSentance;
+            Commands.Add(commandKey, (string input) =>
+            {
+                var response = returnText();
+                if (response != hornSoundingText)
+                {
+                    return response;
+                }
+                input = input.Substring(commandKey.Length).Trim();
+                if (input.Length == 0)
+                {
+                    _ = onHornStandard();
+                }
+                else
+                {
+                    try
+                    {
+                        double sec = double.Parse(input);
+                        sec = Math.Min(sec, ETCNetworkHandler.Instance.hornMaxSeconds);
+                        _ = onHornTimed(sec);
+                    }
+                    catch (Exception e)
+                    {
+                        ExtraTerminalCommandsBase.mls.LogError($"{e.Message}\n\nInputString: '{input}'");
+                        return $"{e.Message}\n\nInputString: '{input}'\n";
+                    }
+
+                }
+                return response;
+
+                //return input;
+            }, new CommandInfo()
+            {
+                Description = description,
+                Category = "Extra"
+            });
         }
         public static string returnText()
         {
-            if(isBlaring)
+            if (isBlaring)
             {
                 return "The horn is already making sound!\n";
             }
@@ -34,17 +69,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             {
                 return "You have not yet purchased the horn.\n";
             }
-            return $"The horn will continue to sound.";
-        }
-
-        private static void onParsedPlayerSentance(object sender, TerminalParseSentenceEventArgs e)
-        {
-
-            if (ETCNetworkHandler.Instance.switchCmdDisabled)
-            {
-                return;
-            }
-            ParsedPlayerSentanceHandler.onParsedPlayerSentance(sender, e);
+            return hornSoundingText;
         }
 
         public static async Task onHornStandard()
@@ -54,7 +79,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return;
             }
             if (ETCNetworkHandler.Instance.hornCmdDisabled) { return; }
-                ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
+            ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
             if (horn == null) { return; }
             isBlaring = true;
             Timer timer = new Timer(ETCNetworkHandler.Instance.hornSeconds * 1000);
@@ -69,13 +94,14 @@ namespace ExtraTerminalCommands.TerminalCommands
             isBlaring = false;
         }
 
-        public static async Task onHornTimed(int seconds)
+        public static async Task onHornTimed(double seconds)
         {
             if (isBlaring)
             {
                 return;
             }
             if (ETCNetworkHandler.Instance.hornCmdDisabled) { return; }
+            ExtraTerminalCommandsBase.mls.LogError($"Blaring horn for {seconds} seconds");
             ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
             if (horn == null) { return; }
             isBlaring = true;

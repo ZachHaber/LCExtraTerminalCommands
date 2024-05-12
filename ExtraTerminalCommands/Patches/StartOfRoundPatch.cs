@@ -66,15 +66,6 @@ namespace ExtraTerminalCommands.Patches
             {
                 ETCNetworkHandler.Instance.syncVariablesServerRpc();
             }
-            addSwitchCmd();
-            addTeleportCmd();
-        }
-        [HarmonyPostfix, HarmonyPatch("Start")]
-        public static void onStartup()
-        {
-            addSwitchCmd();
-            addTeleportCmd();
-            addHornCmd();
         }
 
         [HarmonyPostfix]
@@ -89,47 +80,6 @@ namespace ExtraTerminalCommands.Patches
         public static void openingDoorsSequencePatch()
         {
             ExtraTerminalCommandsBase.daysJoined++;
-        }
-
-        public static void addSwitchCmd()
-        {
-            if (!ETCNetworkHandler.Instance.switchCmdDisabled)
-            {
-                GameNetworkManager[] gameNetworkManagers = GameObject.FindObjectsOfType<GameNetworkManager>();
-
-                foreach (GameNetworkManager playerNetwork in gameNetworkManagers)
-                {
-                    TerminalApi.TerminalApi.AddCommand("sw " + playerNetwork.username, new CommandInfo {Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
-                    TerminalApi.TerminalApi.AddCommand("s " + playerNetwork.username, new CommandInfo { Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
-                    ExtraTerminalCommandsBase.mls.LogInfo("Added command: s/sw " + playerNetwork.username);
-                }
-            }
-        }
-
-        public static void addTeleportCmd()
-        {
-            if (!ETCNetworkHandler.Instance.switchCmdDisabled)
-            {
-                GameNetworkManager[] gameNetworkManagers = GameObject.FindObjectsOfType<GameNetworkManager>();
-
-                foreach (GameNetworkManager playerNetwork in gameNetworkManagers)
-                {
-                    TerminalApi.TerminalApi.AddCommand("tp " + playerNetwork.username, new CommandInfo { Category = "none", Description = TeleportCommand.description, DisplayTextSupplier = TeleportCommand.OnTeleportCommand});
-                    //TerminalApi.TerminalApi.AddCommand("tp " + playerNetwork., new CommandInfo { Category = "none", Description = SwitchCommand.description, DisplayTextSupplier = SwitchCommand.returnText });
-                    ExtraTerminalCommandsBase.mls.LogInfo("Added command: tp " + playerNetwork.username);
-                }
-            }
-        }
-
-        public static void addHornCmd()
-        {
-            if (!ETCNetworkHandler.Instance.hornCmdDisabled)
-            {
-                for (int i = 0; i <= ETCNetworkHandler.Instance.hornMaxSeconds; i++)
-                {
-                    TerminalApi.TerminalApi.AddCommand("horn " + i, new CommandInfo { Category = "none", Description = HornCommand.description, DisplayTextSupplier = HornCommand.returnText });
-                }
-            }
         }
     }
 }

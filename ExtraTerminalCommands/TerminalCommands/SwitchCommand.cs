@@ -18,9 +18,27 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         public static void switchCommand()
         {
-            TerminalParsedSentence += onParsedPlayerSentance;
-            AddCommand("s", new CommandInfo { Category = "hide", Description = description, DisplayTextSupplier = returnText });
-            AddCommand("sw", new CommandInfo { Category = "hide", Description = description, DisplayTextSupplier = returnText });
+
+            string shortCommand2 = "sw";
+            Commands.Add(shortCommand2, (string input) =>
+            {
+                input = input.Substring(shortCommand2.Length).Trim();
+                return onSwitchCommand(input);
+            }, new CommandInfo() { Category = "Extra", Description = description });
+
+            string shortCommand = "s";
+            Commands.Add(shortCommand, (string input) =>
+            {
+                input = input.Substring(shortCommand.Length).Trim();
+                return onSwitchCommand(input);
+            }, new CommandInfo() { Category = "Extra", Description = description });
+
+            string shortCommand3 = "y";
+            Commands.Add(shortCommand3, (string input) =>
+            {
+                input = input.Substring(shortCommand3.Length).Trim();
+                return onSwitchCommand(input);
+            }, new CommandInfo() { Category = "Extra", Description = description });
         }
         public static string returnText()
         {
@@ -31,25 +49,56 @@ namespace ExtraTerminalCommands.TerminalCommands
             return "Switched radar scan view\n";
         }
 
-        private static void onParsedPlayerSentance(object sender, TerminalParseSentenceEventArgs e)
-        {
+        //private static void onParsedPlayerSentance(object sender, TerminalParseSentenceEventArgs e)
+        //{
 
-            if(ETCNetworkHandler.Instance.switchCmdDisabled)
+        //    if (ETCNetworkHandler.Instance.switchCmdDisabled)
+        //    {
+        //        return;
+        //    }
+        //    ParsedPlayerSentanceHandler.onParsedPlayerSentance(sender, e);
+        //}
+
+        private static string onSwitchCommand(string input)
+        {
+            if (ETCNetworkHandler.Instance.switchCmdDisabled)
             {
-                return;
+                return returnText();
             }
-            ParsedPlayerSentanceHandler.onParsedPlayerSentance(sender, e);
+            if (input.Length == 0)
+            {
+                switchNormal();
+                return returnText();
+            }
+            else
+            {
+                if(switchInput(["", input]))
+                {
+                return returnText();
+                }
+                else
+                {
+                    return $"Player '{input}' not found!\n";
+                };
+            }
+
         }
 
-        public static void switchNormal()
+        public static bool switchNormal()
         {
             StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
+            return true;
         }
-        public static void switchInput(string[] userInputParts)
+        public static bool switchInput(string[] userInputParts)
         {
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             int playerNum = terminal.CheckForPlayerNameCommand("switch", userInputParts[1]);
-            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
+            if (playerNum == -1)
+            {
+                return false;
+            }
+                StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
+                return true;
         }
     }
 }
