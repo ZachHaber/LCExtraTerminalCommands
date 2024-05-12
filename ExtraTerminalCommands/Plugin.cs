@@ -74,19 +74,19 @@ namespace ExtraTerminalCommands
         void RegisterCommands()
         {
             if (!configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
-            if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
             if (!configLaunchCommand.Value) { LaunchCommand.launchCommand(); }
+            if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
+            if (!configHornCommand.Value) { HornCommand.hornCommand(); }
+            if (!configLightsCommand.Value) { LightsCommand.lightsCommand(); }
+            if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
+            if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
             if (!configTeleportCommand.Value) { TeleportCommand.teleportCommand(); }
             if (!configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
-            if (!configLightsCommand.Value) { LightsCommand.lightsCommand(); }
-            if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
-            if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
-            if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
-            if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
-            if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
-            if (!configHornCommand.Value) { HornCommand.hornCommand(); }
             RadarBoosterCommands.FlashCommand();
             RadarBoosterCommands.PingCommand();
+            if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
+            if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
+            if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
             daysJoined = 0;
         }
 
@@ -128,7 +128,7 @@ namespace ExtraTerminalCommands
             configIntroSongCommand = Config.Bind("commands",
                                          "DisableIntroSong",
                                          false,
-                                         "Plays the intro song when this command is run");
+                                         "Disables the 'intro' command which plays the intro song when run");
             configRandomMoonCommand = Config.Bind("commands",
                                          "DisableRandomMoon",
                                          false,
@@ -140,7 +140,7 @@ namespace ExtraTerminalCommands
             configSwitchCommand = Config.Bind("commands",
                                          "DisableSwitch",
                                          false,
-                                         "Disables the 's' command, which does the same as the vanilla 'switch' command.");
+                                         "Disables the 'sw' command, which does the same as the vanilla 'switch' command. Except that it also allows specifying a player by name");
             configHornCommand = Config.Bind("commands",
                                          "DisableHorn",
                                          false,
@@ -162,7 +162,7 @@ namespace ExtraTerminalCommands
             configHornDefaultseconds = Config.Bind("horn",
                                          "SecondsEnabled",
                                          10,
-                                         "This is the amount of seconds the horn will continue to sound when running 'horn'");
+                                         "This is the default amount of seconds the horn will continue to sound when running 'horn'");
             configHornMaxSeconds = Config.Bind("horn",
                                          "MaxSeconds",
                                          30,
