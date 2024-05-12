@@ -43,11 +43,9 @@ namespace ExtraTerminalCommands.TerminalCommands
 
             ExtraTerminalCommandsBase.mls.LogInfo($"Ping on {targetIndex}");
 
-            if (targetIndex == -1) { return "Invalid target"; }
 
             StartOfRound.Instance.mapScreen.PingRadarBooster(targetIndex);
             return "Pinged radar booster.\n";
-            return "Pinging\n";
         }
         private static string OnFlashCommand()
         {
