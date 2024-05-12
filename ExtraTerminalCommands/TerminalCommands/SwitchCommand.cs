@@ -70,9 +70,9 @@ namespace ExtraTerminalCommands.TerminalCommands
             }
             else
             {
-                if(switchInput(["", input]))
+                if (switchInput(input))
                 {
-                return returnText();
+                    return returnText();
                 }
                 else
                 {
@@ -87,16 +87,26 @@ namespace ExtraTerminalCommands.TerminalCommands
             StartOfRound.Instance.mapScreen.SwitchRadarTargetForward(callRPC: true);
             return true;
         }
-        public static bool switchInput(string[] userInputParts)
+        public static bool switchInput(string userInput)
         {
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
-            int playerNum = terminal.CheckForPlayerNameCommand("switch", userInputParts[1]);
-            if (playerNum == -1)
+            int playerNum;
+            if (int.TryParse(userInput, out playerNum))
+            {
+                // Convert 1 indexed number to 0 indexed number!
+                playerNum -= 1;
+            }
+            else
+            {
+                playerNum = terminal.CheckForPlayerNameCommand("switch", userInput);
+
+            }
+            if (playerNum <0 || playerNum >= StartOfRound.Instance.mapScreen.radarTargets.Count)
             {
                 return false;
             }
-                StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
-                return true;
+            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(playerNum);
+            return true;
         }
     }
 }
