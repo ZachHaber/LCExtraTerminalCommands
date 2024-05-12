@@ -106,36 +106,29 @@ namespace ExtraTerminalCommands.TerminalCommands
                 if (userInput.Length > 0)
                 {
                     int playerNum;
-                    try
-                    {
-                        playerNum = Convert.ToInt32(userInput.Split(" ")[0]) - 1;
-                        ExtraTerminalCommandsBase.mls.LogInfo($"Teleport by player number: Parsed number as {playerNum}");
-                        if (playerNum >= 0 && playerNum < mapScreen.radarTargets.Count)
-                        {
-                            var controller = mapScreen.radarTargets[playerNum].transform.gameObject.GetComponent<PlayerControllerB>();
-                            if (controller != null && !controller.isPlayerControlled && !controller.isPlayerDead && controller.redirectToEnemy == null)
+                    if (int.TryParse(userInput.Split(" ")[0], out playerNum))
                             {
-                        ExtraTerminalCommandsBase.mls.LogInfo($"Teleport by player number: {playerNum} is an invalid target");
-                                // Invalid target!
-                                return $"Invalid teleportation target: {playerNum}\n";
+                        // Convert 1 indexed number to 0 indexed number!
+                        playerNum -= 1;
                             }
-                        }
                         else
                         {
-                        ExtraTerminalCommandsBase.mls.LogInfo($"Teleport by player number: {playerNum} is an invalid target");
-                            return $"Invalid teleportation target: {playerNum}\n";
-                        }
-                    }
-                    catch
-                    {
                         playerNum = terminal.CheckForPlayerNameCommand("switch", userInput);
-                    }
-                    //PlayerControllerB = StartOfRound.Instance.allPlayerScripts;
+                        }
 
-                    if (playerNum == -1 || playerNum >= mapScreen.radarTargets.Count || mapScreen.radarTargets[playerNum] == null)
+
+                    if (playerNum < 0 || playerNum >= mapScreen.radarTargets.Count || mapScreen.radarTargets[playerNum] == null)
                     {
                         ExtraTerminalCommandsBase.mls.LogInfo($"'{userInput}' was not a valid player! ");
-                        return $"Player {userInput} was not a valid player!\n";
+                        return $"Player {userInput} was not a valid player!\n\n";
+                    }
+
+                    var controller = mapScreen.radarTargets[playerNum].transform.gameObject.GetComponent<PlayerControllerB>();
+                    if (controller != null && !controller.isPlayerControlled && !controller.isPlayerDead && controller.redirectToEnemy == null)
+                    {
+                        ExtraTerminalCommandsBase.mls.LogInfo($"Teleport by player number: {playerNum} is an invalid target");
+                        // Invalid target!
+                        return $"Invalid target: {playerNum}\n\n";
                     }
                     TransformAndName tpTarget = mapScreen.radarTargets[playerNum];
 
@@ -143,10 +136,14 @@ namespace ExtraTerminalCommands.TerminalCommands
 
 
                     PlayerControllerB currentPlayer = mapScreen.targetedPlayer;
-                    int curIndex = mapScreen.targetTransformIndex != 0 ? mapScreen.targetTransformIndex : currentPlayer == null ? -1 : mapScreen.radarTargets.FindIndex(target => target.name == currentPlayer.playerUsername);
+                    int curIndex = mapScreen.targetTransformIndex > 0 ? mapScreen.targetTransformIndex : currentPlayer == null ? -1 : mapScreen.radarTargets.FindIndex(target => target.name == currentPlayer.playerUsername);
                     if (curIndex == -1)
                     {
                         ExtraTerminalCommandsBase.mls.LogInfo($"the current player {currentPlayer?.playerUsername} was not in the radar targets!");
+                    }
+                    if (curIndex != mapScreen.targetTransformIndex)
+                    {
+                        ExtraTerminalCommandsBase.mls.LogError($"The found player index ({curIndex}) doesn't match the targetTransformIndex ({mapScreen.targetTransformIndex})");
                     }
 
 
@@ -157,7 +154,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                         // This requires switching players!
                         mapScreen.SwitchRadarTargetAndSync(playerNum);
                         TeleportOnMapSync(teleporter, tpTarget.name, playerNum, curIndex);
-                        return $"Teleporting player {tpTarget.name} {curIndex} to ship.\n";
+                        return $"Teleporting player {tpTarget.name} {curIndex} to ship.\n\n";
                     }
                     else
                     {
