@@ -1,3 +1,4 @@
+using ExtraTerminalCommands.Networking;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,10 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string OnPingCommand()
         {
+            if (ETCNetworkHandler.Instance.pingCmdDisabled)
+            {
+                return "This command is disabled by the host.\n\n";
+            }
             var targetIndex = GetCurrentRadarBooster();
             if (targetIndex <= 0) { return "Invalid target.\n\n"; }
 
@@ -50,6 +55,10 @@ namespace ExtraTerminalCommands.TerminalCommands
         }
         private static string OnFlashCommand()
         {
+            if (ETCNetworkHandler.Instance.flashCmdDisabled)
+            {
+                return "This command is disabled by the host.\n\n";
+            }
             var targetIndex = GetCurrentRadarBooster();
             if (targetIndex <= 0) { return "Invalid target.\n\n"; }
             ExtraTerminalCommandsBase.mls.LogInfo($"Flash on {targetIndex}");

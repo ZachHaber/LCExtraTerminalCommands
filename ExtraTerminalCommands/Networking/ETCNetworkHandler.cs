@@ -49,7 +49,10 @@ namespace ExtraTerminalCommands.Networking
         public bool timeCmdDisabled = ExtraTerminalCommandsBase.configTimeCommand.Value;
         public bool launchCmdDisabled = ExtraTerminalCommandsBase.configLaunchCommand.Value;
         public bool tpCmdDisabled = ExtraTerminalCommandsBase.configTeleportCommand.Value;
+        public bool tpPlayerCmdDisabled = ExtraTerminalCommandsBase.configTeleportPlayerCommand.Value;
         public bool itpCmdDisabled = ExtraTerminalCommandsBase.configInverseTeleportCommand.Value;
+        public bool flashCmdDisabled = ExtraTerminalCommandsBase.configFlashCommand.Value;
+        public bool pingCmdDisabled = ExtraTerminalCommandsBase.configPingCommand.Value;
         public bool lightCmdDisabled = ExtraTerminalCommandsBase.configLightsCommand.Value;
         public bool doorCmdDisabled = ExtraTerminalCommandsBase.configDoorsCommand.Value;
         public bool introCmdDisabled = ExtraTerminalCommandsBase.configIntroSongCommand.Value;
@@ -74,14 +77,15 @@ namespace ExtraTerminalCommands.Networking
             syncVariablesClientRpc(extraCmdDisabled, timeCmdDisabled, launchCmdDisabled, tpCmdDisabled, itpCmdDisabled,
                 lightCmdDisabled, doorCmdDisabled, introCmdDisabled, randomCmdDisabled, clearCmdDisabled, switchCmdDisabled,
                 hornCmdDisabled,
-
-                allowWeatherFilter, allowHidePlanet, randomMoonPrice, allowLaunchOnMoon, hornSeconds, hornMaxSeconds);
+                allowWeatherFilter, allowHidePlanet, randomMoonPrice, allowLaunchOnMoon, hornSeconds, hornMaxSeconds,
+                tpPlayerCmdDisabled, flashCmdDisabled, pingCmdDisabled);
         }
 
         [ClientRpc]
         public void syncVariablesClientRpc(bool extraCmd, bool timeCmd, bool launchCmd, bool tpCmd, bool itpCmd, bool lightCmd,
             bool doorCmd, bool introCmd, bool randomCmd, bool clearCmd, bool switchCmd, bool hornCmd,
-            bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon, int hornSec, int hornMaxSec)
+            bool weatherFilter, bool hidePlanet, int moonPrice, bool launchOnMoon, int hornSec, int hornMaxSec,
+            bool tpPlayerCmd, bool flashCmd, bool pingCmd)
         {
             randomMoonPrice = moonPrice;
             extraCmdDisabled = extraCmd;
@@ -89,6 +93,9 @@ namespace ExtraTerminalCommands.Networking
             launchCmdDisabled = launchCmd;
             tpCmdDisabled = tpCmd;
             itpCmdDisabled = itpCmd;
+            tpPlayerCmdDisabled = tpPlayerCmd;
+            flashCmdDisabled = flashCmd;
+            pingCmdDisabled = pingCmd;
             lightCmdDisabled = lightCmd;
             doorCmdDisabled = doorCmd;
             introCmdDisabled = introCmd;

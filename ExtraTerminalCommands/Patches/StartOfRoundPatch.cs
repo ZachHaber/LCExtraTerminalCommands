@@ -59,8 +59,8 @@ namespace ExtraTerminalCommands.Patches
                 ETCNetworkHandler.Instance.syncVariablesClientRpc(NH.extraCmdDisabled, NH.timeCmdDisabled, NH.launchCmdDisabled,
                     NH.tpCmdDisabled, NH.itpCmdDisabled, NH.lightCmdDisabled, NH.doorCmdDisabled, NH.introCmdDisabled,
                     NH.randomCmdDisabled, NH.clearCmdDisabled, NH.switchCmdDisabled, NH.hornCmdDisabled,
-
-                    NH.allowWeatherFilter, NH.allowHidePlanet, NH.randomMoonPrice, NH.allowLaunchOnMoon, NH.hornSeconds, NH.hornMaxSeconds);
+                    NH.allowWeatherFilter, NH.allowHidePlanet, NH.randomMoonPrice, NH.allowLaunchOnMoon, NH.hornSeconds, NH.hornMaxSeconds,
+                    NH.tpPlayerCmdDisabled, NH.flashCmdDisabled, NH.pingCmdDisabled);
             }
             else
             {

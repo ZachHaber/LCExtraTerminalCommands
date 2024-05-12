@@ -1,10 +1,11 @@
 
+
+
 A continuation of https://github.com/Beauver/ExtraTerminalCommands.
 
 This mod adds all kinds of commands to the terminal, each of these commands can be disabled in the config file.
-- The new commands Ping/Flash and TP [Player] will be added to config/syncing in the next version.
 
-If you encounter any bugs you can report them on the project github: 
+If you encounter any bugs you can report them on the project github: https://github.com/ZachHaber/LCExtraTerminalCommands/issues
 
 # Commands
 ## Extra Commands

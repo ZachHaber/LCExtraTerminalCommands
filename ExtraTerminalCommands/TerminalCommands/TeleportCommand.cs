@@ -144,8 +144,10 @@ namespace ExtraTerminalCommands.TerminalCommands
                 ExtraTerminalCommandsBase.mls.LogInfo($"TP command called with '{userInput}'");
 
                 Terminal terminal = GameObject.FindObjectOfType<Terminal>();
-                if (userInput.Length > 0)
+                // For now, just go to the normal TP command if the tp player command is disabled!
+                if (userInput.Length > 0 && !ETCNetworkHandler.Instance.tpPlayerCmdDisabled)
                 {
+
                     int playerNum;
                     if (int.TryParse(userInput.Split(" ")[0], out playerNum))
                     {

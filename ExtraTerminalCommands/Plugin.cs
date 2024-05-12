@@ -23,6 +23,7 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configAllowLaunchOnMoon;
         public static ConfigEntry<bool> configTimeCommand;
         public static ConfigEntry<bool> configTeleportCommand;
+        public static ConfigEntry<bool> configTeleportPlayerCommand;
         public static ConfigEntry<bool> configInverseTeleportCommand;
         public static ConfigEntry<bool> configLightsCommand;
         public static ConfigEntry<bool> configDoorsCommand;
@@ -31,6 +32,8 @@ namespace ExtraTerminalCommands
         public static ConfigEntry<bool> configClearCommand;
         public static ConfigEntry<bool> configSwitchCommand;
         public static ConfigEntry<bool> configHornCommand;
+        public static ConfigEntry<bool> configFlashCommand;
+        public static ConfigEntry<bool> configPingCommand;
 
         public static ConfigEntry<bool> configAllowRandomWeatherFilter;
         public static ConfigEntry<bool> configHidePlanet;
@@ -66,7 +69,7 @@ namespace ExtraTerminalCommands
             MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "extraterminalcommandsnetwork"));
             NetcodePatcher();
             mls.LogInfo("Invoked NetcodePatcher");
-            
+
             RegisterCommands();
             mls.LogInfo($"{modGUID} v{modVersion} has loaded!");
         }
@@ -82,8 +85,8 @@ namespace ExtraTerminalCommands
             if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
             if (!configTeleportCommand.Value) { TeleportCommand.teleportCommand(); }
             if (!configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
-            RadarBoosterCommands.FlashCommand();
-            RadarBoosterCommands.PingCommand();
+            if (!configFlashCommand.Value) { RadarBoosterCommands.FlashCommand(); }
+            if (!configPingCommand.Value) { RadarBoosterCommands.PingCommand(); }
             if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
             if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
             if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
@@ -99,7 +102,7 @@ namespace ExtraTerminalCommands
             configLaunchCommand = Config.Bind("commands",
                                          "DisableLaunch",
                                          false,
-                                         "Disables the 'launch' command in terminal");
+                                         "Disables the 'launch' command");
             configAllowLaunchOnMoon = Config.Bind("launch",
                                          "AllowLaunch",
                                          true,
@@ -108,23 +111,36 @@ namespace ExtraTerminalCommands
             configTimeCommand = Config.Bind("commands",
                                          "DisableTime",
                                          false,
-                                         "Disables the 'time' command in terminal");
+                                         "Disables the 'time' command");
             configTeleportCommand = Config.Bind("commands",
                                          "DisableTeleport",
                                          false,
-                                         "Disables the 'teleport' command in terminal");
+                                         "Disables the 'tp' command");
+            configTeleportPlayerCommand = Config.Bind("commands",
+                                         "DisableTeleportPlayer",
+                                         false,
+                                         "Disables the 'tp [player]' command for teleporting a specific player instead of the current one." +
+                                         "\nOnly works if the main teleport command is enabled");
             configInverseTeleportCommand = Config.Bind("commands",
                                          "DisableInverseTeleport",
                                          false,
-                                         "Disables the 'itp' command in terminal");
+                                         "Disables the 'itp' command");
+            configFlashCommand = Config.Bind("commands",
+                                         "DisableFlashCommand",
+                                         false,
+                                         "Disables the 'flash' command");
+            configPingCommand = Config.Bind("commands",
+                                         "DisablePingCommand",
+                                         false,
+                                         "Disables the 'ping' command");
             configLightsCommand = Config.Bind("commands",
                                          "DisableLights",
                                          false,
-                                         "Disables the 'lights' command in terminal");
+                                         "Disables the 'lights' command");
             configDoorsCommand = Config.Bind("commands",
                                          "DisableDoors",
                                          false,
-                                         "Disables the 'doors' command in terminal");
+                                         "Disables the 'doors' command");
             configIntroSongCommand = Config.Bind("commands",
                                          "DisableIntroSong",
                                          false,
