@@ -28,13 +28,13 @@ namespace ExtraTerminalCommands.TerminalCommands
 
             if (ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value)
             {
-                AddCommand("r w", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
-                AddCommand("r weather", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
+                //AddCommand("r w", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
+                //AddCommand("r weather", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
                 AddCommand("random weather", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonWeather });
             }
 
             AddCommand("random", cmdInfo);
-            AddCommand("r", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonNoFilter });
+            //AddCommand("r", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonNoFilter });
             //AddCommand("random both", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonBoth });
             //AddCommand("random money", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonMoney });
             //AddCommand("r both", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onRandomMoonBoth });

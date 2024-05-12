@@ -13,11 +13,11 @@ namespace ExtraTerminalCommands.TerminalCommands
         public static string description = "Inverse teleports everyone on the inverse teleporter.";
         public static void inverseTeleportCommand()
         {
-            AddCommand("iteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            //AddCommand("iteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
             AddCommand("itp", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverseteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverse-teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
-            AddCommand("inverse teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            //AddCommand("inverseteleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            //AddCommand("inverse-teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
+            //AddCommand("inverse teleport", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnInverseTeleportCommand });
         }
 
         private static string OnInverseTeleportCommand()

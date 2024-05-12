@@ -13,14 +13,14 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "none",
+                Category = "None",
                 Description = description,
                 DisplayTextSupplier = onLightCommand
             };
 
             AddCommand("lights", cmdInfo);
-            AddCommand("light", new CommandInfo{ Category = "none", Description = description, DisplayTextSupplier = onLightCommand });
-            AddCommand("l", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = onLightCommand });
+            AddCommand("light", new CommandInfo{ Category = "None", Description = description, DisplayTextSupplier = onLightCommand });
+            //AddCommand("l", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = onLightCommand });
 
         }
 

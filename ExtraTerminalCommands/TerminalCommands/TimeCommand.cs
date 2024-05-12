@@ -14,7 +14,7 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo commandInfo = new CommandInfo
             {
-                Category = "none",
+                Category = "None",
                 Description = description,
                 DisplayTextSupplier = OnTimeCommand
             };

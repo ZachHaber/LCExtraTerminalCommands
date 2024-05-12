@@ -24,13 +24,13 @@ namespace ExtraTerminalCommands.TerminalCommands
             };
 
             AddCommand("intro", cmdInfo);
-            AddCommand("song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("introsong", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("intro-song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("intro song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("great asset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("greatasset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
-            AddCommand("ga", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("introsong", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("intro-song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("intro song", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("great asset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("greatasset", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
+            //AddCommand("ga", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = PlayIntro });
         }
 
         public string PlayIntro()

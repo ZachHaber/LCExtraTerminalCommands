@@ -15,14 +15,14 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             CommandInfo cmdInfo = new CommandInfo
             {
-                Category = "none",
+                Category = "None",
                 Description = description,
                 DisplayTextSupplier = OnLaunchCommand
             };
 
             AddCommand("launch", cmdInfo);
-            AddCommand("go", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnLaunchCommand });
-            AddCommand("start", new CommandInfo { Category = "none", Description = description, DisplayTextSupplier = OnLaunchCommand });
+            //AddCommand("go", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = OnLaunchCommand });
+            AddCommand("start", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = OnLaunchCommand });
         }
 
 
