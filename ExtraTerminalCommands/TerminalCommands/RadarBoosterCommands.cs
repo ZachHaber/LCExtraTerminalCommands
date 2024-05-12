@@ -42,6 +42,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             if (targetIndex <= 0) { return "Invalid target.\n\n"; }
 
             ExtraTerminalCommandsBase.mls.LogInfo($"Ping on {targetIndex}");
+            //ExtraTerminalCommandsBase.mls.LogInfo(StartOfRound.Instance.mapScreen.radarTargets.Select((target,index) => $"{target.name} ({index})").Join(delimiter: ", "));
 
 
             StartOfRound.Instance.mapScreen.PingRadarBooster(targetIndex);
@@ -53,6 +54,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             if (targetIndex <= 0) { return "Invalid target.\n\n"; }
             ExtraTerminalCommandsBase.mls.LogInfo($"Flash on {targetIndex}");
 
+            //ExtraTerminalCommandsBase.mls.LogInfo(StartOfRound.Instance.mapScreen.radarTargets.Select((target,index) => $"{target.name} ({index})").Join(delimiter: ", "));
             StartOfRound.Instance.mapScreen.FlashRadarBooster(targetIndex);
             return "Flashed radar booster.\n\n";
         }
