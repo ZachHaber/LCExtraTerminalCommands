@@ -4,7 +4,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "ZachHaber"
 name = "ExtraTerminalCommands"
-description = "Adds a few of terminal commands, each can be disabled in the config."
+description = "Adds a few of terminal commands, each can be disabled in the config. Forked from Beauver's mod"
 websiteUrl = "https://github.com/ZachHaber/LCExtraTerminalCommands"
 containsNsfwContent = false
 [package.dependencies]
