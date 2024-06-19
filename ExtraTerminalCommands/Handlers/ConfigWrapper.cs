@@ -40,15 +40,16 @@ namespace ExtraTerminalCommands
         public static ArrayConfigEntry pingCommandAliases = new("Aliases", "PingCommandAliases", "", "Aliases for the Ping Command. Comma separated list of aliases");
         public static ArrayConfigEntry hornCommandAliases = new("Aliases", "HornCommandAliases", "", "Aliases for the Horn Command. Comma separated list of aliases. Must be a single word with more than 1 character");
         public static ArrayConfigEntry switchCommandAliases = new("Aliases", "SwitchCommandAliases", "", "Aliases for the Switch Command. Comma separated list of aliases. Must be a single word with more than 1 character");
+        public static ArrayConfigEntry randomCommandAliases = new("Aliases", "RandomCommandAliases", "", "Aliases for the Random Command. Comma separated list of aliases. Must be a single word with more than 1 character");
 
         public static void Bind()
         {
             ConfigFile config = ExtraTerminalCommandsBase.config;
-            configExtraCommandsList = config.Bind("commands",
+            configExtraCommandsList = config.Bind("Commands",
                                       "DisableCommandsList",
                                       false,
                                       "Disables the 'extra' command which shows the command list.");
-            configLaunchCommand = config.Bind("commands",
+            configLaunchCommand = config.Bind("Commands",
                                          "DisableLaunch",
                                          false,
                                          "Disables the 'launch' command");
@@ -57,93 +58,94 @@ namespace ExtraTerminalCommands
                                          true,
                                          "Allows the 'launch' command to be executed when on a moon. " +
                                          "\nIf this is set to false the 'launch' command only works in space.");
-            configTimeCommand = config.Bind("commands",
+            configTimeCommand = config.Bind("Commands",
                                          "DisableTime",
                                          false,
                                          "Disables the 'time' command");
-            configTeleportCommand = config.Bind("commands",
+            configTeleportCommand = config.Bind("Commands",
                                          "DisableTeleport",
                                          false,
                                          "Disables the 'tp' command");
-            configTeleportPlayerCommand = config.Bind("commands",
+            configTeleportPlayerCommand = config.Bind("Commands",
                                          "DisableTeleportPlayer",
                                          false,
                                          "Disables the 'tp [player]' command for teleporting a specific player instead of the current one." +
                                          "\nOnly works if the main teleport command is enabled");
-            configInverseTeleportCommand = config.Bind("commands",
+            configInverseTeleportCommand = config.Bind("Commands",
                                          "DisableInverseTeleport",
                                          false,
                                          "Disables the 'itp' command");
-            configFlashCommand = config.Bind("commands",
+            configFlashCommand = config.Bind("Commands",
                                          "DisableFlashCommand",
                                          false,
                                          "Disables the 'flash' command");
-            configPingCommand = config.Bind("commands",
+            configPingCommand = config.Bind("Commands",
                                          "DisablePingCommand",
                                          false,
                                          "Disables the 'ping' command");
-            configLightsCommand = config.Bind("commands",
+            configLightsCommand = config.Bind("Commands",
                                          "DisableLights",
                                          false,
                                          "Disables the 'lights' command");
-            configDoorsCommand = config.Bind("commands",
+            configDoorsCommand = config.Bind("Commands",
                                          "DisableDoors",
                                          false,
                                          "Disables the 'doors' command");
-            configIntroSongCommand = config.Bind("commands",
+            configIntroSongCommand = config.Bind("Commands",
                                          "DisableIntroSong",
                                          false,
                                          "Disables the 'intro' command which plays the intro song when run");
-            configRandomMoonCommand = config.Bind("commands",
+            configRandomMoonCommand = config.Bind("Commands",
                                          "DisableRandomMoon",
                                          false,
                                          "Disables the 'random' command to go to a random moon.");
-            configClearCommand = config.Bind("commands",
+            configClearCommand = config.Bind("Commands",
                                          "DisableClear",
                                          false,
                                          "Disables the 'clear' command which clears all lines in the console.");
-            configSwitchCommand = config.Bind("commands",
+            configSwitchCommand = config.Bind("Commands",
                                          "DisableSwitch",
                                          false,
                                          "Disables the 'sw' command, which does the same as the vanilla 'switch' command. Except that it also allows specifying a player by name");
-            configHornCommand = config.Bind("commands",
+            configHornCommand = config.Bind("Commands",
                                          "DisableHorn",
                                          false,
                                          "Disables the 'horn' command, which sounds the horn for X amount of seconds");
 
-            configRandomCommandPrice = config.Bind("random",
+            configRandomCommandPrice = config.Bind("Random",
                                          "RandomCommandPrice",
                                          100,
                                          "The price of the 'random' command. You will not receive a confirmation warning.");
-            configAllowRandomWeatherFilter = config.Bind("random",
+            configAllowRandomWeatherFilter = config.Bind("Random",
                                          "AllowWeatherFilter",
                                          true,
                                          "When enabled allows you to filter out weather when going to a random moon by typing 'random weather'");
-            configHidePlanet = config.Bind("random",
+            configHidePlanet = config.Bind("Random",
                                          "AllowPlanetHide",
                                          true,
                                          "When enabled will not show what planet you're going to when writing 'random'");
 
-            configHornDefaultseconds = config.Bind("horn",
+            configHornDefaultseconds = config.Bind("Horn",
                                          "SecondsEnabled",
                                          10,
                                          "This is the default amount of seconds the horn will continue to sound when running 'horn'");
-            configHornMaxSeconds = config.Bind("horn",
+            configHornMaxSeconds = config.Bind("Horn",
                                          "MaxSeconds",
                                          30,
                                          "This is the maximum amount of seconds the horn can sound when running 'horn [time]' Be warned, the higher this number more lag may occur.");
             launchCommandAliases.Bind();
             timeCommandAliases.Bind();
-            inverseTeleportCommandAliases.Bind();
             teleportCommandAliases.Bind();
+            inverseTeleportCommandAliases.Bind();
+            flashCommandAliases.Bind();
+            pingCommandAliases.Bind();
             lightsCommandAliases.Bind();
             doorsCommandAliases.Bind();
             introSongCommandAliases.Bind();
+            randomCommandAliases.Bind();
             clearCommandAliases.Bind();
-            flashCommandAliases.Bind();
-            pingCommandAliases.Bind();
-            hornCommandAliases.Bind();
             switchCommandAliases.Bind();
+            hornCommandAliases.Bind();
         }
     }
     public class ArrayConfigEntry
