@@ -6,11 +6,14 @@
   - These aliases are client-side and won't be synced
 - Horn is able to be cancelled by running it again, but only for the person who ran the command to start it.
 
+## Bug Fixes:
+- Prevent `random` from throwing an error if you repeatedly try to run it while it is still travelling.
+
 # V1.6.1
 
 ## Bug Fixes:
 
-Prevent the aliased keywords from showing on the `other` commands menu.
+- Prevent the aliased keywords from showing on the `other` commands menu.
 
 # V1.6.0
 

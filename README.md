@@ -8,6 +8,13 @@ This mod adds all kinds of commands to the terminal, each of these commands can 
 If you encounter any bugs you can report them on the project github: https://github.com/ZachHaber/LCExtraTerminalCommands/issues
 
 # Commands
+
+### Aliases
+
+All commands except `Extra` are able to have configurable aliases besides the basic command.
+
+Aliases for commands with extra options (e.g. `horn`, `sw`, `tp`, etc.) must be a single word (no spaces) that is greater than 1 character.
+
 ## Extra Commands
 Shows the list of all commands that are enabled.
 
@@ -88,19 +95,25 @@ Aliases: Clear, CLS
   - These aliases are client-side and won't be synced
 - Horn is able to be cancelled by running it again, but only for the person who ran the command to start it.
 
+## Bug Fixes:
+- Prevent `random` from throwing an error if you repeatedly try to run it while it is still travelling.
+
 # V1.6.1
 
 ## Bug Fixes:
-Prevent the aliased keywords from showing on the `other` commands menu.
+
+- Prevent the aliased keywords from showing on the `other` commands menu.
 
 # V1.6.0
 
 ## Additions:
+
 - TP [player name] Command
 - Flash Command
 - Ping Command
 
 ## Removals:
+
 - A ton of aliases
   - Commands, Extra Commands, Extra-Commands, EC
   - R, R W
@@ -113,7 +126,6 @@ Prevent the aliased keywords from showing on the `other` commands menu.
   - Light
   - Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
   - CL
-
 ## V1.5.0
 
 ### Additions:
