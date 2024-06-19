@@ -86,6 +86,7 @@ Aliases: Clear, CLS
 
 - You can now customize aliases to nearly all commands via configuration
   - These aliases are client-side and won't be synced
+- Horn is able to be cancelled by running it again, but only for the person who ran the command to start it.
 
 # V1.6.1
 

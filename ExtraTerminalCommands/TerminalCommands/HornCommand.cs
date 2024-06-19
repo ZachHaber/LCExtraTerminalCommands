@@ -11,7 +11,8 @@ namespace ExtraTerminalCommands.TerminalCommands
     internal class HornCommand
     {
         private const string hornSoundingText = $"The horn will continue to sound.\n\n";
-        public static bool isBlaring = false;
+        private const string hornStoppingText = $"Stopping the horn!\n\n";
+        public static Timer blaringTimer = null;
         public static string description = $"Holds the horn down for you for the next X-Amount of seconds or a pre-specified time if left unset.";
 
         public static void hornCommand()
@@ -20,14 +21,14 @@ namespace ExtraTerminalCommands.TerminalCommands
             Commands.Add(commandKey, (string input) =>
             {
                 var response = returnText();
-                if (response != hornSoundingText)
+                if (response != hornSoundingText && response != hornStoppingText)
                 {
                     return response;
                 }
                 // input = input.Substring(commandKey.Length).Trim();
                 if (input.Length == 0)
                 {
-                    _ = onHornStandard();
+                    _ = onHornTimed(0);
                 }
                 else
                 {
@@ -52,74 +53,73 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Title = "Horn [X seconds]?",
                 Description = description,
                 Category = "Extra"
-            });
+            }, Config.hornCommandAliases.Value);
         }
         public static string returnText()
         {
-            if (isBlaring)
-            {
-                return "The horn is already making sound!\n\n";
-            }
+
             if (ETCNetworkHandler.Instance.hornCmdDisabled)
             {
                 return "This command is disabled by the host.\n\n";
             }
-            if (GameObject.FindAnyObjectByType<ShipAlarmCord>() == null)
+            ShipAlarmCord horn = getHorn();
+            if (horn == null)
             {
                 return "You have not yet purchased the horn.\n\n";
+            }
+            if (horn.otherClientHoldingCord)
+            {
+                return "The horn is already making sound!\n\n";
+            }
+            if (blaringTimer != null)
+            {
+                return hornStoppingText;
             }
             return hornSoundingText;
         }
 
-        public static async Task onHornStandard()
+        public static ShipAlarmCord getHorn()
         {
-            if (isBlaring)
-            {
-                return;
-            }
-            if (ETCNetworkHandler.Instance.hornCmdDisabled) { return; }
-            ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
-            if (horn == null) { return; }
-            isBlaring = true;
-            Timer timer = new Timer(ETCNetworkHandler.Instance.hornSeconds * 1000);
-            timer.Elapsed += (sender, e) => OnTimerElapsedAsync(sender, e, horn);
-            timer.Start();
-
-            while (timer.Enabled)
-            {
-                await Task.Delay(200);
-                horn.HoldCordDown();
-            }
-            isBlaring = false;
+            return GameObject.FindAnyObjectByType<ShipAlarmCord>();
         }
 
-        public static async Task onHornTimed(double seconds)
+        public static async Task onHornTimed(double seconds = 0)
         {
-            if (isBlaring)
+            if (blaringTimer != null)
             {
+                StopHorn();
                 return;
             }
             if (ETCNetworkHandler.Instance.hornCmdDisabled) { return; }
+            seconds = seconds == 0 ? ETCNetworkHandler.Instance.hornSeconds : seconds;
             ExtraTerminalCommandsBase.mls.LogInfo($"Blaring horn for {seconds} seconds");
-            ShipAlarmCord horn = GameObject.FindAnyObjectByType<ShipAlarmCord>();
+            ShipAlarmCord horn = getHorn();
             if (horn == null) { return; }
-            isBlaring = true;
-            Timer timer = new Timer(seconds * 1000);
-            timer.Elapsed += (sender, e) => OnTimerElapsedAsync(sender, e, horn);
-            timer.Start();
 
-            while (timer.Enabled)
+            blaringTimer = new Timer(seconds * 1000);
+            blaringTimer.Elapsed += (sender, e) => OnTimerElapsedAsync();
+            blaringTimer.Start();
+
+            while (blaringTimer.Enabled)
             {
                 await Task.Delay(200);
                 horn.HoldCordDown();
             }
-            isBlaring = false;
+        }
+        private static void StopHorn()
+        {
+            ExtraTerminalCommandsBase.mls.LogInfo($"StopHorn called");
+            if (blaringTimer == null) return;
+            ExtraTerminalCommandsBase.mls.LogInfo($"StopHorn called - calling stop on the timer");
+            blaringTimer.Stop();
+            blaringTimer = null;
+            ShipAlarmCord horn = getHorn();
+            horn?.StopHorn();
         }
 
-        private static void OnTimerElapsedAsync(object sender, ElapsedEventArgs e, ShipAlarmCord horn)
+        private static void OnTimerElapsedAsync()
         {
-            ((Timer)sender).Stop();
-            horn.StopHorn();
+            StopHorn();
         }
     }
 }
