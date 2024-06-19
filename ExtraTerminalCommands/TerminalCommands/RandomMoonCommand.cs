@@ -28,7 +28,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = onRandomMoonNoFilter
             };
 
-            if (ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value)
+            if (Config.configAllowRandomWeatherFilter.Value)
             {
                 AddCommand("random weather", new CommandInfo { Category = "None", Description = description, DisplayTextSupplier = onRandomMoonWeather });
             }
@@ -99,7 +99,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             }
             return goToRandomPlanet(moons);
         }
-        
+
         private static string onRandomMoonBoth()
         {
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
@@ -126,7 +126,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             System.Random rnd = new System.Random();
 
-            int travelPrice = ExtraTerminalCommandsBase.configRandomCommandPrice.Value;
+            int travelPrice = Config.configRandomCommandPrice.Value;
             if (travelPrice < 0) { travelPrice = 0; }
             if (terminal.groupCredits - travelPrice < 0)
             {

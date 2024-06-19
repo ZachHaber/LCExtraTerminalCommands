@@ -20,16 +20,12 @@ namespace ExtraTerminalCommands.TerminalCommands
         public static void teleportCommand()
         {
             string shortCommand = "tp";
-            Commands.Add(shortCommand, (string input) =>
-            {
-                input = input.Substring(shortCommand.Length).Trim();
-                return OnTeleportCommand(input);
-            }, new CommandInfo()
+            Commands.Add(shortCommand, OnTeleportCommand, new CommandInfo()
             {
                 Title = $"{shortCommand.ToUpper()} [Player Name]?",
                 Category = "Extra",
                 Description = description
-            });
+            },Config.teleportCommandAliases.Value);
         }
 
         public static async void TeleportOnMapSync(ShipTeleporter teleporter, string toTeleportUsername, int newIndex, int originalIndex)

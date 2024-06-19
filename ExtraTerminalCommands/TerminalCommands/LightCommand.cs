@@ -19,7 +19,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = onLightCommand
             };
 
-            Commands.AddCommandWithAliases("lights", cmdInfo, ["light"]);
+            Commands.AddCommandWithAliases("lights", cmdInfo, Config.lightsCommandAliases.Value);
 
         }
 
@@ -32,7 +32,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             var isOn = StartOfRound.Instance.shipRoomLights.areLightsOn;
             string result = isOn ? "off" : "on";
             GameObject.Find("LightSwitch").GetComponent<InteractTrigger>().onInteract.Invoke(GameNetworkManager.Instance.localPlayerController);
-            
+
             return $"Turned the lights {result}.\n\n";
         }
     }

@@ -1,8 +1,5 @@
-using ExtraTerminalCommands.Networking;
-using System;
+using ExtraTerminalCommands.Handlers;
 using TerminalApi.Classes;
-using static TerminalApi.TerminalApi;
-
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -15,7 +12,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Category = "other",
                 Description = "Shows extra commands.",
             };
-            AddCommand("extra", cmdInfo);
+            Commands.AddCommandWithAliases("extra", cmdInfo);
         }
 
     }

@@ -1,3 +1,4 @@
+using ExtraTerminalCommands.Handlers;
 using ExtraTerminalCommands.Networking;
 using HarmonyLib;
 using System;
@@ -23,7 +24,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnPingCommand
             };
 
-            AddCommand("ping", cmdInfo);
+            Commands.AddCommandWithAliases("ping", cmdInfo,Config.pingCommandAliases.Value);
         }
         public static void FlashCommand()
         {
@@ -34,7 +35,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnFlashCommand
             };
 
-            AddCommand("flash", cmdInfo);
+            Commands.AddCommandWithAliases("flash", cmdInfo,Config.flashCommandAliases.Value);
         }
 
         private static string OnPingCommand()
@@ -51,7 +52,7 @@ namespace ExtraTerminalCommands.TerminalCommands
 
 
             StartOfRound.Instance.mapScreen.PingRadarBooster(targetIndex);
-            return "Pinged radar booster.\n";
+            return "Pinged radar booster.\n\n";
         }
         private static string OnFlashCommand()
         {

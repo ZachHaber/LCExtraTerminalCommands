@@ -18,7 +18,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Description = description,
                 DisplayTextSupplier = onDoorCommand
             };
-            Commands.AddCommandWithAliases("doors", cmdInfo, ["door", "d"]);
+            Commands.AddCommandWithAliases("doors", cmdInfo, Config.doorsCommandAliases.Value);
         }
 
         private static string onDoorCommand()

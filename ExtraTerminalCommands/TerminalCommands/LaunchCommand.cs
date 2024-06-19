@@ -21,7 +21,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnLaunchCommand
             };
 
-            Commands.AddCommandWithAliases("launch", cmdInfo, ["start"]);
+            Commands.AddCommandWithAliases("launch", cmdInfo, Config.launchCommandAliases.Value);
         }
 
 
@@ -31,7 +31,7 @@ namespace ExtraTerminalCommands.TerminalCommands
             {
                 return "This command is disabled by the host.\n\n";
             }
-            
+
             if(!(NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer) && ExtraTerminalCommandsBase.daysJoined <= 0)
             {
                 return "You have just joined this game. You can not launch the ship yet, please wait a day.\n\n";

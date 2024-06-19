@@ -32,11 +32,11 @@ Activates the inverse teleporter, respects teleporting cooldown.
 
 Aliases: ITP
 ## Flash Radar Booster
-Flashes whatever radar booster is currently active on the radar, so you don't have to specify a name. 
+Flashes whatever radar booster is currently active on the radar, so you don't have to specify a name.
 
 Aliases: Flash
 ## Ping Radar Booster
-Pings whatever radar booster is currently active on the radar, so you don't have to specify a name. 
+Pings whatever radar booster is currently active on the radar, so you don't have to specify a name.
 
 Aliases: Ping
 ## Doors
@@ -63,7 +63,7 @@ Aliases: Time
 ## Switch
 Switches the monitor view to the next person
 
-Due to weird behavior, `S` doesn't allow for switching to specific players with how I have it set up.
+Due to weird behavior in TerminalApi, `S` doesn't allow for switching to specific players with how I have it set up. Use `SW` instead for specifying a player.
 
 Aliases: S, SW, SW [player]
 ## Clear
@@ -80,6 +80,13 @@ Aliases: Clear, CLS
 - Narobic (Thanks for the logo, much love!)
 
 # Versions
+# V1.6.2
+
+## Additions:
+
+- You can now customize aliases to nearly all commands via configuration
+  - These aliases are client-side and won't be synced
+
 # V1.6.1
 
 ## Bug Fixes:
@@ -116,7 +123,7 @@ Prevent the aliased keywords from showing on the `other` commands menu.
 - Fixed Extra command mismatch (in the extra menu it used to show "random [money], whilst money is not a filter)
 
 
- 
+
 ## V1.4.1
 
 ### Bug Fixes:

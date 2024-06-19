@@ -18,29 +18,7 @@ namespace ExtraTerminalCommands
     [BepInDependency("atomic.terminalapi", MinimumDependencyVersion: "1.5.0")]
     public class ExtraTerminalCommandsBase : BaseUnityPlugin
     {
-        public static ConfigEntry<bool> configExtraCommandsList;
-        public static ConfigEntry<bool> configLaunchCommand;
-        public static ConfigEntry<bool> configAllowLaunchOnMoon;
-        public static ConfigEntry<bool> configTimeCommand;
-        public static ConfigEntry<bool> configTeleportCommand;
-        public static ConfigEntry<bool> configTeleportPlayerCommand;
-        public static ConfigEntry<bool> configInverseTeleportCommand;
-        public static ConfigEntry<bool> configLightsCommand;
-        public static ConfigEntry<bool> configDoorsCommand;
-        public static ConfigEntry<bool> configIntroSongCommand;
-        public static ConfigEntry<bool> configRandomMoonCommand;
-        public static ConfigEntry<bool> configClearCommand;
-        public static ConfigEntry<bool> configSwitchCommand;
-        public static ConfigEntry<bool> configHornCommand;
-        public static ConfigEntry<bool> configFlashCommand;
-        public static ConfigEntry<bool> configPingCommand;
-
-        public static ConfigEntry<bool> configAllowRandomWeatherFilter;
-        public static ConfigEntry<bool> configHidePlanet;
-        public static ConfigEntry<int> configRandomCommandPrice;
-        public static ConfigEntry<int> configHornDefaultseconds;
-        public static ConfigEntry<int> configHornMaxSeconds;
-
+        public static ConfigFile config;
         public const string modGUID = MyPluginInfo.PLUGIN_GUID;
         public const string modName = MyPluginInfo.PLUGIN_NAME;
         public const string modVersion = MyPluginInfo.PLUGIN_VERSION;
@@ -62,8 +40,10 @@ namespace ExtraTerminalCommands
             }
             mls = BepInEx.Logging.Logger.CreateLogSource(modName);
 
+            config = Config;
 
-            LoadConfig();
+            ExtraTerminalCommands.Config.Bind();
+
             harmony.PatchAll();
 
             MainAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "extraterminalcommandsnetwork"));
@@ -76,113 +56,21 @@ namespace ExtraTerminalCommands
 
         void RegisterCommands()
         {
-            if (!configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
-            if (!configLaunchCommand.Value) { LaunchCommand.launchCommand(); }
-            if (!configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
-            if (!configHornCommand.Value) { HornCommand.hornCommand(); }
-            if (!configLightsCommand.Value) { LightsCommand.lightsCommand(); }
-            if (!configTimeCommand.Value) { TimeCommand.timeCommand(); }
-            if (!configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
-            if (!configTeleportCommand.Value) { TeleportCommand.teleportCommand(); }
-            if (!configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
-            if (!configFlashCommand.Value) { RadarBoosterCommands.FlashCommand(); }
-            if (!configPingCommand.Value) { RadarBoosterCommands.PingCommand(); }
-            if (!configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
-            if (!configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
-            if (!configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
+            if (!ExtraTerminalCommands.Config.configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
+            if (!ExtraTerminalCommands.Config.configLaunchCommand.Value) { LaunchCommand.launchCommand(); }
+            if (!ExtraTerminalCommands.Config.configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
+            if (!ExtraTerminalCommands.Config.configHornCommand.Value) { HornCommand.hornCommand(); }
+            if (!ExtraTerminalCommands.Config.configLightsCommand.Value) { LightsCommand.lightsCommand(); }
+            if (!ExtraTerminalCommands.Config.configTimeCommand.Value) { TimeCommand.timeCommand(); }
+            if (!ExtraTerminalCommands.Config.configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
+            if (!ExtraTerminalCommands.Config.configTeleportCommand.Value) { TeleportCommand.teleportCommand(); }
+            if (!ExtraTerminalCommands.Config.configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
+            if (!ExtraTerminalCommands.Config.configFlashCommand.Value) { RadarBoosterCommands.FlashCommand(); }
+            if (!ExtraTerminalCommands.Config.configPingCommand.Value) { RadarBoosterCommands.PingCommand(); }
+            if (!ExtraTerminalCommands.Config.configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
+            if (!ExtraTerminalCommands.Config.configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
+            if (!ExtraTerminalCommands.Config.configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
             daysJoined = 0;
-        }
-
-        private void LoadConfig()
-        {
-            configExtraCommandsList = Config.Bind("commands",
-                                         "DisableCommandsList",
-                                         false,
-                                         "Disables the 'extra' command which shows the command list.");
-            configLaunchCommand = Config.Bind("commands",
-                                         "DisableLaunch",
-                                         false,
-                                         "Disables the 'launch' command");
-            configAllowLaunchOnMoon = Config.Bind("launch",
-                                         "AllowLaunch",
-                                         true,
-                                         "Allows the 'launch' command to be executed when on a moon. " +
-                                         "\nIf this is set to false the 'launch' command only works in space.");
-            configTimeCommand = Config.Bind("commands",
-                                         "DisableTime",
-                                         false,
-                                         "Disables the 'time' command");
-            configTeleportCommand = Config.Bind("commands",
-                                         "DisableTeleport",
-                                         false,
-                                         "Disables the 'tp' command");
-            configTeleportPlayerCommand = Config.Bind("commands",
-                                         "DisableTeleportPlayer",
-                                         false,
-                                         "Disables the 'tp [player]' command for teleporting a specific player instead of the current one." +
-                                         "\nOnly works if the main teleport command is enabled");
-            configInverseTeleportCommand = Config.Bind("commands",
-                                         "DisableInverseTeleport",
-                                         false,
-                                         "Disables the 'itp' command");
-            configFlashCommand = Config.Bind("commands",
-                                         "DisableFlashCommand",
-                                         false,
-                                         "Disables the 'flash' command");
-            configPingCommand = Config.Bind("commands",
-                                         "DisablePingCommand",
-                                         false,
-                                         "Disables the 'ping' command");
-            configLightsCommand = Config.Bind("commands",
-                                         "DisableLights",
-                                         false,
-                                         "Disables the 'lights' command");
-            configDoorsCommand = Config.Bind("commands",
-                                         "DisableDoors",
-                                         false,
-                                         "Disables the 'doors' command");
-            configIntroSongCommand = Config.Bind("commands",
-                                         "DisableIntroSong",
-                                         false,
-                                         "Disables the 'intro' command which plays the intro song when run");
-            configRandomMoonCommand = Config.Bind("commands",
-                                         "DisableRandomMoon",
-                                         false,
-                                         "Disables the 'random' command to go to a random moon.");
-            configClearCommand = Config.Bind("commands",
-                                         "DisableClear",
-                                         false,
-                                         "Disables the 'clear' command which clears all lines in the console.");
-            configSwitchCommand = Config.Bind("commands",
-                                         "DisableSwitch",
-                                         false,
-                                         "Disables the 'sw' command, which does the same as the vanilla 'switch' command. Except that it also allows specifying a player by name");
-            configHornCommand = Config.Bind("commands",
-                                         "DisableHorn",
-                                         false,
-                                         "Disables the 'horn' command, which sounds the horn for X amount of seconds");
-
-            configRandomCommandPrice = Config.Bind("random",
-                                         "RandomCommandPrice",
-                                         100,
-                                         "The price of the 'random' command. You will not receive a confirmation warning.");
-            configAllowRandomWeatherFilter = Config.Bind("random",
-                                         "AllowWeatherFilter",
-                                         true,
-                                         "When enabled allows you to filter out weather when going to a random moon by typing 'random weather'");
-            configHidePlanet = Config.Bind("random",
-                                         "AllowPlanetHide",
-                                         true,
-                                         "When enabled will not show what planet you're going to when writing 'random'");
-
-            configHornDefaultseconds = Config.Bind("horn",
-                                         "SecondsEnabled",
-                                         10,
-                                         "This is the default amount of seconds the horn will continue to sound when running 'horn'");
-            configHornMaxSeconds = Config.Bind("horn",
-                                         "MaxSeconds",
-                                         30,
-                                         "This is the maximum amount of seconds the horn can sound when running 'horn [time]' Be warned, the higher this number more lag may occur.");
         }
 
         private static void NetcodePatcher()

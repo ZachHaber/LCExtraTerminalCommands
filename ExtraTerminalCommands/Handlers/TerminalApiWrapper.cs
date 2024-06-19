@@ -20,7 +20,7 @@ namespace ExtraTerminalCommands.Handlers
     public class Commands
     {
         public static List<Command> CommandInfos = new List<Command>();
-        public static void Add(string cmd_string, FuncWI<string> cmd_func, CommandInfo cmd_info = null)
+        public static void Add(string cmd_string, FuncWI<string> cmd_func, CommandInfo cmd_info = null, List<string> aliases = null)
         {
             cmd_string = cmd_string.ToLower();
             if (cmd_info == null)
@@ -31,9 +31,11 @@ namespace ExtraTerminalCommands.Handlers
 
             cmd_info.DisplayTextSupplier = () =>
             {
-                return cmd_func(GetTerminalInput());
+                // return cmd_func(GetTerminalInput());
+                return Execute(GetTerminalInput());
             };
-            AddCommand(cmd_string, cmd_info, "", true);
+            // AddCommand(cmd_string, cmd_info, "", true);
+            AddCommandWithAliases(cmd_string, cmd_info, aliases, "");
 
             Command command = new Command()
             {
@@ -43,6 +45,14 @@ namespace ExtraTerminalCommands.Handlers
             };
 
             CommandInfos.Add(command);
+            if (aliases != null)
+            {
+
+                foreach (string alias in aliases)
+                {
+                    CommandInfos.Add(new Command() { cmd_string = alias, cmd_info = cmd_info, cmd_func = cmd_func });
+                }
+            }
         }
         public static string Execute(string cmd_text)
         {
@@ -50,21 +60,23 @@ namespace ExtraTerminalCommands.Handlers
             string[] cmd_array = cmd_text.Split(new char[1] { ' ' });
             string displayText = null;
             string cmd = cmd_array[0];
-            string args = string.Join(" ", cmd_array.Skip(1).ToArray());
+            string args = string.Join(" ", cmd_array.Skip(1).ToArray()).Trim();
             Command commandInfo = CommandInfos.FirstOrDefault(cI => cI.cmd_string == cmd);
+            ExtraTerminalCommandsBase.mls.LogInfo($"{cmd} -> {commandInfo?.cmd_string}");
             if (commandInfo != null)
             {
                 displayText = commandInfo.cmd_func(args);
+                return displayText.Trim() + "\n\n";
             }
-            return displayText.Trim();
+            return displayText ?? "";
         }
 
         /// <summary>
-        /// 
+        ///
         /// Add aliases to a basic command via a CommandInfo class and a string array of aliases
         /// Creates a new command title to add in the alias strings
         /// </summary>
-        public static void AddCommandWithAliases(string command, CommandInfo commandInfo, List<string> aliases = null)
+        public static void AddCommandWithAliases(string command, CommandInfo commandInfo, List<string> aliases = null, string verbWord = null)
         {
             if (aliases != null && aliases.Count > 0)
             {
@@ -76,17 +88,17 @@ namespace ExtraTerminalCommands.Handlers
                     Category = commandInfo.Category,
                     Description = commandInfo.Description,
                     DisplayTextSupplier = commandInfo.DisplayTextSupplier
-                });
+                }, verbWord);
                 foreach (string alias in aliases)
                 {
-                    var aliasedCommandInfo = new CommandInfo { Category="None", Description = commandInfo.Description, DisplayTextSupplier = commandInfo.DisplayTextSupplier };
+                    var aliasedCommandInfo = new CommandInfo { Category = "None", Description = commandInfo.Description, DisplayTextSupplier = commandInfo.DisplayTextSupplier };
                     ExtraTerminalCommandsBase.mls.LogInfo($"Command {command} - Adding alias {alias}.");
-                    AddCommand(alias, aliasedCommandInfo);
+                    AddCommand(alias, aliasedCommandInfo, verbWord);
                 }
             }
             else
             {
-                AddCommand(command, commandInfo);
+                AddCommand(command, commandInfo, verbWord);
 
             }
         }

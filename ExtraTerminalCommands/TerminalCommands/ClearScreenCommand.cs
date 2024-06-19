@@ -19,8 +19,8 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Description = description,
                 DisplayTextSupplier = onClear
             };
-            
-            Commands.AddCommandWithAliases("clear", cmdInfo, ["cls"]);
+
+            Commands.AddCommandWithAliases("clear", cmdInfo, Config.clearCommandAliases.Value);
         }
 
         private static string onClear()

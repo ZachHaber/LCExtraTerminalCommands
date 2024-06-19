@@ -21,16 +21,12 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
 
             string shortCommand = "sw";
-            Commands.Add(shortCommand, (string input) =>
-            {
-                input = input.Substring(shortCommand.Length).Trim();
-                return onSwitchCommand(input);
-            }, new CommandInfo()
+            Commands.Add(shortCommand, onSwitchCommand, new CommandInfo()
             {
                 Title = $"{shortCommand.ToUpper()} [Player Name]?",
                 Category = "Extra",
                 Description = description
-            });
+            }, Config.switchCommandAliases.Value);
 
             AddCommand("s", new CommandInfo
             {

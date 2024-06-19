@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using System.Timers;
 using TerminalApi.Classes;
 using UnityEngine;
-using static TerminalApi.Events.Events;
-using static TerminalApi.TerminalApi;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -26,7 +24,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 {
                     return response;
                 }
-                input = input.Substring(commandKey.Length).Trim();
+                // input = input.Substring(commandKey.Length).Trim();
                 if (input.Length == 0)
                 {
                     _ = onHornStandard();

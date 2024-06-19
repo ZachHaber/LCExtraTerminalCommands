@@ -45,28 +45,28 @@ namespace ExtraTerminalCommands.Networking
         public bool introPlaying = false;
         public bool randomMoonCommandRan = false;
 
-        public bool extraCmdDisabled = ExtraTerminalCommandsBase.configExtraCommandsList.Value;
-        public bool timeCmdDisabled = ExtraTerminalCommandsBase.configTimeCommand.Value;
-        public bool launchCmdDisabled = ExtraTerminalCommandsBase.configLaunchCommand.Value;
-        public bool tpCmdDisabled = ExtraTerminalCommandsBase.configTeleportCommand.Value;
-        public bool tpPlayerCmdDisabled = ExtraTerminalCommandsBase.configTeleportPlayerCommand.Value;
-        public bool itpCmdDisabled = ExtraTerminalCommandsBase.configInverseTeleportCommand.Value;
-        public bool flashCmdDisabled = ExtraTerminalCommandsBase.configFlashCommand.Value;
-        public bool pingCmdDisabled = ExtraTerminalCommandsBase.configPingCommand.Value;
-        public bool lightCmdDisabled = ExtraTerminalCommandsBase.configLightsCommand.Value;
-        public bool doorCmdDisabled = ExtraTerminalCommandsBase.configDoorsCommand.Value;
-        public bool introCmdDisabled = ExtraTerminalCommandsBase.configIntroSongCommand.Value;
-        public bool randomCmdDisabled = ExtraTerminalCommandsBase.configRandomMoonCommand.Value;
-        public bool clearCmdDisabled = ExtraTerminalCommandsBase.configClearCommand.Value;
-        public bool switchCmdDisabled = ExtraTerminalCommandsBase.configSwitchCommand.Value;
-        public bool hornCmdDisabled = ExtraTerminalCommandsBase.configHornCommand.Value;
+        public bool extraCmdDisabled = Config.configExtraCommandsList.Value;
+        public bool timeCmdDisabled = Config.configTimeCommand.Value;
+        public bool launchCmdDisabled = Config.configLaunchCommand.Value;
+        public bool tpCmdDisabled = Config.configTeleportCommand.Value;
+        public bool tpPlayerCmdDisabled = Config.configTeleportPlayerCommand.Value;
+        public bool itpCmdDisabled = Config.configInverseTeleportCommand.Value;
+        public bool flashCmdDisabled = Config.configFlashCommand.Value;
+        public bool pingCmdDisabled = Config.configPingCommand.Value;
+        public bool lightCmdDisabled = Config.configLightsCommand.Value;
+        public bool doorCmdDisabled = Config.configDoorsCommand.Value;
+        public bool introCmdDisabled = Config.configIntroSongCommand.Value;
+        public bool randomCmdDisabled = Config.configRandomMoonCommand.Value;
+        public bool clearCmdDisabled = Config.configClearCommand.Value;
+        public bool switchCmdDisabled = Config.configSwitchCommand.Value;
+        public bool hornCmdDisabled = Config.configHornCommand.Value;
 
-        public bool allowWeatherFilter = ExtraTerminalCommandsBase.configAllowRandomWeatherFilter.Value;
-        public bool allowHidePlanet = ExtraTerminalCommandsBase.configHidePlanet.Value;
-        public int randomMoonPrice = ExtraTerminalCommandsBase.configRandomCommandPrice.Value;
-        public bool allowLaunchOnMoon = ExtraTerminalCommandsBase.configAllowLaunchOnMoon.Value;
-        public int hornSeconds = ExtraTerminalCommandsBase.configHornDefaultseconds.Value;
-        public int hornMaxSeconds = ExtraTerminalCommandsBase.configHornMaxSeconds.Value;
+        public bool allowWeatherFilter = Config.configAllowRandomWeatherFilter.Value;
+        public bool allowHidePlanet = Config.configHidePlanet.Value;
+        public int randomMoonPrice = Config.configRandomCommandPrice.Value;
+        public bool allowLaunchOnMoon = Config.configAllowLaunchOnMoon.Value;
+        public int hornSeconds = Config.configHornDefaultseconds.Value;
+        public int hornMaxSeconds = Config.configHornMaxSeconds.Value;
 
         //Networking Functions:
 

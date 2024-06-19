@@ -1,4 +1,5 @@
 using BepInEx;
+using ExtraTerminalCommands.Handlers;
 using ExtraTerminalCommands.Networking;
 using HarmonyLib;
 using TerminalApi.Classes;
@@ -19,7 +20,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnTimeCommand
             };
 
-            AddCommand("time", commandInfo);
+            Commands.AddCommandWithAliases("time", commandInfo,Config.timeCommandAliases.Value);
         }
 
         private static string OnTimeCommand()

@@ -8,6 +8,7 @@ using Unity.Netcode;
 using BepInEx.Logging;
 using JetBrains.Annotations;
 using ExtraTerminalCommands.Networking;
+using ExtraTerminalCommands.Handlers;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -23,7 +24,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = PlayIntro
             };
 
-            AddCommand("intro", cmdInfo);
+            Commands.AddCommandWithAliases("intro", cmdInfo,Config.introSongCommandAliases.Value);
         }
 
         public string PlayIntro()
