@@ -3,7 +3,7 @@
     <!-- Name of the team on Thunderstore -->
     <!-- https://thunderstore.io/settings/teams -->
     <RootNamespace>ZachHaber</RootNamespace>
-    <Version>1.6.1</Version>
+    <Version>1.6.2</Version>
     <!-- The plugin will be built in the bin directory -->
     <OutputPath>bin</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
