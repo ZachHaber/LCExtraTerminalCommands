@@ -74,7 +74,7 @@
     <Exec Command="dotnet tcli build --config-path $(ProjectDir)assets/thunderstore.toml --package-version $(OutputVersion)" />
   </Target>
 
-  <Target Name="ThunderstorePublish" AfterTargets="PackThunderstore">
+  <Target Name="ThunderstorePublish" AfterTargets="PackThunderstore" Condition="$(Configuration) == 'Release'">
     <Exec Command="dotnet tcli publish --config-path $(ProjectDir)assets\thunderstore.toml --file $(ProjectDir)dist\$(ThunderstoreId)-$(OutputVersion).zip" />
   </Target>
 
