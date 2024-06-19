@@ -108,9 +108,7 @@ namespace ExtraTerminalCommands.TerminalCommands
         }
         private static void StopHorn()
         {
-            ExtraTerminalCommandsBase.mls.LogInfo($"StopHorn called");
             if (blaringTimer == null) return;
-            ExtraTerminalCommandsBase.mls.LogInfo($"StopHorn called - calling stop on the timer");
             blaringTimer.Stop();
             blaringTimer = null;
             ShipAlarmCord horn = getHorn();

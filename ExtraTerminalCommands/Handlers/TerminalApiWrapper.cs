@@ -62,7 +62,6 @@ namespace ExtraTerminalCommands.Handlers
             string cmd = cmd_array[0];
             string args = string.Join(" ", cmd_array.Skip(1).ToArray()).Trim();
             Command commandInfo = CommandInfos.FirstOrDefault(cI => cI.cmd_string == cmd);
-            ExtraTerminalCommandsBase.mls.LogInfo($"{cmd} -> {commandInfo?.cmd_string}");
             if (commandInfo != null)
             {
                 displayText = commandInfo.cmd_func(args);
