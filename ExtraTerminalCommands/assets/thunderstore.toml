@@ -29,7 +29,7 @@ source = "../../LICENSE"
 target = "/"
 
 [[build.copy]]
-source = "../../CHANGELOG.md"
+source = "../CHANGELOG.md"
 target = "/"
 
 [publish]
