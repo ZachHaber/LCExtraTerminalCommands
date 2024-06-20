@@ -45,11 +45,11 @@ namespace ExtraTerminalCommands
         public static void Bind()
         {
             ConfigFile config = ExtraTerminalCommandsBase.config;
-            configExtraCommandsList = config.Bind("Commands",
+            configExtraCommandsList = config.Bind("commands",
                                       "DisableCommandsList",
                                       false,
                                       "Disables the 'extra' command which shows the command list.");
-            configLaunchCommand = config.Bind("Commands",
+            configLaunchCommand = config.Bind("commands",
                                          "DisableLaunch",
                                          false,
                                          "Disables the 'launch' command");
@@ -58,78 +58,78 @@ namespace ExtraTerminalCommands
                                          true,
                                          "Allows the 'launch' command to be executed when on a moon. " +
                                          "\nIf this is set to false the 'launch' command only works in space.");
-            configTimeCommand = config.Bind("Commands",
+            configTimeCommand = config.Bind("commands",
                                          "DisableTime",
                                          false,
                                          "Disables the 'time' command");
-            configTeleportCommand = config.Bind("Commands",
+            configTeleportCommand = config.Bind("commands",
                                          "DisableTeleport",
                                          false,
                                          "Disables the 'tp' command");
-            configTeleportPlayerCommand = config.Bind("Commands",
+            configTeleportPlayerCommand = config.Bind("commands",
                                          "DisableTeleportPlayer",
                                          false,
                                          "Disables the 'tp [player]' command for teleporting a specific player instead of the current one." +
                                          "\nOnly works if the main teleport command is enabled");
-            configInverseTeleportCommand = config.Bind("Commands",
+            configInverseTeleportCommand = config.Bind("commands",
                                          "DisableInverseTeleport",
                                          false,
                                          "Disables the 'itp' command");
-            configFlashCommand = config.Bind("Commands",
+            configFlashCommand = config.Bind("commands",
                                          "DisableFlashCommand",
                                          false,
                                          "Disables the 'flash' command");
-            configPingCommand = config.Bind("Commands",
+            configPingCommand = config.Bind("commands",
                                          "DisablePingCommand",
                                          false,
                                          "Disables the 'ping' command");
-            configLightsCommand = config.Bind("Commands",
+            configLightsCommand = config.Bind("commands",
                                          "DisableLights",
                                          false,
                                          "Disables the 'lights' command");
-            configDoorsCommand = config.Bind("Commands",
+            configDoorsCommand = config.Bind("commands",
                                          "DisableDoors",
                                          false,
                                          "Disables the 'doors' command");
-            configIntroSongCommand = config.Bind("Commands",
+            configIntroSongCommand = config.Bind("commands",
                                          "DisableIntroSong",
                                          false,
                                          "Disables the 'intro' command which plays the intro song when run");
-            configRandomMoonCommand = config.Bind("Commands",
+            configRandomMoonCommand = config.Bind("commands",
                                          "DisableRandomMoon",
                                          false,
                                          "Disables the 'random' command to go to a random moon.");
-            configClearCommand = config.Bind("Commands",
+            configClearCommand = config.Bind("commands",
                                          "DisableClear",
                                          false,
                                          "Disables the 'clear' command which clears all lines in the console.");
-            configSwitchCommand = config.Bind("Commands",
+            configSwitchCommand = config.Bind("commands",
                                          "DisableSwitch",
                                          false,
                                          "Disables the 'sw' command, which does the same as the vanilla 'switch' command. Except that it also allows specifying a player by name");
-            configHornCommand = config.Bind("Commands",
+            configHornCommand = config.Bind("commands",
                                          "DisableHorn",
                                          false,
                                          "Disables the 'horn' command, which sounds the horn for X amount of seconds");
 
-            configRandomCommandPrice = config.Bind("Random",
+            configRandomCommandPrice = config.Bind("random",
                                          "RandomCommandPrice",
                                          100,
                                          "The price of the 'random' command. You will not receive a confirmation warning.");
-            configAllowRandomWeatherFilter = config.Bind("Random",
+            configAllowRandomWeatherFilter = config.Bind("random",
                                          "AllowWeatherFilter",
                                          true,
                                          "When enabled allows you to filter out weather when going to a random moon by typing 'random weather'");
-            configHidePlanet = config.Bind("Random",
+            configHidePlanet = config.Bind("random",
                                          "AllowPlanetHide",
                                          true,
                                          "When enabled will not show what planet you're going to when writing 'random'");
 
-            configHornDefaultseconds = config.Bind("Horn",
+            configHornDefaultseconds = config.Bind("horn",
                                          "SecondsEnabled",
                                          10,
                                          "This is the default amount of seconds the horn will continue to sound when running 'horn'");
-            configHornMaxSeconds = config.Bind("Horn",
+            configHornMaxSeconds = config.Bind("horn",
                                          "MaxSeconds",
                                          30,
                                          "This is the maximum amount of seconds the horn can sound when running 'horn [time]' Be warned, the higher this number more lag may occur.");
