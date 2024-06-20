@@ -8,7 +8,7 @@
     <RootNamespace>ExtraTerminalCommands</RootNamespace>
     <AssemblyName>ZachHaber.ExtraTerminalCommands</AssemblyName>
     <Product>Extra Terminal Commands</Product>
-    <OutputVersion>1.6.2</OutputVersion>
+    <OutputVersion>1.6.3</OutputVersion>
     <Version>$(OutputVersion)</Version>
     <Description></Description>
 

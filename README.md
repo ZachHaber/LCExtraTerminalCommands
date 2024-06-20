@@ -114,6 +114,11 @@ Aliases: Clear, CLS
 
 # Versions
 
+## V1.6.3
+
+### Bug Fixes:
+- Reset Config to non-capitalized group names. I didn't think about it not carrying over properly.
+
 ## V1.6.2
 
 ### Additions:
