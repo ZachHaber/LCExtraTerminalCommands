@@ -19,8 +19,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = onLightCommand
             };
 
-            Commands.AddCommandWithAliases("lights", cmdInfo, Config.lightsCommandAliases.Value);
-
+            Commands.AddCommandWithAliases("lights", cmdInfo, Config.lightsCommandAliases.Value, null, ETCNetworkHandler.Instance?.lightCmdDisabled ?? Config.configLightsCommand.Value);
         }
 
         private static string onLightCommand()

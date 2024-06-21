@@ -1,6 +1,15 @@
+## V1.6.4
+
+## Additions:
+
+- Commands are now dynamically added/removed fully when joining a lobby
+  - Commands will no longer display in the `Extra` command menu if disabled
+  - Commands that are enabled by the host will automatically be enabled for clients even if they had it disabled before
+
 ## V1.6.3
 
 ### Bug Fixes:
+
 - Reset Config to non-capitalized group names. I didn't think about it not carrying over properly.
 
 # V1.6.2
@@ -43,6 +52,10 @@
   - Light
   - Song, Intro Song, IntroSong, Intro-Song, GreatAsset, Great Asset, GA
   - CL
+
+---
+
+# Original Version
 
 # V1.5.0
 

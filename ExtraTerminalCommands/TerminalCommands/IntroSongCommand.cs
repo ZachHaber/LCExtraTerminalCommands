@@ -15,7 +15,7 @@ namespace ExtraTerminalCommands.TerminalCommands
     internal class IntroSongCommand : NetworkBehaviour
     {
         public static string description = "Plays a song that reminds you what you are working towards!";
-        public void introSongCommand()
+        public static void introSongCommand()
         {
             CommandInfo cmdInfo = new CommandInfo
             {
@@ -24,10 +24,10 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = PlayIntro
             };
 
-            Commands.AddCommandWithAliases("intro", cmdInfo,Config.introSongCommandAliases.Value);
+            Commands.AddCommandWithAliases("intro", cmdInfo, Config.introSongCommandAliases.Value, null, ETCNetworkHandler.Instance?.introCmdDisabled ?? Config.configIntroSongCommand.Value);
         }
 
-        public string PlayIntro()
+        public static string PlayIntro()
         {
             if (ETCNetworkHandler.Instance.introCmdDisabled)
             {

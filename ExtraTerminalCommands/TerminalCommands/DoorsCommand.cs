@@ -1,9 +1,7 @@
 using ExtraTerminalCommands.Handlers;
 using ExtraTerminalCommands.Networking;
-using System.ComponentModel;
 using TerminalApi.Classes;
 using UnityEngine;
-using static TerminalApi.TerminalApi;
 
 namespace ExtraTerminalCommands.TerminalCommands
 {
@@ -18,12 +16,12 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Description = description,
                 DisplayTextSupplier = onDoorCommand
             };
-            Commands.AddCommandWithAliases("doors", cmdInfo, Config.doorsCommandAliases.Value);
+            Commands.AddCommandWithAliases("doors", cmdInfo, Config.doorsCommandAliases.Value, null, ETCNetworkHandler.Instance?.doorCmdDisabled ?? Config.configDoorsCommand.Value);
         }
 
         private static string onDoorCommand()
         {
-            if(ETCNetworkHandler.Instance.doorCmdDisabled)
+            if (ETCNetworkHandler.Instance.doorCmdDisabled)
             {
                 return "This command is disabled by the host.\n\n";
             }

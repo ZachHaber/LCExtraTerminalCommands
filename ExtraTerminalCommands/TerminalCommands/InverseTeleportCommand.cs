@@ -14,7 +14,12 @@ namespace ExtraTerminalCommands.TerminalCommands
         public static string description = "Activates the Inverse Teleporter.";
         public static void inverseTeleportCommand()
         {
-            Commands.AddCommandWithAliases("itp", new CommandInfo { Category = "Extra", Description = description, DisplayTextSupplier = OnInverseTeleportCommand }, Config.inverseTeleportCommandAliases.Value);
+            Commands.AddCommandWithAliases("itp", new CommandInfo
+            {
+                Category = "Extra",
+                Description = description,
+                DisplayTextSupplier = OnInverseTeleportCommand
+            }, Config.inverseTeleportCommandAliases.Value, null, ETCNetworkHandler.Instance?.itpCmdDisabled ?? Config.configInverseTeleportCommand.Value);
         }
 
         private static string OnInverseTeleportCommand()

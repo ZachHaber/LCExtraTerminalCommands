@@ -20,7 +20,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnTimeCommand
             };
 
-            Commands.AddCommandWithAliases("time", commandInfo,Config.timeCommandAliases.Value);
+            Commands.AddCommandWithAliases("time", commandInfo, Config.timeCommandAliases.Value, null, ETCNetworkHandler.Instance?.timeCmdDisabled ?? Config.configTimeCommand.Value);
         }
 
         private static string OnTimeCommand()

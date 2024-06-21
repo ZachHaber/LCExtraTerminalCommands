@@ -146,6 +146,28 @@ namespace ExtraTerminalCommands
             clearCommandAliases.Bind();
             switchCommandAliases.Bind();
             hornCommandAliases.Bind();
+
+//             ExtraTerminalCommandsBase.mls.LogInfo(@$"ExtraCommandsList: {!configExtraCommandsList.Value}
+// LaunchCommand: {!configLaunchCommand.Value}
+// TimeCommand: {!configTimeCommand.Value}
+// TeleportCommand: {!configTeleportCommand.Value}
+// TeleportPlayerCommand: {!configTeleportPlayerCommand.Value}
+// InverseTeleportCommand: {!configInverseTeleportCommand.Value}
+// FlashCommand: {!configFlashCommand.Value}
+// PingCommand: {!configPingCommand.Value}
+// LightsCommand: {!configLightsCommand.Value}
+// DoorsCommand: {!configDoorsCommand.Value}
+// IntroSongCommand: {!configIntroSongCommand.Value}
+// RandomMoonCommand: {!configRandomMoonCommand.Value}
+// ClearCommand: {!configClearCommand.Value}
+// SwitchCommand: {!configSwitchCommand.Value}
+// HornCommand: {!configHornCommand.Value}
+// AllowLaunchOnMoon: {configAllowLaunchOnMoon.Value}
+// RandomCommandPrice: {configRandomCommandPrice.Value}
+// AllowRandomWeatherFilter: {configAllowRandomWeatherFilter.Value}
+// HidePlanet: {configHidePlanet.Value}
+// HornDefaultseconds: {configHornDefaultseconds.Value}
+// HornMaxSeconds: {configHornMaxSeconds.Value}");
         }
     }
     public class ArrayConfigEntry

@@ -23,13 +23,17 @@ namespace ExtraTerminalCommands.TerminalCommands
             var command = "random";
             Commands.Add(command, (input) =>
             {
+                if (ETCNetworkHandler.Instance.randomCmdDisabled)
+                {
+                    return "This command is disabled by the host.\n\n";
+                }
                 if (input == "weather")
                 {
                     return onRandomMoonWeather();
                 }
                 else if (input != "")
                 {
-                    return $"Invalid option: '{input}'. option can only be 'weather'";
+                    return $"Invalid option: '{input}'. option can only be 'weather'\n\n";
                 }
                 return onRandomMoonNoFilter();
             }, new CommandInfo()
@@ -37,7 +41,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Title = "random weather?",
                 Category = "Extra",
                 Description = description,
-            }, Config.randomCommandAliases.Value);
+            }, Config.randomCommandAliases.Value, ETCNetworkHandler.Instance?.randomCmdDisabled ?? Config.configRandomMoonCommand.Value);
         }
 
         private static string getInvalidTravelText(StartOfRound startOfRound)
@@ -55,19 +59,15 @@ namespace ExtraTerminalCommands.TerminalCommands
 
         private static string onRandomMoonNoFilter()
         {
-            if (ETCNetworkHandler.Instance.randomCmdDisabled)
-            {
-                return "This command is disabled by the host.\n\n";
-            }
-
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             var invalid = getInvalidTravelText(startOfRound);
-            if (invalid != null){
+            if (invalid != null)
+            {
                 return invalid;
             }
 
-                List<SelectableLevel> moons = [.. terminal.moonsCatalogueList];
+            List<SelectableLevel> moons = [.. terminal.moonsCatalogueList];
             return goToRandomPlanet(moons);
         }
 
@@ -81,7 +81,8 @@ namespace ExtraTerminalCommands.TerminalCommands
             StartOfRound startOfRound = GameObject.FindObjectOfType<StartOfRound>();
             Terminal terminal = GameObject.FindObjectOfType<Terminal>();
             var invalid = getInvalidTravelText(startOfRound);
-            if (invalid != null){
+            if (invalid != null)
+            {
                 return invalid;
             }
 

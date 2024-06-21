@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -111,6 +109,7 @@ namespace ExtraTerminalCommands.Networking
             hornSeconds = hornSec;
             hornMaxSeconds = hornMaxSec;
             ExtraTerminalCommandsBase.mls.LogInfo($"Synced variables with host.");
+            ExtraTerminalCommandsBase.RegisterCommands();
         }
 
         //IntroSongCommand

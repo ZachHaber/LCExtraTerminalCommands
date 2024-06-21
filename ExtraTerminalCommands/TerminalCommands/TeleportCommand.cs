@@ -25,7 +25,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Title = $"{shortCommand.ToUpper()} [Player Name]?",
                 Category = "Extra",
                 Description = description
-            },Config.teleportCommandAliases.Value);
+            }, Config.teleportCommandAliases.Value, (ETCNetworkHandler.Instance?.tpCmdDisabled ?? Config.configTeleportCommand.Value) && (ETCNetworkHandler.Instance?.tpPlayerCmdDisabled ?? Config.configTeleportPlayerCommand.Value));
         }
 
         public static async void TeleportOnMapSync(ShipTeleporter teleporter, string toTeleportUsername, int newIndex, int originalIndex)

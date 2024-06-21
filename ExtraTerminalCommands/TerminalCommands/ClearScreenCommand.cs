@@ -1,9 +1,5 @@
 using ExtraTerminalCommands.Networking;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TerminalApi.Classes;
-using static TerminalApi.TerminalApi;
 using ExtraTerminalCommands.Handlers;
 
 namespace ExtraTerminalCommands.TerminalCommands
@@ -20,12 +16,12 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = onClear
             };
 
-            Commands.AddCommandWithAliases("clear", cmdInfo, Config.clearCommandAliases.Value);
+            Commands.AddCommandWithAliases("clear", cmdInfo, Config.clearCommandAliases.Value, null, ETCNetworkHandler.Instance?.clearCmdDisabled ?? Config.configClearCommand.Value);
         }
 
         private static string onClear()
         {
-            if(ETCNetworkHandler.Instance.clearCmdDisabled)
+            if (ETCNetworkHandler.Instance.clearCmdDisabled)
             {
                 return "This command is disabled by the host.\n\n";
             }

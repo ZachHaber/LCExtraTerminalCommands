@@ -26,14 +26,14 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Title = $"{shortCommand.ToUpper()} [Player Name]?",
                 Category = "Extra",
                 Description = description
-            }, Config.switchCommandAliases.Value);
+            }, Config.switchCommandAliases.Value, ETCNetworkHandler.Instance?.switchCmdDisabled ?? Config.configSwitchCommand.Value);
 
-            AddCommand("s", new CommandInfo
+            Commands.AddCommandWithAliases("s", new CommandInfo
             {
                 Category = "Extra",
                 Description = basicDescription,
                 DisplayTextSupplier = () => onSwitchCommand("")
-            });
+            }, null, null, ETCNetworkHandler.Instance?.switchCmdDisabled ?? Config.configSwitchCommand.Value);
             // For some reason the Commands.Add isn't working with text of a single letter long.
             //string shortCommand = "s";
             //Commands.Add(shortCommand, (string input) =>

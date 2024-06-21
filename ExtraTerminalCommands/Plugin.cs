@@ -1,15 +1,11 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using ExtraTerminalCommands.Handlers;
-using ExtraTerminalCommands.Networking;
-using ExtraTerminalCommands.Patches;
 using ExtraTerminalCommands.TerminalCommands;
 using HarmonyLib;
-using System;
 using System.IO;
 using System.Reflection;
-using TerminalApi.Classes;
+using static TerminalApi.Events.Events;
 using UnityEngine;
 
 namespace ExtraTerminalCommands
@@ -32,6 +28,8 @@ namespace ExtraTerminalCommands
 
         public static int daysJoined;
 
+        // public static bool firstRun = false;
+
         void Awake()
         {
             if (Instance == null)
@@ -50,27 +48,36 @@ namespace ExtraTerminalCommands
             NetcodePatcher();
             mls.LogInfo("Invoked NetcodePatcher");
 
-            RegisterCommands();
+            TerminalAwake += (object sender, TerminalEventArgs e) =>
+            {
+                RegisterCommands();
+            };
+            daysJoined = 0;
+
             mls.LogInfo($"{modGUID} v{modVersion} has loaded!");
         }
 
-        void RegisterCommands()
+        private delegate void CommandFunc(bool forceDisable = false);
+
+        public static void RegisterCommands()
         {
-            if (!ExtraTerminalCommands.Config.configExtraCommandsList.Value) { ExtraCommands.extraCommands(); }
-            if (!ExtraTerminalCommands.Config.configLaunchCommand.Value) { LaunchCommand.launchCommand(); }
-            if (!ExtraTerminalCommands.Config.configDoorsCommand.Value) { DoorsCommand.doorsCommand(); }
-            if (!ExtraTerminalCommands.Config.configHornCommand.Value) { HornCommand.hornCommand(); }
-            if (!ExtraTerminalCommands.Config.configLightsCommand.Value) { LightsCommand.lightsCommand(); }
-            if (!ExtraTerminalCommands.Config.configTimeCommand.Value) { TimeCommand.timeCommand(); }
-            if (!ExtraTerminalCommands.Config.configSwitchCommand.Value) { SwitchCommand.switchCommand(); }
-            if (!ExtraTerminalCommands.Config.configTeleportCommand.Value) { TeleportCommand.teleportCommand(); }
-            if (!ExtraTerminalCommands.Config.configInverseTeleportCommand.Value) { InverseTeleportCommand.inverseTeleportCommand(); }
-            if (!ExtraTerminalCommands.Config.configFlashCommand.Value) { RadarBoosterCommands.FlashCommand(); }
-            if (!ExtraTerminalCommands.Config.configPingCommand.Value) { RadarBoosterCommands.PingCommand(); }
-            if (!ExtraTerminalCommands.Config.configRandomMoonCommand.Value) { RandomMoonCommand.randomMoonCommand(); }
-            if (!ExtraTerminalCommands.Config.configClearCommand.Value) { ClearScreenCommand.clearScreenCommand(); }
-            if (!ExtraTerminalCommands.Config.configIntroSongCommand.Value) { IntroSongCommand introSongCommandClass = new IntroSongCommand(); introSongCommandClass.introSongCommand(); }
-            daysJoined = 0;
+
+            mls.LogInfo("Adding Commands");
+            ExtraCommands.extraCommands();
+            LaunchCommand.launchCommand();
+            DoorsCommand.doorsCommand();
+            HornCommand.hornCommand();
+            LightsCommand.lightsCommand();
+            TimeCommand.timeCommand();
+            SwitchCommand.switchCommand();
+            TeleportCommand.teleportCommand();
+            InverseTeleportCommand.inverseTeleportCommand();
+            RadarBoosterCommands.FlashCommand();
+            RadarBoosterCommands.PingCommand();
+            RandomMoonCommand.randomMoonCommand();
+            ClearScreenCommand.clearScreenCommand();
+            IntroSongCommand.introSongCommand();
+            mls.LogInfo("Added Commands");
         }
 
         private static void NetcodePatcher()

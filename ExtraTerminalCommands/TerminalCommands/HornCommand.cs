@@ -53,7 +53,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 Title = "Horn [X seconds]?",
                 Description = description,
                 Category = "Extra"
-            }, Config.hornCommandAliases.Value);
+            }, Config.hornCommandAliases.Value, ETCNetworkHandler.Instance?.hornCmdDisabled ?? Config.configHornCommand.Value);
         }
         public static string returnText()
         {

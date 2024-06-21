@@ -24,7 +24,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnPingCommand
             };
 
-            Commands.AddCommandWithAliases("ping", cmdInfo,Config.pingCommandAliases.Value);
+            Commands.AddCommandWithAliases("ping", cmdInfo, Config.pingCommandAliases.Value, null, ETCNetworkHandler.Instance?.pingCmdDisabled ?? Config.configPingCommand.Value);
         }
         public static void FlashCommand()
         {
@@ -35,7 +35,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnFlashCommand
             };
 
-            Commands.AddCommandWithAliases("flash", cmdInfo,Config.flashCommandAliases.Value);
+            Commands.AddCommandWithAliases("flash", cmdInfo, Config.flashCommandAliases.Value, null, ETCNetworkHandler.Instance?.flashCmdDisabled ?? Config.configFlashCommand.Value);
         }
 
         private static string OnPingCommand()
@@ -73,13 +73,14 @@ namespace ExtraTerminalCommands.TerminalCommands
         {
             int targetIndex = StartOfRound.Instance.mapScreen.targetTransformIndex;
             var targetedPlayer = StartOfRound.Instance.mapScreen.targetedPlayer;
-            if (targetedPlayer!=null)
+            if (targetedPlayer != null)
             {
                 // this is likely a player - don't try and ping them
                 ExtraTerminalCommandsBase.mls.LogInfo($"Ping/Flash called on Player {targetedPlayer.playerUsername} at targetTransformIndex {targetIndex}");
                 return -1;
             }
-            if(targetIndex < 0) {
+            if (targetIndex < 0)
+            {
                 ExtraTerminalCommandsBase.mls.LogInfo($"Ping/Flash called with invalid targetTransformIndex: {targetIndex}");
                 return -1;
             }

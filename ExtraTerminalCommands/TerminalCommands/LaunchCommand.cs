@@ -21,7 +21,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 DisplayTextSupplier = OnLaunchCommand
             };
 
-            Commands.AddCommandWithAliases("launch", cmdInfo, Config.launchCommandAliases.Value);
+            Commands.AddCommandWithAliases("launch", cmdInfo, Config.launchCommandAliases.Value, null, ETCNetworkHandler.Instance?.launchCmdDisabled ?? Config.configLaunchCommand.Value);
         }
 
 
@@ -32,7 +32,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return "This command is disabled by the host.\n\n";
             }
 
-            if(!(NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer) && ExtraTerminalCommandsBase.daysJoined <= 0)
+            if (!(NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer) && ExtraTerminalCommandsBase.daysJoined <= 0)
             {
                 return "You have just joined this game. You can not launch the ship yet, please wait a day.\n\n";
             }
@@ -53,7 +53,7 @@ namespace ExtraTerminalCommands.TerminalCommands
                 return "Unable to complete action. The ship has already been launched.\n\n";
             }
 
-            if(!ETCNetworkHandler.Instance.allowLaunchOnMoon && lever.leverHasBeenPulled)
+            if (!ETCNetworkHandler.Instance.allowLaunchOnMoon && lever.leverHasBeenPulled)
             {
                 return "Could not launch to space, you can only launch to a moon. This is due to config settings.\n\n";
             }
